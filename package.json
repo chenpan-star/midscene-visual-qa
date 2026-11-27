@@ -7,6 +7,7 @@
   "scripts": {
     "web": "npx serve -l 4173 .",
     "tour:login": "npx tsx scripts/capture-auth.mts",
+    "capture:screens": "npx tsx scripts/capture-screens.mts",
     "test:visual": "playwright test tests/visual-tour.spec.ts",
     "test:visual:update": "playwright test tests/visual-tour.spec.ts --update-snapshots",
     "test:midscene": "MIDSCENE_REPORT=1 playwright test tests/midscene-qa.spec.ts",

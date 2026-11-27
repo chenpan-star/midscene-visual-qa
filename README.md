@@ -6,7 +6,7 @@ Interactive web visualizer and runnable Midscene.js + Playwright kit targeted at
 
 **Live Web Visualizer:** https://chenpan-star.github.io/midscene-visual-qa/
 
-The Pages demo uses a sanitized LotusFlare-style mock of Home / API Product Orders / Offers. Live Midscene and pixel-diff runs against the real dc02 portal happen on your machine only — auth cookies and screenshots stay local (gitignored).
+The Pages demo embeds **real screenshots** captured from `portal-dc02` operator 29 (login / Home / Orders / Offers). Live iframe embedding is blocked by the portal’s `X-Frame-Options: deny`, so the visualizer cannot show a live session on GitHub Pages. Live Midscene and pixel-diff runs against the real dc02 portal happen on your machine only — auth cookies stay local (gitignored). Refresh the demo shots with `npm run capture:screens` after `tour:login`.
 
 ## Quick start against portal-dc02
 
@@ -56,7 +56,9 @@ Controls:
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Zero-dependency interactive visualizer (LF shell, operator 29 URLs) |
+| `index.html` | Zero-dependency interactive visualizer over real dc02 screenshots |
+| `assets/portal/*.png` | Captured login / Home / Orders / Offers / Settings frames |
+| `scripts/capture-screens.mts` | Refresh `assets/portal` from a logged-in dc02 session |
 | `tests/midscene-qa.spec.ts` | Live Midscene `aiAssert` / `aiWaitFor` against portal-dc02 |
 | `tests/visual-tour.spec.ts` | Live Playwright `toHaveScreenshot` tour against portal-dc02 |
 | `tests/fixture.ts` | Midscene Playwright fixture |
