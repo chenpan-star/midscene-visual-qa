@@ -1,30 +1,29 @@
 web:
-  url: http://127.0.0.1:4173
+  url: https://portal-dc02.lotusflare.com
   viewportWidth: 1440
   viewportHeight: 900
 
 tasks:
-  - name: Log into the portal
+  - name: Open operator 29 Home
     flow:
-      - ai: Type "qa-bot@example.com" into Work Email and a password, then click Sign In
-      - aiWaitFor: The main dashboard is visible
-      - aiAssert: Sidebar and top navigation bar are aligned with no overlapping text
+      - goto: https://portal-dc02.lotusflare.com/#/29
+      - aiWaitFor: The left navigation sidebar is visible and the Home page has finished loading
+      - aiAssert: Sidebar and page header are aligned with no overlapping text
 
-  - name: Check API Product Orders table alignment
+  - name: Check API Product Orders alignment
     flow:
-      - ai: Click "API Product Orders" in the left navigation menu
-      - aiWaitFor: The orders table rows are loaded
-      - aiAssert: The Status column header aligns cleanly with the Approved and Pending pills below it
+      - goto: https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders
+      - aiWaitFor: The API Product Orders table or list is visible
+      - aiAssert: Column headers align with the values under them and no primary action is clipped
 
-  - name: Verify Billing & Plans UI
+  - name: Verify Offers page layout
     flow:
-      - ai: Click "Billing & Plans" in the left navigation menu
-      - aiWaitFor: Active subscription card is loaded
-      - aiAssert: Active plan card is highlighted and the Upgrade Plan button is not cut off or clipped
-      - aiAssert: Currency amounts and renewal dates are formatted with no "NaN" or "Invalid Date"
+      - goto: https://portal-dc02.lotusflare.com/#/29/pc/offers
+      - aiWaitFor: The Offers page content is visible
+      - aiAssert: Primary action buttons are fully legible and prices or dates are properly formatted with no NaN text
 
-  - name: Test modal interaction
+  - name: Verify Settings page
     flow:
-      - ai: Click the "Upgrade Plan" button
-      - sleep: 1000
-      - aiAssert: Modal dialog is centered, readable, and has a visible close button
+      - goto: https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization
+      - aiWaitFor: The Settings page content is visible beside the sidebar
+      - aiAssert: Settings content is readable with no overlapping panels

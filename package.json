@@ -1,20 +1,22 @@
 {
   "name": "midscene-visual-qa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Interactive Vision QA Live Visualizer + runnable Midscene.js & Playwright visual-diff starter kit",
+  "description": "Interactive Vision QA Live Visualizer + Midscene.js / Playwright kit targeting LotusFlare portal-dc02 operator 29",
   "scripts": {
     "web": "npx serve -l 4173 .",
+    "tour:login": "npx tsx scripts/capture-auth.mts",
     "test:visual": "playwright test tests/visual-tour.spec.ts",
     "test:visual:update": "playwright test tests/visual-tour.spec.ts --update-snapshots",
-    "test:midscene": "playwright test tests/midscene-qa.spec.ts",
+    "test:midscene": "MIDSCENE_REPORT=1 playwright test tests/midscene-qa.spec.ts",
     "test:report": "playwright show-report playwright-report"
   },
   "devDependencies": {
     "@midscene/web": "1.17.1",
     "@playwright/test": "1.52.0",
     "dotenv": "16.5.0",
+    "tsx": "4.19.4",
     "typescript": "5.8.3"
   }
 }

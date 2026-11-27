@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Midscene.js — Vision QA &amp; Visual Diff Live Visualizer</title>
+  <title>Midscene.js — LotusFlare Portal Vision QA (dc02 / #/29)</title>
   <style>
     :root {
       --bg-app: #020617;
@@ -947,7 +947,7 @@
       color: #b45309;
     }
 
-    /* Billing Card */
+    /* Offers Card */
     .plan-card {
       background: #ffffff;
       border: 2px solid #6366f1;
@@ -1356,7 +1356,7 @@
             <h1 class="brand-title">Midscene.js — Vision QA &amp; Visual Diff Visualizer</h1>
             <span class="pill-version">Interactive Demo</span>
           </div>
-          <p class="brand-sub">Compare natural-language Vision AI assertions and pixel-diff alignment checks on a multi-view SaaS portal</p>
+          <p class="brand-sub">Target: https://portal-dc02.lotusflare.com/#/29 — Midscene Vision AI + Playwright pixel-diff exploration</p>
         </div>
       </div>
 
@@ -1428,7 +1428,7 @@
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#34d399" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <span id="browser-url">https://demo.cloudpulse-portal.example/login</span>
+            <span id="browser-url">https://portal-dc02.lotusflare.com/#/login</span>
           </div>
           <div class="live-pill">1440×900 · Live DOM</div>
         </div>
@@ -1437,16 +1437,16 @@
           <div id="view-login" class="view-login">
             <div class="login-card">
               <div class="portal-logo-row">
-                <div class="portal-logo-badge">CP</div>
+                <div class="portal-logo-badge">LF</div>
                 <div>
-                  <div style="font-size:15px;font-weight:700;color:#0f172a;">CloudPulse Portal</div>
-                  <div style="font-size:12px;color:#64748b;">Sign in to your operator workspace</div>
+                  <div style="font-size:15px;font-weight:700;color:#0f172a;">LotusFlare Portal</div>
+                  <div style="font-size:12px;color:#64748b;">Sign in to operator 29 · Staging</div>
                 </div>
               </div>
 
               <div class="field-group">
                 <div class="field-label"><span>Work Email</span></div>
-                <input id="portal-email" class="portal-input" type="text" readonly placeholder="qa-bot@example.com" />
+                <input id="portal-email" class="portal-input" type="text" readonly placeholder="qa.bot@example.com" />
               </div>
 
               <div class="field-group">
@@ -1464,14 +1464,14 @@
           <div id="view-app-shell" class="app-shell hidden">
             <aside id="portal-sidebar" class="portal-sidebar">
               <div class="sidebar-brand">
-                <div class="portal-logo-badge" style="width:28px;height:28px;font-size:11px;border-radius:8px;">CP</div>
-                <span style="font-weight:700;font-size:14px;color:#0f172a;">CloudPulse</span>
+                <div class="portal-logo-badge" style="width:28px;height:28px;font-size:11px;border-radius:8px;">LF</div>
+                <span style="font-weight:700;font-size:14px;color:#0f172a;">LotusFlare</span>
               </div>
 
               <nav class="sidebar-nav">
-                <div id="nav-overview" class="snav-item active">Overview</div>
+                <div id="nav-overview" class="snav-item active">Home</div>
                 <div id="nav-orders" class="snav-item">API Product Orders</div>
-                <div id="nav-billing" class="snav-item">Billing &amp; Plans</div>
+                <div id="nav-billing" class="snav-item">Offers</div>
                 <div class="snav-item">Settings</div>
               </nav>
 
@@ -1479,39 +1479,39 @@
                 <div class="avatar-circle">QA</div>
                 <div style="min-width:0;">
                   <div style="font-size:12px;font-weight:600;color:#1e293b;">QA Bot</div>
-                  <div style="font-size:10.5px;color:#64748b;overflow:hidden;text-overflow:ellipsis;">qa-bot@example.com</div>
+                  <div style="font-size:10.5px;color:#64748b;overflow:hidden;text-overflow:ellipsis;">Operator 29 · Staging</div>
                 </div>
               </div>
             </aside>
 
             <div class="portal-main">
               <header id="portal-topbar" class="portal-topbar">
-                <h2 id="portal-page-title">Workspace Overview</h2>
+                <h2 id="portal-page-title">Home</h2>
                 <span class="ops-pill">All Systems Operational</span>
               </header>
 
               <div id="subview-dashboard" class="subview">
                 <div id="dashboard-metrics" class="kpi-grid">
                   <div class="kpi-card">
-                    <div class="kpi-label">Monthly Recurring Revenue</div>
-                    <div class="kpi-val">$128,450</div>
-                    <div class="kpi-delta">+14.2% vs last month</div>
+                    <div class="kpi-label">Pending Orders</div>
+                    <div class="kpi-val">14</div>
+                    <div class="kpi-delta">Awaiting review</div>
                   </div>
                   <div class="kpi-card">
-                    <div class="kpi-label">Active Workspaces</div>
-                    <div class="kpi-val">2,418</div>
-                    <div class="kpi-delta">+86 this week</div>
+                    <div class="kpi-label">Published Offers</div>
+                    <div class="kpi-val">32</div>
+                    <div class="kpi-delta">Catalog live</div>
                   </div>
                   <div class="kpi-card">
-                    <div class="kpi-label">API P95 Latency</div>
-                    <div class="kpi-val">42 ms</div>
-                    <div class="kpi-delta" style="color:#64748b;">99.99% uptime</div>
+                    <div class="kpi-label">Tour Scope</div>
+                    <div class="kpi-val">9 pages</div>
+                    <div class="kpi-delta" style="color:#64748b;">Operator 29</div>
                   </div>
                 </div>
 
                 <div class="chart-card">
                   <div style="display:flex;justify-content:space-between;font-size:12px;">
-                    <strong style="color:#1e293b;">Real-time Request Throughput</strong>
+                    <strong style="color:#1e293b;">Operator workspace activity</strong>
                     <span style="color:#94a3b8;">Last 7 days</span>
                   </div>
                   <div class="bars-row">
@@ -1541,7 +1541,7 @@
                   </div>
                   <div class="t-row">
                     <span class="mono" style="font-size:11.5px;">ORD-9041</span>
-                    <span>NovaTel Partner</span>
+                    <span>Aduna Sandbox</span>
                     <span id="orders-col-status-cell"><span class="tag-ok">Approved</span></span>
                     <span style="text-align:right;color:#4f46e5;font-weight:600;">Review</span>
                   </div>
@@ -1562,18 +1562,18 @@
 
               <div id="subview-billing" class="subview hidden">
                 <div>
-                  <div style="font-size:14px;font-weight:700;color:#0f172a;">Subscription &amp; Billing</div>
-                  <div style="font-size:12px;color:#64748b;">Manage your plan, seats, and invoices.</div>
+                  <div style="font-size:14px;font-weight:700;color:#0f172a;">Product Catalog · Offers</div>
+                  <div style="font-size:12px;color:#64748b;">Inspect offer card layout, CTA clipping, and price formatting.</div>
                 </div>
 
                 <div id="plan-card-pro" class="plan-card">
                   <div class="plan-top">
                     <div>
                       <div style="display:flex;align-items:center;gap:8px;">
-                        <span style="font-size:15px;font-weight:700;color:#0f172a;">Pro Team Plan</span>
+                        <span style="font-size:15px;font-weight:700;color:#0f172a;">5G Roaming Plus</span>
                         <span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:#e0e7ff;color:#4338ca;">ACTIVE</span>
                       </div>
-                      <div style="font-size:12px;color:#64748b;margin-top:4px;">Unlimited pipelines, SSO, and priority support.</div>
+                      <div style="font-size:12px;color:#64748b;margin-top:4px;">Catalog ID · OFR-204 · Active</div>
                     </div>
                     <div style="text-align:right;">
                       <div id="billing-price" style="font-size:22px;font-weight:800;color:#0f172a;">$49.00<span style="font-size:12px;font-weight:500;color:#64748b;">/mo</span></div>
@@ -1582,23 +1582,23 @@
                   </div>
 
                   <div class="plan-foot">
-                    <span style="font-size:12px;color:#475569;">Visa ending in •••• 4242</span>
+                    <span style="font-size:12px;color:#475569;">Published · Auto-renew</span>
                     <div style="display:flex;gap:8px;">
                       <button type="button" class="btn-portal-sec">Invoices</button>
-                      <button id="btn-upgrade" type="button" class="btn-portal-pri">Upgrade Plan</button>
+                      <button id="btn-upgrade" type="button" class="btn-portal-pri">Create Offer</button>
                     </div>
                   </div>
                 </div>
 
                 <div class="usage-grid">
                   <div class="usage-card">
-                    <div style="font-size:11.5px;color:#64748b;">Team Seats</div>
-                    <div style="font-size:14px;font-weight:700;margin-top:4px;">8 / 15 used</div>
+                    <div style="font-size:11.5px;color:#64748b;">Catalog Status</div>
+                    <div style="font-size:14px;font-weight:700;margin-top:4px;">Published</div>
                     <div class="meter"><div style="width:53%;height:100%;background:#6366f1;"></div></div>
                   </div>
                   <div class="usage-card">
-                    <div style="font-size:11.5px;color:#64748b;">Monthly API Quota</div>
-                    <div style="font-size:14px;font-weight:700;margin-top:4px;">640k / 1M</div>
+                    <div style="font-size:11.5px;color:#64748b;">Validity</div>
+                    <div style="font-size:14px;font-weight:700;margin-top:4px;">Until Dec 15, 2026</div>
                     <div class="meter"><div style="width:64%;height:100%;background:#0ea5e9;"></div></div>
                   </div>
                 </div>
@@ -1609,22 +1609,22 @@
           <div id="upgrade-modal-backdrop" class="modal-backdrop hidden">
             <div id="upgrade-modal" class="modal-box">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                <strong style="font-size:14px;color:#0f172a;">Upgrade to Enterprise</strong>
+                <strong style="font-size:14px;color:#0f172a;">New Offer Draft</strong>
                 <button id="btn-close-modal" type="button" style="width:28px;height:28px;border-radius:8px;border:none;background:#f1f5f9;color:#475569;font-weight:700;">✕</button>
               </div>
               <p style="font-size:12px;color:#475569;line-height:1.5;margin:0 0 14px;">
-                Unlock dedicated VPC runners, custom SLA guarantees, audit logs, and unlimited seats for your organization.
+                Create a draft offer for operator 29. Vision QA checks modal centering and the close control.
               </p>
               <div style="padding:12px;border-radius:10px;background:#eef2ff;border:1px solid #e0e7ff;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
                 <div>
-                  <div style="font-size:12px;font-weight:700;color:#312e81;">Enterprise Annual</div>
-                  <div style="font-size:11px;color:#4f46e5;">Billed yearly · Save 20%</div>
+                  <div style="font-size:12px;font-weight:700;color:#312e81;">Offer Draft</div>
+                  <div style="font-size:11px;color:#4f46e5;">Recurring monthly price</div>
                 </div>
                 <div style="font-size:16px;font-weight:800;color:#4338ca;">$199<span style="font-size:11px;font-weight:500;">/mo</span></div>
               </div>
               <div style="display:flex;justify-content:flex-end;gap:8px;">
                 <button type="button" class="btn-portal-sec">Cancel</button>
-                <button type="button" class="btn-portal-pri">Confirm Upgrade</button>
+                <button type="button" class="btn-portal-pri">Save Draft</button>
               </div>
             </div>
           </div>
@@ -1650,7 +1650,7 @@
       </div>
 
       <div id="bug-mode-banner" class="bug-banner hidden">
-        <strong>Bug Simulation Active:</strong> API Product Orders shifts the <code class="mono">Status</code> column header by +22px, and Billing injects a clipped <code class="mono">Upgrade Plan</code> button plus an unformatted <code class="mono">$NaN/mo</code> price.
+        <strong>Bug Simulation Active:</strong> API Product Orders shifts the <code class="mono">Status</code> column header by +22px, and Offers injects a clipped <code class="mono">Create Offer</code> button plus an unformatted <code class="mono">$NaN/mo</code> price.
       </div>
     </section>
 
@@ -1686,16 +1686,16 @@
 
   <script>
     const QA_STEPS = [
-      { id: 0, task: 'Log into portal', type: 'ai', pixelType: 'goto', yamlText: 'Sign in with qa-bot@example.com & password', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 1320, thoughtObserve: 'Capturing 1440×900 frame of /login...', thoughtPlan: 'Located email, password, and Sign In button', thoughtAct: 'Typing credentials & clicking Sign In...' },
-      { id: 1, task: 'Log into portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Main dashboard KPI cards are visible', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 510, thoughtObserve: 'Polling frame for Workspace Overview...', thoughtPlan: 'Detected Workspace Overview header & 3 KPI cards', thoughtAct: 'Dashboard rendered cleanly' },
+      { id: 0, task: 'Log into portal', type: 'ai', pixelType: 'goto', yamlText: 'Sign in with qa.bot@example.com & password', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 1320, thoughtObserve: 'Capturing 1440×900 frame of /login...', thoughtPlan: 'Located email, password, and Sign In button', thoughtAct: 'Typing credentials & clicking Sign In...' },
+      { id: 1, task: 'Log into portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Main dashboard KPI cards are visible', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 510, thoughtObserve: 'Polling frame for Home...', thoughtPlan: 'Detected Home header & 3 KPI cards', thoughtAct: 'Dashboard rendered cleanly' },
       { id: 2, task: 'Log into portal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Sidebar & top header aligned with zero overlap', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 640, thoughtObserve: 'Inspecting sidebar and header geometry...', thoughtPlan: 'Evaluating bounding alignment and spacing', thoughtAct: 'PASS: Sidebar and top header aligned' },
-      { id: 3, task: 'Check API Orders alignment', type: 'ai', pixelType: 'click', yamlText: 'Click "API Product Orders" in left sidebar', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Product Orders in left sidebar...', thoughtPlan: 'Found navigation link at row 2', thoughtAct: 'Navigating to /orders...' },
+      { id: 3, task: 'Check API Orders alignment', type: 'ai', pixelType: 'click', yamlText: 'Click "API Product Orders" in left sidebar', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Product Orders in left sidebar...', thoughtPlan: 'Found navigation link at row 2', thoughtAct: 'Navigating to /#/29/operate-apis/api-product-orders...' },
       { id: 4, task: 'Check API Orders alignment', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Status column header aligns with status pills', viewBefore: 'orders', viewAfter: 'orders', durationMs: 720, bugTarget: 'orders', thoughtObserve: 'Inspecting table header vs cell alignment...', thoughtPlan: 'Measuring horizontal x-offset on Status column', thoughtAct: 'Evaluating column alignment...' },
-      { id: 5, task: 'Verify Billing & Plans UI', type: 'ai', pixelType: 'click', yamlText: 'Click "Billing & Plans" in left sidebar', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Scanning left sidebar for Billing & Plans...', thoughtPlan: 'Found Billing link at row 3', thoughtAct: 'Navigating to /billing...' },
-      { id: 6, task: 'Verify Billing & Plans UI', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Active subscription card is loaded', viewBefore: 'billing', viewAfter: 'billing', durationMs: 470, thoughtObserve: 'Waiting for Pro Team Plan card...', thoughtPlan: 'Detected Pro Team Plan active card', thoughtAct: 'Subscription card visible' },
-      { id: 7, task: 'Verify Billing & Plans UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Active plan highlighted & no buttons clipped', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Scanning plan card border and button bounds...', thoughtPlan: 'Checking CTA overflow and text clipping', thoughtAct: 'Evaluating CTA visibility...' },
-      { id: 8, task: 'Verify Billing & Plans UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Currency & renewal date formatted (no NaN)', viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Reading rendered price & renewal date text...', thoughtPlan: 'Validating currency & date format strings', thoughtAct: 'Evaluating price formatting...' },
-      { id: 9, task: 'Test Upgrade modal', type: 'ai', pixelType: 'click', yamlText: 'Click "Upgrade Plan" CTA button', viewBefore: 'billing', viewAfter: 'modal', durationMs: 790, thoughtObserve: 'Locating primary Upgrade Plan button...', thoughtPlan: 'Found indigo CTA in plan card footer', thoughtAct: 'Opening Upgrade to Enterprise modal...' },
+      { id: 5, task: 'Verify Offers UI', type: 'ai', pixelType: 'click', yamlText: 'Click "Offers" in left sidebar', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Scanning left sidebar for Offers...', thoughtPlan: 'Found Offers link at row 3', thoughtAct: 'Navigating to /#/29/pc/offers...' },
+      { id: 6, task: 'Verify Offers UI', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Active offer card is loaded', viewBefore: 'billing', viewAfter: 'billing', durationMs: 470, thoughtObserve: 'Waiting for 5G Roaming Plus card...', thoughtPlan: 'Detected 5G Roaming Plus active card', thoughtAct: 'Offer card visible' },
+      { id: 7, task: 'Verify Offers UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Active plan highlighted & no buttons clipped', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Scanning plan card border and button bounds...', thoughtPlan: 'Checking CTA overflow and text clipping', thoughtAct: 'Evaluating CTA visibility...' },
+      { id: 8, task: 'Verify Offers UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Currency & renewal date formatted (no NaN)', viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Reading rendered price & renewal date text...', thoughtPlan: 'Validating currency & date format strings', thoughtAct: 'Evaluating price formatting...' },
+      { id: 9, task: 'Test Upgrade modal', type: 'ai', pixelType: 'click', yamlText: 'Click "Create Offer" CTA button', viewBefore: 'billing', viewAfter: 'modal', durationMs: 790, thoughtObserve: 'Locating primary Create Offer button...', thoughtPlan: 'Found indigo CTA in plan card footer', thoughtAct: 'Opening New Offer Draft modal...' },
       { id: 10, task: 'Test Upgrade modal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Modal centered, readable, with visible close button', viewBefore: 'modal', viewAfter: 'modal', durationMs: 620, thoughtObserve: 'Capturing modal geometry above backdrop...', thoughtPlan: 'Checking centering, contrast, and close affordance', thoughtAct: 'PASS: Modal centered with clear ✕ button' },
     ];
 
@@ -1740,7 +1740,7 @@
       viewAppShell: $('view-app-shell'),
       subviewDashboard: $('subview-dashboard'),
       subviewOrders: $('subview-orders'),
-      subviewBilling: $('subview-billing'),
+      subviewOffers: $('subview-billing'),
       upgradeModalBackdrop: $('upgrade-modal-backdrop'),
       portalPageTitle: $('portal-page-title'),
 
@@ -1748,7 +1748,7 @@
       portalPassword: $('portal-password'),
       navOverview: $('nav-overview'),
       navOrders: $('nav-orders'),
-      navBilling: $('nav-billing'),
+      navOffers: $('nav-billing'),
       ordersColStatusHead: $('orders-col-status-head'),
       billingPrice: $('billing-price'),
       billingRenewal: $('billing-renewal'),
@@ -1798,7 +1798,7 @@
       let html = `
         <div class="yaml-header-block">
           <div style="color:#38bdf8;">${isMid ? 'web:' : 'playwright:'}</div>
-          <div style="padding-left:10px;">url: <span style="color:#6ee7b7;">demo.cloudpulse-portal.example</span></div>
+          <div style="padding-left:10px;">url: <span style="color:#6ee7b7;">portal-dc02.lotusflare.com</span></div>
           <div style="padding-left:10px;">viewport: <span style="color:#fcd34d;">1440×900</span></div>
         </div>
       `;
@@ -1863,34 +1863,34 @@
       els.viewAppShell.classList.add('hidden');
       els.subviewDashboard.classList.add('hidden');
       els.subviewOrders.classList.add('hidden');
-      els.subviewBilling.classList.add('hidden');
+      els.subviewOffers.classList.add('hidden');
       els.upgradeModalBackdrop.classList.add('hidden');
 
       els.navOverview.classList.remove('active');
       els.navOrders.classList.remove('active');
-      els.navBilling.classList.remove('active');
+      els.navOffers.classList.remove('active');
 
       if (view === 'login') {
         els.viewLogin.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/login';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/login';
       } else if (view === 'dashboard') {
         els.viewAppShell.classList.remove('hidden');
         els.subviewDashboard.classList.remove('hidden');
         els.navOverview.classList.add('active');
-        els.portalPageTitle.textContent = 'Workspace Overview';
-        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/dashboard';
+        els.portalPageTitle.textContent = 'Home';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29';
       } else if (view === 'orders') {
         els.viewAppShell.classList.remove('hidden');
         els.subviewOrders.classList.remove('hidden');
         els.navOrders.classList.add('active');
         els.portalPageTitle.textContent = 'API Product Orders';
-        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/orders';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders';
       } else {
         els.viewAppShell.classList.remove('hidden');
-        els.subviewBilling.classList.remove('hidden');
-        els.navBilling.classList.add('active');
-        els.portalPageTitle.textContent = 'Billing & Subscription';
-        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/billing';
+        els.subviewOffers.classList.remove('hidden');
+        els.navOffers.classList.add('active');
+        els.portalPageTitle.textContent = 'Product Catalog · Offers';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/offers';
         if (view === 'modal') els.upgradeModalBackdrop.classList.remove('hidden');
       }
     }
@@ -2050,7 +2050,7 @@
       state.inspectedStepId = stepId;
       setPortalView(res.view);
       if (stepId === 0) {
-        els.portalEmail.value = 'qa-bot@example.com';
+        els.portalEmail.value = 'qa.bot@example.com';
         els.portalPassword.value = 'DemoPass123!';
       }
       clearVisionOverlay();
@@ -2091,7 +2091,7 @@
         if (!(await sleep(450, token))) return false;
         setActivePhase('act');
         setThought(step.thoughtAct);
-        if (rEmail) { moveCursorTo(rEmail.cx, rEmail.cy); if (!(await sleep(420, token))) return false; spawnClickRipple(rEmail.cx, rEmail.cy); if (!(await typeIntoInput(els.portalEmail, 'qa-bot@example.com', token))) return false; }
+        if (rEmail) { moveCursorTo(rEmail.cx, rEmail.cy); if (!(await sleep(420, token))) return false; spawnClickRipple(rEmail.cx, rEmail.cy); if (!(await typeIntoInput(els.portalEmail, 'qa.bot@example.com', token))) return false; }
         if (rPass) { moveCursorTo(rPass.cx, rPass.cy); if (!(await sleep(320, token))) return false; spawnClickRipple(rPass.cx, rPass.cy); if (!(await typeIntoInput(els.portalPassword, 'DemoPass123!', token))) return false; }
         if (rBtn) { moveCursorTo(rBtn.cx, rBtn.cy); if (!(await sleep(400, token))) return false; spawnClickRipple(rBtn.cx, rBtn.cy); result.coords = `(${Math.round(rBtn.cx)}, ${Math.round(rBtn.cy)})`; }
         if (!(await sleep(300, token))) return false;
@@ -2107,7 +2107,7 @@
         clearVisionOverlay();
         drawBoundingBox('#dashboard-metrics', '✓ dashboard visible', 'pass');
         result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = 'Workspace Overview and 3 KPI cards rendered cleanly.';
+        result.reasoning = 'Home and 3 KPI cards rendered cleanly.';
         result.boxes = [{ selector: '#dashboard-metrics', label: '✓ dashboard visible', variant: 'pass' }];
         if (!(await sleep(480, token))) return false;
       } else if (step.id === 2) {
@@ -2154,24 +2154,24 @@
           if (!(await sleep(580, token))) return false;
         }
       } else if (step.id === 5) {
-        const rB = drawBoundingBox('#nav-billing', 'nav: Billing & Plans', 'detect');
+        const rB = drawBoundingBox('#nav-billing', 'nav: Offers', 'detect');
         if (!(await sleep(440, token))) return false;
         setActivePhase('act');
         if (rB) { moveCursorTo(rB.cx, rB.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rB.cx, rB.cy); result.coords = `(${Math.round(rB.cx)}, ${Math.round(rB.cy)})`; }
         if (!(await sleep(280, token))) return false;
         setPortalView('billing');
         clearVisionOverlay();
-        result.reasoning = 'Clicked Billing & Plans in left navigation.';
-        result.boxes = [{ selector: '#nav-billing', label: '✓ active: Billing', variant: 'pass' }];
+        result.reasoning = 'Clicked Offers in left navigation.';
+        result.boxes = [{ selector: '#nav-billing', label: '✓ active: Offers', variant: 'pass' }];
       } else if (step.id === 6) {
-        const rC = drawBoundingBox('#plan-card-pro', 'card: Pro Team Plan', 'detect');
+        const rC = drawBoundingBox('#plan-card-pro', 'card: 5G Roaming Plus', 'detect');
         if (!(await sleep(440, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        drawBoundingBox('#plan-card-pro', '✓ subscription loaded', 'pass');
+        drawBoundingBox('#plan-card-pro', '✓ offer card loaded', 'pass');
         result.coords = rC ? `(${Math.round(rC.cx)}, ${Math.round(rC.cy)})` : '';
-        result.reasoning = 'Pro Team Plan card rendered with payment method and usage meters.';
-        result.boxes = [{ selector: '#plan-card-pro', label: '✓ subscription loaded', variant: 'pass' }];
+        result.reasoning = '5G Roaming Plus card rendered with payment method and usage meters.';
+        result.boxes = [{ selector: '#plan-card-pro', label: '✓ offer card loaded', variant: 'pass' }];
         if (!(await sleep(480, token))) return false;
       } else if (step.id === 7) {
         drawBoundingBox('#plan-card-pro', 'check: active highlight', 'detect');
@@ -2181,17 +2181,17 @@
         clearVisionOverlay();
         if (state.bugMode) {
           result.status = 'fail';
-          setThought('FAIL: Clipped text detected on "Upgrade Plan" button!');
+          setThought('FAIL: Clipped text detected on "Create Offer" button!');
           drawBoundingBox('#plan-card-pro', '✓ active border ok', 'pass');
-          const rClip = drawBoundingBox('#btn-upgrade', '✕ DEFECT: clipped', 'fail', 'Button label "Upgrade Plan" is clipped horizontally inside a 78px container.');
+          const rClip = drawBoundingBox('#btn-upgrade', '✕ DEFECT: clipped', 'fail', 'Button label "Create Offer" is clipped horizontally inside a 78px container.');
           result.coords = rClip ? `(${Math.round(rClip.cx)}, ${Math.round(rClip.cy)})` : '';
-          result.reasoning = isPixel ? 'Pixel diff (1.8%) flagged truncated Upgrade Plan button.' : 'Visual defect caught: "Upgrade Plan" button text is clipped inside its 78px width.';
+          result.reasoning = isPixel ? 'Pixel diff (1.8%) flagged truncated Create Offer button.' : 'Visual defect caught: "Create Offer" button text is clipped inside its 78px width.';
           result.boxes = [{ selector: '#plan-card-pro', label: '✓ active border ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✕ DEFECT: clipped', variant: 'fail', callout: result.reasoning }];
           if (!(await sleep(1250, token))) return false;
         } else {
           drawBoundingBox('#plan-card-pro', '✓ highlight ok', 'pass');
           drawBoundingBox('#btn-upgrade', '✓ text intact', 'pass');
-          result.reasoning = 'Active Pro Team Plan card highlighted and Upgrade Plan CTA renders with full padding.';
+          result.reasoning = 'Active 5G Roaming Plus card highlighted and Create Offer CTA renders with full padding.';
           result.boxes = [{ selector: '#plan-card-pro', label: '✓ highlight ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✓ text intact', variant: 'pass' }];
           if (!(await sleep(600, token))) return false;
         }
@@ -2203,7 +2203,7 @@
         clearVisionOverlay();
         if (state.bugMode) {
           result.status = 'fail';
-          setThought('FAIL: Detected "$NaN/mo" and "Invalid Date" on Billing card!');
+          setThought('FAIL: Detected "$NaN/mo" and "Invalid Date" on Offers card!');
           const rP = drawBoundingBox('#billing-price', '✕ DEFECT: $NaN/mo', 'fail', 'Found raw "$NaN/mo" and "Invalid Date" strings instead of formatted currency & date.');
           result.coords = rP ? `(${Math.round(rP.cx)}, ${Math.round(rP.cy)})` : '';
           result.reasoning = 'Detected unformatted "$NaN/mo" price and "Invalid Date" renewal string.';
@@ -2217,14 +2217,14 @@
           if (!(await sleep(600, token))) return false;
         }
       } else if (step.id === 9) {
-        const rU = drawBoundingBox('#btn-upgrade', 'btn: Upgrade Plan', 'detect');
+        const rU = drawBoundingBox('#btn-upgrade', 'btn: Create Offer', 'detect');
         if (!(await sleep(420, token))) return false;
         setActivePhase('act');
         if (rU) { moveCursorTo(rU.cx, rU.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rU.cx, rU.cy); result.coords = `(${Math.round(rU.cx)}, ${Math.round(rU.cy)})`; }
         if (!(await sleep(280, token))) return false;
         setPortalView('modal');
         clearVisionOverlay();
-        result.reasoning = 'Clicked Upgrade Plan CTA and opened Enterprise upgrade dialog.';
+        result.reasoning = 'Clicked Create Offer CTA and opened Enterprise upgrade dialog.';
         result.boxes = [{ selector: '#upgrade-modal', label: '✓ modal opened', variant: 'pass' }];
       } else if (step.id === 10) {
         drawBoundingBox('#upgrade-modal', 'check: centering', 'detect');

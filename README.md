@@ -1,55 +1,74 @@
-# Midscene Visual QA — Live Visualizer & Exploration Kit
+# Midscene Visual QA — LotusFlare Portal (dc02 / operator 29)
 
-Interactive web visualizer and starter kit for exploring [Midscene.js](https://github.com/web-infra-dev/midscene) alongside deterministic Playwright pixel-diff screenshot tours.
+Interactive web visualizer and runnable Midscene.js + Playwright kit targeted at:
+
+**`https://portal-dc02.lotusflare.com/#/29`**
 
 **Live Web Visualizer:** https://chenpan-star.github.io/midscene-visual-qa/
 
-## What is in this repo
+The Pages demo uses a sanitized LotusFlare-style mock of Home / API Product Orders / Offers. Live Midscene and pixel-diff runs against the real dc02 portal happen on your machine only — auth cookies and screenshots stay local (gitignored).
 
-- **`index.html`** — Zero-dependency interactive 3-pane live visualizer:
-  - Toggle between **Midscene Vision AI** and **Playwright Pixel Diff** modes.
-  - Toggle **Simulate UI Bugs** to inject a `+22px` misaligned table column header, a clipped CTA button, and an unformatted `$NaN/mo` price.
-  - Step through live (`Run QA Scan`, `Next Step`, `Reset`) and click any card in the **Visual HTML Report** to time-travel back to that screen and inspect bounding boxes.
-- **`tests/visual-tour.spec.ts`** — Deterministic Playwright full-page screenshot diff tour (`toHaveScreenshot`).
-- **`tests/midscene-qa.spec.ts`** & **`tests/fixture.ts`** — Midscene `@midscene/web/playwright` fixture and semantic `aiAssert` examples.
-- **`midscene-yaml/portal-qa.yaml`** — Declarative Midscene YAML flow mirroring the web visualizer.
-
-## Quick Start
-
-### 1. Open the web visualizer locally
-
-Open `index.html` directly in any browser, or serve it:
-
-```bash
-npm run web
-```
-
-### 2. Run Playwright + Midscene locally
+## Quick start against portal-dc02
 
 ```bash
 npm install
-npx playwright install chromium
+npx playwright install chromium   # or rely on channel: chrome
 cp .env.example .env
-# Fill OPENAI_API_KEY and MIDSCENE_MODEL_NAME in .env
+# Fill OPENAI_API_KEY + MIDSCENE_MODEL_NAME in .env
 
-# Deterministic screenshot baseline + diff
+# 1) Sign in once (opens Chrome against portal-dc02)
+npm run tour:login
+
+# 2) Midscene Vision AI assertions on Home / Orders / Offers / Settings
+npm run test:midscene
+
+# 3) Deterministic Playwright pixel baselines (optional)
 npm run test:visual:update
 npm run test:visual
 
-# Midscene Vision QA assertions
-npm run test:midscene
-
-# View Playwright HTML report
+# 4) Open the Playwright / Midscene HTML report
 npm run test:report
 ```
 
-## Key Spike Takeaways: Midscene vs. Playwright Pixel Diff
+Environment defaults (override in `.env`):
 
-| Defect Type | Playwright `toHaveScreenshot` | Midscene `aiAssert` |
+| Variable | Default |
+| --- | --- |
+| `PORTAL_BASE_URL` | `https://portal-dc02.lotusflare.com` |
+| `PORTAL_COMPANY_ID` | `29` |
+| `PORTAL_AUTH_STATE` | `.auth/user.json` |
+| `MIDSCENE_MODEL_NAME` | `gpt-4.1` |
+
+## Web visualizer (GitHub Pages)
+
+```bash
+npm run web
+# or open https://chenpan-star.github.io/midscene-visual-qa/
+```
+
+Controls:
+
+- **Midscene Vision AI / Playwright Pixel Diff** — switch how the simulated scan narrates each step.
+- **Simulate UI Bugs** — inject a +22px Status-column misalignment, a clipped Create Offer CTA, and `$NaN/mo`.
+- **Run QA Scan / Next Step / Reset** — step through the flow; click a report card to inspect boxes.
+
+## What's in the repo
+
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Zero-dependency interactive visualizer (LF shell, operator 29 URLs) |
+| `tests/midscene-qa.spec.ts` | Live Midscene `aiAssert` / `aiWaitFor` against portal-dc02 |
+| `tests/visual-tour.spec.ts` | Live Playwright `toHaveScreenshot` tour against portal-dc02 |
+| `tests/fixture.ts` | Midscene Playwright fixture |
+| `scripts/capture-auth.mts` | One-time Chrome login → `.auth/user.json` |
+| `midscene-yaml/portal-qa.yaml` | Declarative Midscene YAML for the same pages |
+
+## Midscene vs pixel-diff (spike notes)
+
+| Defect | Playwright screenshot | Midscene `aiAssert` |
 | --- | --- | --- |
-| Small misalignment (2–20px), spacing drift, icon orientation | Strong (exact pixel diff) | Weak on full-screen shots (small icons ~10% uncropped, ~70% cropped with `searchArea`/`locatePrompt`) |
-| Obvious layout breakage, clipped text, `$NaN`, wrong visible math | Catches via pixel diff (requires baseline) | Strong without baselines (natural-language claim on screen) |
-| Off-screen bugs (silent HTTP 500 behind optimistic toast, double submit) | Check via Playwright network assertions | Misses (cannot see network; only reads screenshot) |
-| Data privacy / model cost | Local, zero external upload | Sends each screenshot to configured VLM (use test/staging tenants only) |
+| 2–20px misalignment / spacing | Strong | Weak unless you crop with `locatePrompt` / `searchArea` |
+| Clipped CTA, `$NaN`, obvious overlap | Via baseline | Strong as natural-language screen claims |
+| Silent HTTP 500 / double submit | Network assertions | Misses (screenshot only) |
 
-**Recommended hybrid workflow:** Use Playwright pixel diffs for stable layout/alignment baselines on core screens, and add targeted Midscene `aiAssert` checks where visual intent matters more than pixel-identical data.
+Use Midscene for visible intent checks. Keep Playwright pixel diffs for alignment baselines. Never point either at production tenants — every Midscene assert uploads a screenshot to your configured model.
