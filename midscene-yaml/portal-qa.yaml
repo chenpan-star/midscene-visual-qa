@@ -46,11 +46,21 @@ tasks:
       - aiWaitFor: The Settings page content is visible beside the sidebar
       - aiAssert: Settings content is readable with no overlapping panels or cut-off labels
 
-  - name: Verify Reference Table Column Configuration
+  - name: Verify Column configuration absent on Reports
+    flow:
+      - goto: https://portal-dc02.lotusflare.com/#/29/reports
+      - aiWaitFor: The Reports page table or list is visible
+      - aiAssert: No Column configuration gear icon is present in the Reports table header
+
+  - name: Verify Reference Table Column Configuration show hide and Reset
     flow:
       - goto: https://portal-dc02.lotusflare.com/#/29/pc/reference-table
       - aiWaitFor: The Reference Tables data table is visible
-      - aiAssert: A Column configuration (gear) icon is visible at the right of the table header and is not clipped
+      - aiAssert: A Column configuration gear is visible at the right of the table header and Values Count is visible
       - ai: Click the Column configuration icon in the table header
-      - aiWaitFor: The Column configuration panel is open with a title and checkbox list of columns
-      - aiAssert: The panel lists Reference Table columns with checkboxes and the title stays pinned above the list
+      - aiWaitFor: The Column configuration panel is open with checkboxes including Values Count and Reset
+      - ai: Uncheck the Values Count checkbox in the Column configuration panel
+      - aiWaitFor: The Values Count column header is no longer visible in the table
+      - ai: Click Reset in the Column configuration panel
+      - aiWaitFor: The Values Count column header is visible again
+      - aiAssert: Values Count is restored and the Column configuration control remains available
