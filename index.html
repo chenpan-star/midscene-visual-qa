@@ -1418,6 +1418,176 @@
     .report-card.is-fail .rc-reason {
       color: #fecdd3;
     }
+
+    /* —— Triple bridge: Storybook + Repo + Midscene —— */
+    .bridge-bar {
+      max-width: 1680px;
+      margin: 8px auto 0;
+      padding: 0 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .bridge-sources {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .bridge-card {
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 12px;
+      padding: 10px 12px;
+      min-height: 72px;
+    }
+    .bridge-card h3 {
+      margin: 0 0 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bridge-card p {
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.4;
+      color: #94a3b8;
+    }
+    .bridge-card a { color: #7dd3fc; text-decoration: none; }
+    .bridge-card a:hover { text-decoration: underline; }
+    .bridge-dot {
+      width: 8px; height: 8px; border-radius: 999px; display: inline-block;
+    }
+    .bridge-dot.sb { background: #f472b6; }
+    .bridge-dot.repo { background: #a78bfa; }
+    .bridge-dot.ms { background: #34d399; }
+    .bridge-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(51, 65, 85, 0.85);
+      background: rgba(2, 6, 23, 0.65);
+    }
+    .bridge-controls label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .bridge-controls select {
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      min-width: 260px;
+    }
+    .source-tabs {
+      display: inline-flex;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #334155;
+    }
+    .source-tab {
+      border: 0;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .source-tab.active {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+    .bridge-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-left: auto;
+    }
+    .bridge-chip {
+      font-size: 11px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      text-decoration: none;
+      background: #0f172a;
+    }
+    .bridge-chip:hover { border-color: #38bdf8; color: #e0f2fe; }
+    .frame-storybook, .frame-code {
+      position: absolute;
+      inset: 0;
+      background: #0b1220;
+      z-index: 5;
+    }
+    .frame-storybook iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+    .frame-storybook-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px;
+      text-align: center;
+      color: #cbd5e1;
+      background: #0f172a;
+    }
+    .frame-code {
+      overflow: auto;
+      padding: 16px 18px 28px;
+      color: #e2e8f0;
+    }
+    .frame-code h2 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+    .frame-code .muted { color: #94a3b8; font-size: 12px; margin-bottom: 14px; }
+    .code-file {
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: rgba(15, 23, 42, 0.85);
+    }
+    .code-file a { color: #7dd3fc; font-size: 12px; font-weight: 600; text-decoration: none; word-break: break-all; }
+    .code-file .role { display: block; margin-top: 4px; font-size: 11px; color: #94a3b8; }
+    .contract-list, .check-list {
+      margin: 8px 0 14px;
+      padding-left: 18px;
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .portal-viewport.source-storybook .portal-shot-view,
+    .portal-viewport.source-storybook #inventory-strip,
+    .portal-viewport.source-code .portal-shot-view,
+    .portal-viewport.source-code #inventory-strip {
+      visibility: hidden;
+    }
+    .portal-viewport.source-portal .frame-storybook,
+    .portal-viewport.source-portal .frame-code {
+      display: none !important;
+    }
+    .portal-viewport.source-storybook .frame-code { display: none !important; }
+    .portal-viewport.source-code .frame-storybook { display: none !important; }
+
   </style>
 </head>
 <body>
@@ -1437,7 +1607,7 @@
             <h1 class="brand-title">Midscene.js — Vision QA &amp; Visual Diff Visualizer</h1>
             <span class="pill-version">Interactive Demo</span>
           </div>
-          <p class="brand-sub">Midscene framework · frame = your portal · report driven by <code style="color:#7dd3fc;">assets/portal/live-data.json</code> from dc02 <code style="color:#7dd3fc;">/#/29</code></p>
+          <p class="brand-sub">Storybook (elements) · <code style="color:#c4b5fd;">ts-polaris</code> (code) · Midscene (portal bug scan) · dc02 <code style="color:#7dd3fc;">/#/29</code></p>
         </div>
       </div>
 
@@ -1470,8 +1640,38 @@
     </div>
   </header>
 
-  <div id="live-data-banner" style="max-width:1680px;margin:0 auto;padding:8px 16px 0;font-size:12px;color:#94a3b8;">
-    Loading live portal data…
+  <div class="bridge-bar">
+    <div class="bridge-sources">
+      <div class="bridge-card">
+        <h3><span class="bridge-dot sb"></span>1. Storybook — elements</h3>
+        <p id="bridge-sb-desc">Component library: props, variants, expected UI. <a id="bridge-sb-home" href="https://portal-components-storybook.dc02-2.lotusflare.info/" target="_blank" rel="noopener">Open Storybook</a></p>
+      </div>
+      <div class="bridge-card">
+        <h3><span class="bridge-dot repo"></span>2. Repo — code</h3>
+        <p id="bridge-repo-desc">Implementation in <a href="https://github.com/lotusflare/ts-polaris" target="_blank" rel="noopener">lotusflare/ts-polaris</a>. Select a component to see exact source files.</p>
+      </div>
+      <div class="bridge-card">
+        <h3><span class="bridge-dot ms"></span>3. Midscene — find bugs</h3>
+        <p id="bridge-ms-desc">Scan live portal-dc02 for misalignment / clipped CTAs against the Storybook contract.</p>
+      </div>
+    </div>
+    <div class="bridge-controls">
+      <label for="bridge-component">Component</label>
+      <select id="bridge-component" aria-label="Component under review"></select>
+      <div class="source-tabs" role="tablist" aria-label="Source view">
+        <button type="button" class="source-tab" data-source="storybook" id="tab-storybook">Storybook</button>
+        <button type="button" class="source-tab" data-source="code" id="tab-code">Repo code</button>
+        <button type="button" class="source-tab active" data-source="portal" id="tab-portal">Portal Midscene</button>
+      </div>
+      <div class="bridge-links">
+        <a class="bridge-chip" id="chip-storybook" href="#" target="_blank" rel="noopener">Story ↗</a>
+        <a class="bridge-chip" id="chip-github" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="bridge-chip" id="chip-portal" href="#" target="_blank" rel="noopener">Live portal ↗</a>
+      </div>
+    </div>
+    <div id="live-data-banner" style="font-size:12px;color:#94a3b8;padding-bottom:2px;">
+      Loading live portal data…
+    </div>
   </div>
 
   <main class="workspace">
@@ -1519,7 +1719,7 @@
           <div class="live-pill">1440×900 · Full frame</div>
         </div>
 
-        <div id="portal-viewport" class="portal-viewport">
+        <div id="portal-viewport" class="portal-viewport source-portal">
           <!-- Login (static) -->
           <div id="view-login" class="portal-shot-view">
             <img class="portal-shot" src="assets/portal/login.png" alt="LotusFlare portal login on dc02" />
@@ -1552,7 +1752,26 @@
             </div>
           </div>
 
-          <div id="inventory-strip" style="position:absolute;left:0;right:0;bottom:0;z-index:40;padding:8px 12px;background:linear-gradient(180deg,transparent,rgba(2,6,23,.92));font-size:11px;color:#cbd5e1;pointer-events:none;">
+                    <div id="frame-storybook" class="frame-storybook" hidden>
+            <iframe id="storybook-iframe" title="Storybook component" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div id="storybook-fallback" class="frame-storybook-fallback">
+              <div style="font-weight:700;color:#f8fafc;">Storybook could not be embedded (frame blocked or offline)</div>
+              <div style="font-size:12px;color:#94a3b8;max-width:420px;">Open the story in a new tab — Midscene still verifies the same contract on the live portal.</div>
+              <a id="storybook-fallback-link" class="btn btn-primary" href="#" target="_blank" rel="noopener" style="text-decoration:none;">Open Storybook story</a>
+            </div>
+          </div>
+          <div id="frame-code" class="frame-code" hidden>
+            <h2 id="code-title">Component source</h2>
+            <div class="muted" id="code-summary"></div>
+            <div style="font-size:11px;font-weight:700;color:#a78bfa;margin-bottom:6px;">CONTRACT (Storybook + code)</div>
+            <ul class="contract-list" id="code-contract"></ul>
+            <div style="font-size:11px;font-weight:700;color:#34d399;margin-bottom:6px;">MIDSCENE CHECKS (live portal)</div>
+            <ul class="check-list" id="code-checks"></ul>
+            <div style="font-size:11px;font-weight:700;color:#7dd3fc;margin:12px 0 6px;">SOURCE FILES (ts-polaris)</div>
+            <div id="code-files"></div>
+          </div>
+
+<div id="inventory-strip" style="position:absolute;left:0;right:0;bottom:0;z-index:40;padding:8px 12px;background:linear-gradient(180deg,transparent,rgba(2,6,23,.92));font-size:11px;color:#cbd5e1;pointer-events:none;">
             <div style="font-weight:600;color:#e2e8f0;margin-bottom:2px;" id="inventory-title">Portal inventory</div>
             <div id="inventory-meta" style="color:#94a3b8;">Load live-data.json to store page rows + layout boxes in this frame.</div>
           </div>
@@ -1996,6 +2215,11 @@
 
     function setPortalView(view) {
       CURRENT_PAGE_ID = view;
+      // Midscene scan always shows the portal frame (Storybook/code are manual tabs).
+      if (bridgeState.source !== 'portal' && (state.isRunning || view !== 'login')) {
+        /* keep user's Storybook/code tab unless a scan is running */
+      }
+      if (state.isRunning) setBridgeSource('portal', { silentUrl: true });
       if (view === 'login') {
         els.viewLogin.classList.remove('hidden');
         els.viewPortal.classList.add('hidden');
@@ -2512,15 +2736,142 @@
       }
     }
 
+    /** Storybook (elements) + ts-polaris (code) + Midscene (portal scan) */
+    const bridgeState = {
+      catalog: null,
+      componentId: null,
+      source: 'portal',
+    };
+
+    function githubBlobUrl(filePath) {
+      const branch = bridgeState.catalog?.sources?.repo?.branch || 'master';
+      return `https://github.com/lotusflare/ts-polaris/blob/${branch}/${filePath}`;
+    }
+
+    function storybookUrl(path) {
+      const base = (bridgeState.catalog?.sources?.storybook?.baseUrl || 'https://portal-components-storybook.dc02-2.lotusflare.info').replace(/\/$/, '');
+      return `${base}${path || '/'}`;
+    }
+
+    function currentComponent() {
+      const list = bridgeState.catalog?.components || [];
+      return list.find((c) => c.id === bridgeState.componentId) || list[0] || null;
+    }
+
+    function renderCodeFrame(comp) {
+      if (!comp) return;
+      $('code-title').textContent = comp.name;
+      $('code-summary').textContent = comp.summary || '';
+      $('code-contract').innerHTML = (comp.contract || []).map((x) => `<li>${x}</li>`).join('');
+      $('code-checks').innerHTML = (comp.midscene?.checks || []).map((x) => `<li>${x}</li>`).join('');
+      $('code-files').innerHTML = (comp.repo?.files || [])
+        .map(
+          (f) =>
+            `<div class="code-file"><a href="${githubBlobUrl(f.path)}" target="_blank" rel="noopener">${f.path}</a><span class="role">${f.role || ''}</span></div>`,
+        )
+        .join('');
+    }
+
+    function updateBridgeChips(comp) {
+      if (!comp) return;
+      const sb = storybookUrl(comp.storybook?.storyPath || comp.storybook?.docsPath || '/');
+      const gh = comp.repo?.files?.[0] ? githubBlobUrl(comp.repo.files[0].path) : 'https://github.com/lotusflare/ts-polaris';
+      const portalPath = comp.midscene?.portalPath || '/#/29';
+      const portal = `https://portal-dc02.lotusflare.com${portalPath}`;
+      $('chip-storybook').href = sb;
+      $('chip-github').href = gh;
+      $('chip-portal').href = portal;
+      $('bridge-sb-desc').innerHTML = `Selected: <strong style="color:#f9a8d4">${comp.storybook?.title || comp.name}</strong>. <a href="${sb}" target="_blank" rel="noopener">Open story</a>`;
+      $('bridge-ms-desc').innerHTML = `Portal target: <code style="color:#86efac">${portalPath}</code> · Midscene test: <code style="color:#86efac">${comp.midscene?.testName || 'layout scan'}</code>`;
+    }
+
+    function setBridgeSource(source, opts = {}) {
+      bridgeState.source = source;
+      document.querySelectorAll('.source-tab').forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-source') === source);
+      });
+      const vp = els.portalViewport;
+      vp.classList.remove('source-storybook', 'source-code', 'source-portal');
+      vp.classList.add(`source-${source}`);
+
+      const frameSb = $('frame-storybook');
+      const frameCode = $('frame-code');
+      if (frameSb) frameSb.hidden = source !== 'storybook';
+      if (frameCode) frameCode.hidden = source !== 'code';
+
+      const comp = currentComponent();
+      if (source === 'storybook' && comp) {
+        const iframe = $('storybook-iframe');
+        const fallback = $('storybook-fallback');
+        const link = $('storybook-fallback-link');
+        const story = storybookUrl(comp.storybook?.iframePath || comp.storybook?.storyPath || '/');
+        const openUrl = storybookUrl(comp.storybook?.storyPath || comp.storybook?.docsPath || '/');
+        if (link) link.href = openUrl;
+        if (fallback) fallback.style.display = 'none';
+        if (iframe && iframe.dataset.src !== story) {
+          iframe.dataset.src = story;
+          iframe.src = story;
+          iframe.onload = () => {
+            if (fallback) fallback.style.display = 'none';
+          };
+          iframe.onerror = () => {
+            if (fallback) fallback.style.display = 'flex';
+          };
+        }
+        if (!opts.silentUrl) els.browserUrl.textContent = openUrl;
+      } else if (source === 'code' && comp) {
+        renderCodeFrame(comp);
+        const first = comp.repo?.files?.[0]?.path;
+        if (!opts.silentUrl) els.browserUrl.textContent = first ? githubBlobUrl(first) : 'https://github.com/lotusflare/ts-polaris';
+      } else if (source === 'portal' && !opts.silentUrl) {
+        els.browserUrl.textContent = urlFor(CURRENT_PAGE_ID || 'home');
+      }
+    }
+
+    function selectBridgeComponent(id) {
+      bridgeState.componentId = id;
+      const comp = currentComponent();
+      updateBridgeChips(comp);
+      renderCodeFrame(comp);
+      if (bridgeState.source === 'storybook') setBridgeSource('storybook');
+      if (bridgeState.source === 'code') setBridgeSource('code');
+      // Jump portal inventory to the component's Midscene page when idle.
+      if (!state.isRunning && comp?.midscene?.pageId) {
+        setPortalView(comp.midscene.pageId);
+      }
+    }
+
+    async function loadBridgeCatalog() {
+      const select = $('bridge-component');
+      try {
+        const res = await fetch('assets/bridge/components.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        bridgeState.catalog = await res.json();
+        const comps = bridgeState.catalog.components || [];
+        select.innerHTML = comps.map((c) => `<option value="${c.id}">${c.name}</option>`).join('');
+        select.onchange = () => selectBridgeComponent(select.value);
+        document.querySelectorAll('.source-tab').forEach((btn) => {
+          btn.addEventListener('click', () => setBridgeSource(btn.getAttribute('data-source')));
+        });
+        selectBridgeComponent(comps[0]?.id || '');
+        setBridgeSource('portal');
+        els.liveBanner.innerHTML =
+          (els.liveBanner.innerHTML || '') +
+          ` · <strong style="color:#f9a8d4">Storybook</strong> + <strong style="color:#c4b5fd">repo</strong> + <strong style="color:#86efac">Midscene</strong> bridged`;
+      } catch (err) {
+        if (select) select.innerHTML = `<option>Bridge catalog missing (${err.message})</option>`;
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', async () => {
       await loadLiveData();
+      await loadBridgeCatalog();
       applyModeUI();
       resetSimulation(true);
       setTimeout(() => {
         if (state.currentStepIndex === -1 && !state.isRunning && QA_STEPS.length) runLoop(0);
       }, 650);
     });
-  </script>
   </script>
 </body>
 </html>

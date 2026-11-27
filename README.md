@@ -6,9 +6,17 @@ Target: **`https://portal-dc02.lotusflare.com/#/29`**
 
 **Live Web Visualizer:** https://chenpan-star.github.io/midscene-visual-qa/
 
-The Pages demo keeps the Midscene Vision QA chrome (YAML steps, Observe → Plan → Verify, AI cursor, report timeline, bug-sim toggle). The **browser frame** shows real captures from operator 29 — not a mock portal shell.
+Three sources work together in one UI:
 
-GitHub Pages cannot iframe the live site (`X-Frame-Options: deny`). Midscene against the live portal runs on your machine.
+| Source | Role | Where |
+| --- | --- | --- |
+| **Storybook** | UI elements, props, variants, expected behavior | [portal-components-storybook](https://portal-components-storybook.dc02-2.lotusflare.info/) |
+| **Repo (`ts-polaris`)** | Implementation source | [lotusflare/ts-polaris](https://github.com/lotusflare/ts-polaris) |
+| **Midscene** | Live portal bug / misalignment scan | portal-dc02 `/#/29` (+ this visualizer) |
+
+Pick a component in the bridge bar → **Storybook** / **Repo code** / **Portal Midscene** tabs. Catalog: `assets/bridge/components.json`.
+
+GitHub Pages cannot iframe the live portal (`X-Frame-Options: deny`); Midscene against the live site runs on your machine. Storybook may embed if the host allows framing.
 
 ## Tomorrow (when Gemini quota resets)
 

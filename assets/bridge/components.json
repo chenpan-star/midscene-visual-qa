@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "purpose": "Connect Storybook (elements) + ts-polaris (code) + Midscene (portal bug/misalignment scan)",
+  "sources": {
+    "storybook": {
+      "label": "Storybook",
+      "baseUrl": "https://portal-components-storybook.dc02-2.lotusflare.info",
+      "role": "Stores UI elements, props, variants, and expected behavior"
+    },
+    "repo": {
+      "label": "GitHub ts-polaris",
+      "baseUrl": "https://github.com/lotusflare/ts-polaris",
+      "branch": "master",
+      "role": "Stores implementation source for every component"
+    },
+    "midscene": {
+      "label": "Midscene Visual QA",
+      "portalBaseUrl": "https://portal-dc02.lotusflare.com",
+      "companyId": "29",
+      "role": "Scans live portal for bugs, misalignment, clipped CTAs"
+    }
+  },
+  "components": [
+    {
+      "id": "datatable-column-configuration",
+      "name": "Table Column Configuration",
+      "summary": "Gear control in the table header that opens a panel to show/hide (and optionally reorder) columns. Requires tableKey + canSelectColumns.",
+      "storybook": {
+        "title": "Basic Components / DataTable / Configure Columns",
+        "docsPath": "/?path=/docs/basic-components-datatable--docs",
+        "storyPath": "/?path=/story/basic-components-datatable--configure-columns",
+        "iframePath": "/iframe.html?id=basic-components-datatable--configure-columns&viewMode=story",
+        "relatedStories": [
+          { "name": "Many columns (scroll at 10)", "path": "/?path=/story/basic-components-datatable--configure-columns-with-many-columns" },
+          { "name": "Hidden by default", "path": "/?path=/story/basic-components-datatable--configure-columns-with-hidden-by-default" },
+          { "name": "Sticky on scroll", "path": "/?path=/story/basic-components-datatable--configure-columns-sticky-on-scroll" }
+        ]
+      },
+      "repo": {
+        "files": [
+          {
+            "path": "portal/src/commonComponents/basicComponents/DataTable/ColumnSelectionDropdown.vue",
+            "role": "Column configuration panel + gear trigger"
+          },
+          {
+            "path": "portal/src/commonComponents/basicComponents/DataTable/DataTable.vue",
+            "role": "Mounts ColumnSelectionDropdown when canSelectColumns + tableKey"
+          },
+          {
+            "path": "portal/src/commonComponents/basicComponents/DataTable/helper/useColumnSelection.ts",
+            "role": "Gate: isColumnSelectionEnabled = canSelectColumns && persistence key"
+          },
+          {
+            "path": "portal/src/commonComponents/pageComponents/Table/Table.vue",
+            "role": "Portal Table wrapper; forwards canSelectColumns / tableKey"
+          },
+          {
+            "path": "portal/src/commonComponents/basicComponents/DataTable/storybook/DataTable.stories.ts",
+            "role": "Storybook docs + Configure Columns stories"
+          },
+          {
+            "path": "portal/src/unified/app/pc/referenceTable/ReferenceTableListPage.vue",
+            "role": "Live usage: can-select-columns + table-key=pc-reference-table"
+          },
+          {
+            "path": "portal/src/unified/app/reports/Reports.vue",
+            "role": "Control case: can-select-columns=false (gear must be absent)"
+          }
+        ]
+      },
+      "midscene": {
+        "portalPath": "/#/29/pc/reference-table",
+        "controlPortalPath": "/#/29/reports",
+        "pageId": "reference-table",
+        "checks": [
+          "Gear / Configure Columns icon visible at right of table header",
+          "Panel opens with pinned title + checkbox list of columns",
+          "Uncheck Values Count hides that header",
+          "Reset restores Values Count",
+          "Reports page has no Column configuration gear (canSelectColumns false)"
+        ],
+        "testName": "Reference Table — Column Configuration show hide and Reset"
+      },
+      "contract": [
+        "canSelectColumns: true enables the gear",
+        "tableKey (or persistenceKey) required for persistence",
+        "Menu labels from declarative title / string header (not function header)",
+        "Panel list caps at 10 visible rows then scrolls",
+        "stickyColumnConfig defaults true (gear pinned on scroll)"
+      ]
+    },
+    {
+      "id": "table-reference-list",
+      "name": "Reference Tables list (Table)",
+      "summary": "Product Catalog Reference Tables page built on commonComponents Table.",
+      "storybook": {
+        "title": "Page Components / Table",
+        "docsPath": "/?path=/docs/page-components-table--docs",
+        "storyPath": "/?path=/docs/page-components-table--docs",
+        "iframePath": "/iframe.html?id=page-components-table--docs&viewMode=docs"
+      },
+      "repo": {
+        "files": [
+          {
+            "path": "portal/src/commonComponents/pageComponents/Table/Table.vue",
+            "role": "Table page component"
+          },
+          {
+            "path": "portal/src/unified/app/pc/referenceTable/ReferenceTableListPage.vue",
+            "role": "Reference Tables list page"
+          }
+        ]
+      },
+      "midscene": {
+        "portalPath": "/#/29/pc/reference-table",
+        "pageId": "reference-table",
+        "checks": [
+          "Title Reference Tables (N) visible",
+          "Column headers align with cells",
+          "+ Add New not clipped"
+        ],
+        "testName": "Product Catalog Reference Table"
+      },
+      "contract": [
+        "Uses Table with show-search, show-filter, show-pagination",
+        "Declarative column titles for filters and column config labels"
+      ]
+    }
+  ]
+}
