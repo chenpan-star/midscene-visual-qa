@@ -22,6 +22,12 @@ tasks:
       - aiWaitFor: The Offers page content is visible
       - aiAssert: Primary action buttons are fully legible and prices or dates are properly formatted with no NaN text
 
+  - name: Verify Product Catalog Reference Table
+    flow:
+      - goto: https://portal-dc02.lotusflare.com/#/29/pc/reference-table
+      - aiWaitFor: The Reference Table page content is visible beside the sidebar
+      - aiAssert: The Reference Table list is loaded, column headers align with values, and no primary action is clipped
+
   - name: Verify Settings page
     flow:
       - goto: https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization

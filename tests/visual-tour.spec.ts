@@ -11,6 +11,7 @@ const pages = [
   { id: 'home', name: 'Home', path: `/#/${companyId}` },
   { id: 'orders', name: 'API Product Orders', path: `/#/${companyId}/operate-apis/api-product-orders` },
   { id: 'offers', name: 'Offers', path: `/#/${companyId}/pc/offers` },
+  { id: 'reference-table', name: 'Product Catalog Reference Table', path: `/#/${companyId}/pc/reference-table` },
   { id: 'settings', name: 'Settings', path: `/#/${companyId}/settings/tenant-localization` },
 ];
 

@@ -26,6 +26,12 @@ const pages = [
       'The Offers page is visible. Any Create Offer or primary action button is fully legible, and prices or dates shown on screen are properly formatted with no NaN or Invalid Date text',
   },
   {
+    name: 'Product Catalog Reference Table',
+    path: `/#/${companyId}/pc/reference-table`,
+    assert:
+      'The Product Catalog Reference Table page is visible beside the left sidebar. The table or list area is loaded, column headers align with the values under them, and no primary action button is clipped',
+  },
+  {
     name: 'Settings',
     path: `/#/${companyId}/settings/tenant-localization`,
     assert: 'The Settings page content is visible beside the left sidebar with no overlapping panels or cut-off labels',
