@@ -128,13 +128,35 @@
     "timezone": "(GMT+00:00)",
     "dateFormat": "DD-MM-YYYY",
     "timeFormat": "12 hour",
-    "currency": "Canadian Dollar — CA$"
+    "currency": "Canadian Dollar \u2014 CA$"
   },
   "screenshots": {
     "login": "assets/portal/login.png",
     "home": "assets/portal/home.png",
     "orders": "assets/portal/orders.png",
     "offers": "assets/portal/offers.png",
-    "settings": "assets/portal/settings.png"
+    "settings": "assets/portal/settings.png",
+    "referenceTable": "assets/portal/reference-table.png"
+  },
+  "referenceTable": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/pc/reference-table",
+    "title": "Reference Tables (16)",
+    "totalCount": 16,
+    "sampleNames": [
+      "test-new-2",
+      "test-approve",
+      "Delivery vendor",
+      "yuliang_reftable",
+      "dgfdhgf"
+    ],
+    "columns": [
+      "Reference",
+      "Name",
+      "Value Type",
+      "State",
+      "Values Count",
+      "Created Time",
+      "Last Updated"
+    ]
   }
 }

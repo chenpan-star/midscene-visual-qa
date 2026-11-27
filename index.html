@@ -1478,7 +1478,7 @@
     <section class="pane">
       <div class="pane-header">
         <div class="pane-header-title mono" id="left-pane-filename">portal-qa.yaml</div>
-        <span class="pane-meta">11 steps</span>
+        <span class="pane-meta" id="steps-count-label">10 steps</span>
       </div>
 
       <div class="phase-bar">
@@ -1563,6 +1563,18 @@
             <div id="settings-currency" class="hotspot" style="left:40%;top:48%;width:40%;height:5%;"></div>
           </div>
 
+          <div id="view-reftable" class="portal-shot-view hidden">
+            <img class="portal-shot" src="assets/portal/reference-table.png" alt="Product Catalog Reference Table on dc02 /#/29" />
+            <div id="reftable-nav" class="hotspot" style="left:0.8%;top:14%;width:14%;height:3.2%;"></div>
+            <div id="reftable-title" class="hotspot" style="left:16%;top:2%;width:28%;height:5%;"></div>
+            <div id="reftable-add-btn" class="hotspot" style="left:86%;top:2.5%;width:12%;height:4.5%;"></div>
+            <div id="reftable-headers" class="hotspot" style="left:16%;top:12%;width:82%;height:4.5%;"></div>
+            <div id="reftable-data" class="hotspot" style="left:16%;top:17%;width:82%;height:78%;"></div>
+            <div id="reftable-row-1" class="hotspot" style="left:16%;top:17%;width:82%;height:5%;"></div>
+            <div id="reftable-row-2" class="hotspot" style="left:16%;top:22%;width:82%;height:5%;"></div>
+            <div id="reftable-state-col" class="hotspot" style="left:52%;top:17%;width:12%;height:40%;"></div>
+          </div>
+
           <div id="vision-overlay" class="vision-overlay">
             <div id="vision-scan-layer"></div>
             <div id="vision-boxes-layer"></div>
@@ -1625,27 +1637,23 @@
 
     function buildSteps(live) {
       const welcome = live?.home?.welcome || 'Welcome back';
-      const ordersTitle = live?.orders?.title || 'API Product Orders';
-      const ordersCount = live?.orders?.totalCount ?? 0;
-      const offersTitle = live?.offers?.title || 'Offers';
-      const offersCount = live?.offers?.totalCount ?? 0;
-      const offerSamples = (live?.offers?.sampleNames || []).slice(0, 3).join(', ') || 'offer rows';
-      const currency = live?.settings?.currency || 'currency';
-      const tz = live?.settings?.timezone || 'timezone';
-      const dateFmt = live?.settings?.dateFormat || 'date format';
+      const refTitle = live?.referenceTable?.title || 'Reference Tables (16)';
+      const refCount = live?.referenceTable?.totalCount ?? 16;
+      const refSamples = (live?.referenceTable?.sampleNames || ['test-new-2', 'test-approve', 'Delivery vendor']).slice(0, 3).join(', ');
 
+      // Visualized Midscene flow focused on Product Catalog → Reference Table
+      // with green boxes around your real table data.
       return [
-        { id: 0, task: 'Open portal login', type: 'ai', pixelType: 'goto', yamlText: 'Open https://portal-dc02.lotusflare.com/#/login', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 900, thoughtObserve: 'Capturing real login frame…', thoughtPlan: 'Located LotusFlare login chrome', thoughtAct: 'Session continues into /#/29…' },
-        { id: 1, task: 'Open portal login', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `Home shows "${welcome}"`, viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 520, thoughtObserve: 'Polling Home screenshot…', thoughtPlan: `Detected ${welcome}`, thoughtAct: 'Home ready for operator 29' },
-        { id: 2, task: 'Open portal login', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Sidebar & Home header aligned', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 640, thoughtObserve: 'Inspecting LOTUSFLARE sidebar…', thoughtPlan: 'Checking overlap vs Home header', thoughtAct: 'PASS: sidebar aligned' },
-        { id: 3, task: 'API Product Orders', type: 'ai', pixelType: 'click', yamlText: 'Open API Product Orders', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Management → Orders…', thoughtPlan: 'Found orders nav', thoughtAct: 'Goto /#/29/operate-apis/api-product-orders' },
-        { id: 4, task: 'API Product Orders', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `${ordersTitle} — live count ${ordersCount}`, viewBefore: 'orders', viewAfter: 'orders', durationMs: 720, bugTarget: 'orders', thoughtObserve: 'Reading live orders table…', thoughtPlan: `Live data: ${ordersTitle}`, thoughtAct: 'Asserting column alignment' },
-        { id: 5, task: 'Offers', type: 'ai', pixelType: 'click', yamlText: 'Open Product Catalog → Offers', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Locating Offers…', thoughtPlan: 'Found Offers nav', thoughtAct: 'Goto /#/29/pc/offers' },
-        { id: 6, task: 'Offers', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `${offersTitle} loaded`, viewBefore: 'billing', viewAfter: 'billing', durationMs: 500, thoughtObserve: 'Waiting for offers table…', thoughtPlan: `Live: ${offersCount} offers (e.g. ${offerSamples})`, thoughtAct: 'Offers visible' },
-        { id: 7, task: 'Offers', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Primary New offer CTA fully legible', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Checking New offer button bounds…', thoughtPlan: 'CTA clip check', thoughtAct: 'Evaluating CTA' },
-        { id: 8, task: 'Offers', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `No $NaN in live offer prices (${offersCount} rows)`, viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Scanning price cells in live offers…', thoughtPlan: 'NaN / Invalid Date check', thoughtAct: 'Evaluating prices' },
-        { id: 9, task: 'Company Settings', type: 'ai', pixelType: 'click', yamlText: 'Open Company Settings', viewBefore: 'billing', viewAfter: 'settings', durationMs: 780, thoughtObserve: 'Opening settings/tenant-localization…', thoughtPlan: 'Settings route', thoughtAct: 'Goto /#/29/settings/tenant-localization' },
-        { id: 10, task: 'Company Settings', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Timezone ${tz}, ${dateFmt}, ${currency}`, viewBefore: 'settings', viewAfter: 'settings', durationMs: 700, thoughtObserve: 'Reading live localization fields…', thoughtPlan: `Live settings: ${tz} / ${dateFmt} / ${currency}`, thoughtAct: 'PASS: settings readable' },
+        { id: 0, kind: 'login', task: 'Open portal', type: 'ai', pixelType: 'goto', yamlText: 'Open portal-dc02 login', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 900, thoughtObserve: 'Capturing real login frame…', thoughtPlan: 'Located LotusFlare login chrome', thoughtAct: 'Continue into /#/29…' },
+        { id: 1, kind: 'home-wait', task: 'Open portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `Home shows "${welcome}"`, viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 520, thoughtObserve: 'Polling Home…', thoughtPlan: `Detected ${welcome}`, thoughtAct: 'Home ready' },
+        { id: 2, kind: 'nav-reftable', task: 'Product Catalog Reference Table', type: 'ai', pixelType: 'click', yamlText: 'Click Product Catalog → Reference Table', viewBefore: 'dashboard', viewAfter: 'reftable', durationMs: 850, thoughtObserve: 'Locating Reference Table in sidebar…', thoughtPlan: 'Found Product Catalog → Reference Table', thoughtAct: 'Goto /#/29/pc/reference-table' },
+        { id: 3, kind: 'reftable-wait', task: 'Product Catalog Reference Table', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `${refTitle} loaded`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 600, thoughtObserve: 'Waiting for Reference Tables list…', thoughtPlan: `Live: ${refCount} tables (e.g. ${refSamples})`, thoughtAct: 'Reference Table visible' },
+        { id: 4, kind: 'reftable-title', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Title "${refTitle}" is visible`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 700, thoughtObserve: 'Boxing page title…', thoughtPlan: 'Title region', thoughtAct: 'PASS: title highlighted' },
+        { id: 5, kind: 'reftable-headers', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Column headers align with table data', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 750, thoughtObserve: 'Boxing column headers…', thoughtPlan: 'Header row geometry', thoughtAct: 'PASS: headers highlighted' },
+        { id: 6, kind: 'reftable-data', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Select live table rows (${refCount})`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 900, thoughtObserve: 'Boxing Reference Table data region…', thoughtPlan: `Rows include ${refSamples}`, thoughtAct: 'PASS: green box on table data' },
+        { id: 7, kind: 'reftable-rows', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Highlight first data rows', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 800, thoughtObserve: 'Selecting row 1 and row 2…', thoughtPlan: 'Row-level boxes', thoughtAct: 'PASS: rows selected' },
+        { id: 8, kind: 'reftable-state', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Approved state badges aligned in State column', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 780, thoughtObserve: 'Boxing State / Approved column…', thoughtPlan: 'Status pills alignment', thoughtAct: 'PASS: state column highlighted' },
+        { id: 9, kind: 'reftable-cta', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: '+ Add New button fully legible', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 700, thoughtObserve: 'Boxing + Add New CTA…', thoughtPlan: 'Primary action bounds', thoughtAct: 'PASS: Add New highlighted' },
       ];
     }
 
@@ -1691,6 +1699,7 @@
       viewOrders: $('view-orders'),
       viewOffers: $('view-billing'),
       viewSettings: $('view-settings'),
+      viewReftable: $('view-reftable'),
       liveBanner: $('live-data-banner'),
 
       portalEmail: $('portal-email'),
@@ -1803,6 +1812,7 @@
       els.viewOrders.classList.add('hidden');
       els.viewOffers.classList.add('hidden');
       els.viewSettings.classList.add('hidden');
+      els.viewReftable.classList.add('hidden');
 
       if (view === 'login') {
         els.viewLogin.classList.remove('hidden');
@@ -1816,6 +1826,9 @@
       } else if (view === 'settings') {
         els.viewSettings.classList.remove('hidden');
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization';
+      } else if (view === 'reftable') {
+        els.viewReftable.classList.remove('hidden');
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/reference-table';
       } else {
         els.viewOffers.classList.remove('hidden');
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/offers';
@@ -2010,8 +2023,11 @@
       setThought(isPixel ? 'Comparing frame against accepted baseline PNG...' : step.thoughtPlan);
 
       const result = { status: 'pass', durationMs: isPixel ? Math.round(step.durationMs * 0.45) : step.durationMs, reasoning: '', coords: '', view: step.viewAfter, boxes: [] };
+      const refTitle = LIVE?.referenceTable?.title || 'Reference Tables (16)';
+      const refCount = LIVE?.referenceTable?.totalCount ?? 16;
+      const refSamples = (LIVE?.referenceTable?.sampleNames || ['test-new-2', 'test-approve', 'Delivery vendor']).slice(0, 3).join(', ');
 
-      if (step.id === 0) {
+      if (step.kind === 'login') {
         const rBtn = drawBoundingBox('#portal-signin', 'login chrome', 'detect');
         if (!(await sleep(450, token))) return false;
         setActivePhase('act');
@@ -2021,152 +2037,114 @@
         setPortalView('dashboard');
         clearVisionOverlay();
         result.view = 'login';
-        result.reasoning = 'Opened real dc02 login frame, then continued into operator 29 Home (live session screenshots).';
+        result.reasoning = 'Opened real dc02 login, then operator 29 Home.';
         result.boxes = [{ selector: '#portal-signin', label: '✓ login frame', variant: 'pass' }];
-      } else if (step.id === 1) {
+      } else if (step.kind === 'home-wait') {
         const rM = drawBoundingBox('#dashboard-metrics', 'welcome banner', 'detect');
         if (!(await sleep(450, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
         drawBoundingBox('#dashboard-metrics', '✓ Home welcome visible', 'pass');
         result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = `Live Home data: "${LIVE?.home?.welcome || 'Welcome back'}" · ${LIVE?.home?.operatorLabel || 'operator 29'} · ${LIVE?.home?.environment || 'Staging'}.`;
+        result.reasoning = `Live Home: "${LIVE?.home?.welcome || 'Welcome back'}"`;
         result.boxes = [{ selector: '#dashboard-metrics', label: '✓ Home welcome visible', variant: 'pass' }];
         if (!(await sleep(480, token))) return false;
-      } else if (step.id === 2) {
-        drawBoundingBox('#portal-sidebar', 'region: sidebar', 'detect');
-        drawBoundingBox('#portal-topbar', 'region: topbar', 'detect');
-        if (!(await sleep(480, token))) return false;
+      } else if (step.kind === 'nav-reftable') {
+        // From Home, jump into Reference Table view and green-box the nav affordance region.
+        const rNav = drawBoundingBox('#nav-overview', 'nav: Product Catalog', 'detect');
+        if (!(await sleep(400, token))) return false;
         setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#portal-sidebar', isPixel ? '✓ 0.00% diff' : '✓ sidebar aligned', 'pass');
-        drawBoundingBox('#portal-topbar', '✓ topbar clean', 'pass');
-        result.reasoning = isPixel ? 'Full-page screenshot matched dashboard-baseline.png (0.00% pixel diff).' : 'Sidebar and top bar aligned with zero overlapping labels.';
-        result.boxes = [{ selector: '#portal-sidebar', label: isPixel ? '✓ 0.00% diff' : '✓ sidebar aligned', variant: 'pass' }, { selector: '#portal-topbar', label: '✓ topbar clean', variant: 'pass' }];
-        if (!(await sleep(550, token))) return false;
-      } else if (step.id === 3) {
-        const rN = drawBoundingBox('#nav-orders', 'nav: API Product Orders', 'detect');
-        if (!(await sleep(440, token))) return false;
-        setActivePhase('act');
-        if (rN) { moveCursorTo(rN.cx, rN.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rN.cx, rN.cy); result.coords = `(${Math.round(rN.cx)}, ${Math.round(rN.cy)})`; }
+        setThought(step.thoughtAct);
+        if (rNav) { moveCursorTo(rNav.cx, rNav.cy + 40); if (!(await sleep(420, token))) return false; spawnClickRipple(rNav.cx, rNav.cy + 40); }
         if (!(await sleep(280, token))) return false;
-        setPortalView('orders');
+        setPortalView('reftable');
         clearVisionOverlay();
-        result.reasoning = `Opened live Orders page: ${LIVE?.orders?.title || 'API Product Orders'} (${LIVE?.orders?.totalCount ?? '?'} rows in capture).`;
-        result.boxes = [{ selector: '#orders-table', label: '✓ orders table region', variant: 'pass' }];
-      } else if (step.id === 4) {
-        drawBoundingBox('#orders-col-status-head', 'header: Approval Status', 'detect');
-        drawBoundingBox('#orders-col-status-cell', 'cell: status pill', 'detect');
-        if (!(await sleep(520, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        if (state.bugMode) {
-          result.status = 'fail';
-          setThought('FAIL: Approval Status header shifted +22px right of status pills!');
-          const rBad = drawBoundingBox('#orders-col-status-head', '✕ +22px offset', 'fail', isPixel ? 'Pixel diff 2.1% exceeds 1.0% threshold on Approval Status header.' : 'Approval Status header is visually misaligned (+22px) from the status pills below.');
-          drawBoundingBox('#orders-col-status-cell', 'cell column', 'pass');
-          result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
-          result.reasoning = isPixel ? 'Pixel diff (2.1%) caught +22px rightward shift on Approval Status header.' : 'Detected +22px horizontal misalignment between Approval Status header and pill column.';
-          result.boxes = [{ selector: '#orders-col-status-head', label: '✕ +22px offset', variant: 'fail', callout: result.reasoning }, { selector: '#orders-col-status-cell', label: 'cell column', variant: 'pass' }];
-          if (!(await sleep(1250, token))) return false;
-        } else {
-          drawBoundingBox('#orders-col-status-head', '✓ aligned', 'pass');
-          drawBoundingBox('#orders-col-status-cell', '✓ aligned', 'pass');
-          result.reasoning = isPixel ? 'Matched real orders screenshot with 0.00% diff.' : 'Approval Status header and pills align on the real portal screenshot.';
-          result.boxes = [{ selector: '#orders-col-status-head', label: '✓ aligned', variant: 'pass' }, { selector: '#orders-col-status-cell', label: '✓ aligned', variant: 'pass' }];
-          if (!(await sleep(580, token))) return false;
-        }
-      } else if (step.id === 5) {
-        const rB = drawBoundingBox('#nav-billing', 'nav: Offers', 'detect');
-        if (!(await sleep(440, token))) return false;
-        setActivePhase('act');
-        if (rB) { moveCursorTo(rB.cx, rB.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rB.cx, rB.cy); result.coords = `(${Math.round(rB.cx)}, ${Math.round(rB.cy)})`; }
-        if (!(await sleep(280, token))) return false;
-        setPortalView('billing');
-        clearVisionOverlay();
-        result.reasoning = `Opened live Offers: ${LIVE?.offers?.title || 'Offers'}.`;
-        result.boxes = [{ selector: '#plan-card-pro', label: '✓ Offers content', variant: 'pass' }];
-      } else if (step.id === 6) {
-        const rC = drawBoundingBox('#plan-card-pro', 'Offers content', 'detect');
-        if (!(await sleep(440, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#plan-card-pro', '✓ Offers loaded', 'pass');
-        result.coords = rC ? `(${Math.round(rC.cx)}, ${Math.round(rC.cy)})` : '';
-        const samples = (LIVE?.offers?.sampleNames || []).slice(0, 3).join(', ');
-        result.reasoning = `Live offers loaded: ${LIVE?.offers?.totalCount ?? '?'} total. Samples: ${samples || 'n/a'}.`;
-        result.boxes = [{ selector: '#plan-card-pro', label: '✓ Offers loaded', variant: 'pass' }];
-        if (!(await sleep(480, token))) return false;
-      } else if (step.id === 7) {
-        drawBoundingBox('#plan-card-pro', 'check: page content', 'detect');
-        drawBoundingBox('#btn-upgrade', 'check: primary CTA clip', 'detect');
-        if (!(await sleep(520, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        if (state.bugMode) {
-          result.status = 'fail';
-          setThought('FAIL: Clipped text detected on primary CTA!');
-          drawBoundingBox('#plan-card-pro', '✓ content ok', 'pass');
-          const rClip = drawBoundingBox('#btn-upgrade', '✕ DEFECT: clipped', 'fail', 'Primary action label is clipped horizontally inside a 78px container.');
-          result.coords = rClip ? `(${Math.round(rClip.cx)}, ${Math.round(rClip.cy)})` : '';
-          result.reasoning = isPixel ? 'Pixel diff (1.8%) flagged truncated primary CTA.' : 'Visual defect caught: primary CTA text is clipped inside its 78px width.';
-          result.boxes = [{ selector: '#plan-card-pro', label: '✓ content ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✕ DEFECT: clipped', variant: 'fail', callout: result.reasoning }];
-          if (!(await sleep(1250, token))) return false;
-        } else {
-          drawBoundingBox('#plan-card-pro', '✓ content ok', 'pass');
-          drawBoundingBox('#btn-upgrade', '✓ text intact', 'pass');
-          result.reasoning = 'Offers page content and primary CTA render fully on the real portal screenshot.';
-          result.boxes = [{ selector: '#plan-card-pro', label: '✓ content ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✓ text intact', variant: 'pass' }];
-          if (!(await sleep(600, token))) return false;
-        }
-      } else if (step.id === 8) {
-        drawBoundingBox('#billing-price', 'check: price string', 'detect');
-        drawBoundingBox('#billing-renewal', 'check: date string', 'detect');
-        if (!(await sleep(520, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        if (state.bugMode) {
-          result.status = 'fail';
-          setThought('FAIL: Detected "$NaN/mo" overlay on Offers!');
-          const rP = drawBoundingBox('#billing-price', '✕ DEFECT: $NaN/mo', 'fail', 'Found raw "$NaN/mo" instead of a formatted currency value.');
-          result.coords = rP ? `(${Math.round(rP.cx)}, ${Math.round(rP.cy)})` : '';
-          result.reasoning = 'Detected unformatted "$NaN/mo" price string on Offers.';
-          result.boxes = [{ selector: '#billing-price', label: '✕ DEFECT: $NaN/mo', variant: 'fail', callout: result.reasoning }];
-          if (!(await sleep(1250, token))) return false;
-        } else {
-          drawBoundingBox('#billing-price', '✓ no $NaN', 'pass');
-          drawBoundingBox('#billing-renewal', '✓ no Invalid Date', 'pass');
-          result.reasoning = `No $NaN/Invalid Date on live Offers (${LIVE?.offers?.totalCount ?? '?'} rows from portal-dc02).`;
-          result.boxes = [{ selector: '#billing-price', label: '✓ no $NaN', variant: 'pass' }, { selector: '#billing-renewal', label: '✓ no Invalid Date', variant: 'pass' }];
-          if (!(await sleep(600, token))) return false;
-        }
-      } else if (step.id === 9) {
-        const rS = drawBoundingBox('#settings-panel', 'settings content', 'detect');
-        if (!(await sleep(420, token))) return false;
-        setActivePhase('act');
-        if (rS) { moveCursorTo(rS.cx, rS.cy); if (!(await sleep(360, token))) return false; spawnClickRipple(rS.cx, rS.cy); result.coords = `(${Math.round(rS.cx)}, ${Math.round(rS.cy)})`; }
-        if (!(await sleep(280, token))) return false;
-        setPortalView('settings');
-        clearVisionOverlay();
-        result.reasoning = 'Opened live Company Settings for operator 29.';
-        result.boxes = [{ selector: '#settings-panel', label: '✓ settings', variant: 'pass' }];
-      } else if (step.id === 10) {
-        drawBoundingBox('#settings-timezone', 'check: timezone', 'detect');
-        drawBoundingBox('#settings-currency', 'check: currency', 'detect');
+        drawBoundingBox('#reftable-nav', '✓ Reference Table nav', 'pass');
+        result.reasoning = 'Opened Product Catalog → Reference Table (/#/29/pc/reference-table).';
+        result.boxes = [{ selector: '#reftable-nav', label: '✓ Reference Table nav', variant: 'pass' }];
+      } else if (step.kind === 'reftable-wait') {
+        drawBoundingBox('#reftable-title', 'title', 'detect');
+        drawBoundingBox('#reftable-data', 'table data', 'detect');
         if (!(await sleep(500, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        const rM = drawBoundingBox('#settings-panel', '✓ settings readable', 'pass');
-        drawBoundingBox('#settings-timezone', `✓ ${LIVE?.settings?.timezone || 'timezone'}`, 'pass');
-        drawBoundingBox('#settings-currency', `✓ ${LIVE?.settings?.currency || 'currency'}`, 'pass');
-        result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = `Live settings: timezone ${LIVE?.settings?.timezone || '?'}, date ${LIVE?.settings?.dateFormat || '?'}, currency ${LIVE?.settings?.currency || '?'}.`;
+        drawBoundingBox('#reftable-title', `✓ ${refTitle}`, 'pass');
+        drawBoundingBox('#reftable-data', '✓ table loaded', 'pass');
+        result.reasoning = `Live Reference Table loaded: ${refTitle}. Samples: ${refSamples}.`;
         result.boxes = [
-          { selector: '#settings-panel', label: '✓ settings readable', variant: 'pass' },
-          { selector: '#settings-timezone', label: `✓ ${LIVE?.settings?.timezone || 'timezone'}`, variant: 'pass' },
-          { selector: '#settings-currency', label: `✓ ${LIVE?.settings?.currency || 'currency'}`, variant: 'pass' },
+          { selector: '#reftable-title', label: `✓ ${refTitle}`, variant: 'pass' },
+          { selector: '#reftable-data', label: '✓ table loaded', variant: 'pass' },
         ];
         if (!(await sleep(550, token))) return false;
+      } else if (step.kind === 'reftable-title') {
+        drawBoundingBox('#reftable-title', 'title region', 'detect');
+        if (!(await sleep(420, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#reftable-title', `✓ ${refTitle}`, 'pass');
+        result.reasoning = `Green box on page title: ${refTitle}.`;
+        result.boxes = [{ selector: '#reftable-title', label: `✓ ${refTitle}`, variant: 'pass' }];
+        if (!(await sleep(500, token))) return false;
+      } else if (step.kind === 'reftable-headers') {
+        drawBoundingBox('#reftable-headers', 'column headers', 'detect');
+        if (!(await sleep(420, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#reftable-headers', '✓ headers aligned', 'pass');
+        result.reasoning = 'Green box on Reference Table column headers (Name, Value Type, State, …).';
+        result.boxes = [{ selector: '#reftable-headers', label: '✓ headers aligned', variant: 'pass' }];
+        if (!(await sleep(520, token))) return false;
+      } else if (step.kind === 'reftable-data') {
+        drawBoundingBox('#reftable-data', 'table data region', 'detect');
+        if (!(await sleep(480, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#reftable-data', `✓ ${refCount} tables selected`, 'pass');
+        result.reasoning = `Green box selecting live Reference Table data (${refCount} rows). Examples: ${refSamples}.`;
+        result.boxes = [{ selector: '#reftable-data', label: `✓ ${refCount} tables selected`, variant: 'pass' }];
+        if (!(await sleep(650, token))) return false;
+      } else if (step.kind === 'reftable-rows') {
+        drawBoundingBox('#reftable-row-1', 'row 1', 'detect');
+        drawBoundingBox('#reftable-row-2', 'row 2', 'detect');
+        if (!(await sleep(450, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#reftable-row-1', '✓ row 1', 'pass');
+        drawBoundingBox('#reftable-row-2', '✓ row 2', 'pass');
+        result.reasoning = 'Green boxes on the first Reference Table data rows.';
+        result.boxes = [
+          { selector: '#reftable-row-1', label: '✓ row 1', variant: 'pass' },
+          { selector: '#reftable-row-2', label: '✓ row 2', variant: 'pass' },
+        ];
+        if (!(await sleep(550, token))) return false;
+      } else if (step.kind === 'reftable-state') {
+        drawBoundingBox('#reftable-state-col', 'State / Approved', 'detect');
+        if (!(await sleep(420, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: State column badges look misaligned!');
+          const rBad = drawBoundingBox('#reftable-state-col', '✕ state misaligned', 'fail', 'Simulated State column misalignment on Reference Table.');
+          result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
+          result.reasoning = 'Bug simulation: State / Approved column highlighted as misaligned.';
+          result.boxes = [{ selector: '#reftable-state-col', label: '✕ state misaligned', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(1100, token))) return false;
+        } else {
+          drawBoundingBox('#reftable-state-col', '✓ Approved column', 'pass');
+          result.reasoning = 'Green box on State column (Approved badges) in Reference Table.';
+          result.boxes = [{ selector: '#reftable-state-col', label: '✓ Approved column', variant: 'pass' }];
+          if (!(await sleep(520, token))) return false;
+        }
+      } else if (step.kind === 'reftable-cta') {
+        drawBoundingBox('#reftable-add-btn', '+ Add New', 'detect');
+        if (!(await sleep(400, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#reftable-add-btn', '✓ + Add New', 'pass');
+        result.reasoning = 'Green box on + Add New primary action for Reference Tables.';
+        result.boxes = [{ selector: '#reftable-add-btn', label: '✓ + Add New', variant: 'pass' }];
+        if (!(await sleep(500, token))) return false;
       }
 
       state.stepResults[step.id] = result;
@@ -2294,11 +2272,12 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         LIVE = await res.json();
         QA_STEPS = buildSteps(LIVE);
+        const sc=$('steps-count-label'); if (sc) sc.textContent = `${QA_STEPS.length} steps`;
         const offerNames = (LIVE.offers?.sampleNames || []).slice(0, 3).join(', ');
+        const ref = LIVE.referenceTable?.title || 'Reference Tables';
         els.liveBanner.innerHTML = `<strong style="color:#e2e8f0">Live dc02 data</strong> · captured ${LIVE.capturedAt || '?'} · `
-          + `${LIVE.home?.welcome || 'Home'} · ${LIVE.orders?.title || 'Orders'} · ${LIVE.offers?.title || 'Offers'}`
-          + (offerNames ? ` (e.g. ${offerNames})` : '')
-          + ` · ${LIVE.settings?.currency || 'settings'} · <span style="color:#64748b">source: ${LIVE.source || 'portal scrape'}</span>`;
+          + `${LIVE.home?.welcome || 'Home'} · <strong style="color:#86efac">${ref}</strong>`
+          + ` · ${LIVE.offers?.title || 'Offers'} · <span style="color:#64748b">source: ${LIVE.source || 'portal scrape'}</span>`;
       } catch (err) {
         LIVE = null;
         QA_STEPS = buildSteps(null);
