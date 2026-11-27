@@ -1911,13 +1911,13 @@
         const done = !!res;
         const fail = res && res.status === 'fail';
         const cmd = state.mode === 'midscene' ? step.type : step.pixelType;
-        html += `<div class="yaml-step ${active ? 'is-active' : ''} ${done ? (fail ? 'is-fail' : 'is-done') : ''}">
+        html += `<div class="yaml-step ${active ? 'is-current' : ''} ${done && fail ? 'is-fail' : ''} ${done && !fail ? 'is-inspected' : ''}">
           <div class="mono" style="font-size:10px;color:#64748b;">#${idx + 1} ${cmd} · ${step.pageId || ''}</div>
           <div style="font-size:12px;color:#e2e8f0;font-weight:600;">${step.yamlText}</div>
         </div>`;
       });
       els.yamlContainer.innerHTML = html;
-      const activeEl = els.yamlContainer.querySelector('.yaml-step.is-active');
+      const activeEl = els.yamlContainer.querySelector('.yaml-step.is-current');
       if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
     }
 
