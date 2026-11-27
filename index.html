@@ -1520,7 +1520,7 @@
         </div>
 
         <div id="portal-viewport" class="portal-viewport">
-          <!-- Real dc02 screenshots (operator 29). Portal sets X-Frame-Options: deny, so live iframe is impossible on Pages. -->
+          <!-- Login (static) -->
           <div id="view-login" class="portal-shot-view">
             <img class="portal-shot" src="assets/portal/login.png" alt="LotusFlare portal login on dc02" />
             <input id="portal-email" class="hotspot hotspot-input" style="left:7%;top:38%;width:28%;height:4.5%;" readonly tabindex="-1" />
@@ -1528,51 +1528,10 @@
             <div id="portal-signin" class="hotspot" style="left:7%;top:58%;width:18%;height:5%;"></div>
           </div>
 
-          <div id="view-dashboard" class="portal-shot-view hidden">
-            <img class="portal-shot" src="assets/portal/home.png" alt="LotusFlare portal Home /#/29" />
-            <div id="portal-sidebar" class="hotspot" style="left:0;top:0;width:15.5%;height:100%;"></div>
-            <div id="portal-topbar" class="hotspot" style="left:16%;top:1%;width:20%;height:6%;"></div>
-            <div id="dashboard-metrics" class="hotspot" style="left:16%;top:8%;width:82%;height:22%;"></div>
-            <div id="nav-overview" class="hotspot" style="left:0.5%;top:7%;width:14%;height:3.5%;"></div>
-            <div id="nav-orders" class="hotspot" style="left:0.5%;top:22%;width:14%;height:3.5%;"></div>
-            <div id="nav-billing" class="hotspot" style="left:0.5%;top:12%;width:14%;height:3.5%;"></div>
-          </div>
-
-          <div id="view-orders" class="portal-shot-view hidden">
-            <img class="portal-shot" src="assets/portal/orders.png" alt="API Product Orders on dc02 /#/29" />
-            <div class="hotspot" style="left:0;top:0;width:15.5%;height:100%;"></div>
-            <div id="orders-table" class="hotspot" style="left:16%;top:22%;width:82%;height:55%;"></div>
-            <div id="orders-col-status-head" class="hotspot" style="left:86%;top:22%;width:10%;height:4%;"></div>
-            <div id="orders-col-status-cell" class="hotspot" style="left:86%;top:30%;width:10%;height:5%;"></div>
-            <div id="orders-new-btn" class="hotspot" style="left:84%;top:8%;width:14%;height:4.5%;"></div>
-          </div>
-
-          <div id="view-billing" class="portal-shot-view hidden">
-            <img class="portal-shot" src="assets/portal/offers.png" alt="Offers on dc02 /#/29/pc/offers" />
-            <div id="plan-card-pro" class="hotspot" style="left:16%;top:18%;width:82%;height:48%;"></div>
-            <div id="btn-upgrade" class="hotspot" style="left:84%;top:8%;width:14%;height:4.5%;"></div>
-            <div id="billing-price" class="hotspot" style="left:70%;top:28%;width:12%;height:4%;"></div>
-            <div id="billing-renewal" class="hotspot" style="left:70%;top:33%;width:16%;height:3.5%;"></div>
-            <div id="bug-nan-price" class="bug-nan-pill" style="left:70%;top:28%;">$NaN/mo</div>
-          </div>
-
-          <div id="view-settings" class="portal-shot-view hidden">
-            <img class="portal-shot" src="assets/portal/settings.png" alt="Company Settings on dc02 /#/29" />
-            <div id="settings-panel" class="hotspot" style="left:30%;top:10%;width:68%;height:70%;"></div>
-            <div id="settings-timezone" class="hotspot" style="left:40%;top:22%;width:40%;height:5%;"></div>
-            <div id="settings-currency" class="hotspot" style="left:40%;top:48%;width:40%;height:5%;"></div>
-          </div>
-
-          <div id="view-reftable" class="portal-shot-view hidden">
-            <img class="portal-shot" src="assets/portal/reference-table.png" alt="Product Catalog Reference Table on dc02 /#/29" />
-            <div id="reftable-nav" class="hotspot" style="left:0.8%;top:14%;width:14%;height:3.2%;"></div>
-            <div id="reftable-title" class="hotspot" style="left:16%;top:2%;width:28%;height:5%;"></div>
-            <div id="reftable-add-btn" class="hotspot" style="left:86%;top:2.5%;width:12%;height:4.5%;"></div>
-            <div id="reftable-headers" class="hotspot" style="left:16%;top:12%;width:82%;height:4.5%;"></div>
-            <div id="reftable-data" class="hotspot" style="left:16%;top:17%;width:82%;height:78%;"></div>
-            <div id="reftable-row-1" class="hotspot" style="left:16%;top:17%;width:82%;height:5%;"></div>
-            <div id="reftable-row-2" class="hotspot" style="left:16%;top:22%;width:82%;height:5%;"></div>
-            <div id="reftable-state-col" class="hotspot" style="left:52%;top:17%;width:12%;height:40%;"></div>
+          <!-- Dynamic portal page: screenshot + layout hotspots from live-data.json -->
+          <div id="view-portal" class="portal-shot-view hidden">
+            <img id="portal-shot-img" class="portal-shot" src="assets/portal/home.png" alt="portal-dc02 page" />
+            <div id="portal-hotspots"></div>
           </div>
 
           <div id="vision-overlay" class="vision-overlay">
@@ -1592,11 +1551,16 @@
               <span id="ai-thought-text">Observing real portal-dc02 screenshot...</span>
             </div>
           </div>
+
+          <div id="inventory-strip" style="position:absolute;left:0;right:0;bottom:0;z-index:40;padding:8px 12px;background:linear-gradient(180deg,transparent,rgba(2,6,23,.92));font-size:11px;color:#cbd5e1;pointer-events:none;">
+            <div style="font-weight:600;color:#e2e8f0;margin-bottom:2px;" id="inventory-title">Portal inventory</div>
+            <div id="inventory-meta" style="color:#94a3b8;">Load live-data.json to store page rows + layout boxes in this frame.</div>
+          </div>
         </div>
       </div>
 
       <div id="bug-mode-banner" class="bug-banner hidden">
-        <strong>Bug Simulation Active:</strong> Approval Status header shifts +22px, the primary Offers CTA is clipped, and a <code class="mono">$NaN/mo</code> overlay is injected on the real portal screenshots.
+        <strong>Bug Simulation Active:</strong> Column headers shift and primary CTAs clip across stored portal pages so the Vision scan can flag misalignment defects in the frame.
       </div>
     </section>
 
@@ -1631,30 +1595,214 @@
   </main>
 
   <script>
-    /** Filled from assets/portal/live-data.json — scraped from your live portal-dc02 session. */
+    /** Filled from assets/portal/live-data.json — full portal inventory for the frame. */
     let LIVE = null;
     let QA_STEPS = [];
+    let CURRENT_PAGE_ID = 'home';
+
+    const PAGE_ORDER = ['home', 'orders', 'offers', 'products', 'templates', 'reference-table', 'settings'];
+
+    function pageById(id) {
+      if (!LIVE?.pages) return null;
+      return LIVE.pages.find((p) => p.id === id) || null;
+    }
+
+    function shotFor(id) {
+      if (id === 'login') return 'assets/portal/login.png';
+      const p = pageById(id);
+      if (p?.screenshot) return p.screenshot;
+      const key = id === 'reference-table' ? 'referenceTable' : id;
+      return LIVE?.screenshots?.[key] || `assets/portal/${id}.png`;
+    }
+
+    function urlFor(id) {
+      if (id === 'login') return 'https://portal-dc02.lotusflare.com/#/login';
+      const p = pageById(id);
+      return p?.url || `https://portal-dc02.lotusflare.com/#/29`;
+    }
+
+    function layoutBox(pageId, boxId) {
+      const p = pageById(pageId);
+      return (p?.layout || []).find((b) => b.id === boxId) || null;
+    }
 
     function buildSteps(live) {
       const welcome = live?.home?.welcome || 'Welcome back';
-      const refTitle = live?.referenceTable?.title || 'Reference Tables (16)';
-      const refCount = live?.referenceTable?.totalCount ?? 16;
-      const refSamples = (live?.referenceTable?.sampleNames || ['test-new-2', 'test-approve', 'Delivery vendor']).slice(0, 3).join(', ');
-
-      // Visualized Midscene flow focused on Product Catalog → Reference Table
-      // with green boxes around your real table data.
-      return [
-        { id: 0, kind: 'login', task: 'Open portal', type: 'ai', pixelType: 'goto', yamlText: 'Open portal-dc02 login', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 900, thoughtObserve: 'Capturing real login frame…', thoughtPlan: 'Located LotusFlare login chrome', thoughtAct: 'Continue into /#/29…' },
-        { id: 1, kind: 'home-wait', task: 'Open portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `Home shows "${welcome}"`, viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 520, thoughtObserve: 'Polling Home…', thoughtPlan: `Detected ${welcome}`, thoughtAct: 'Home ready' },
-        { id: 2, kind: 'nav-reftable', task: 'Product Catalog Reference Table', type: 'ai', pixelType: 'click', yamlText: 'Click Product Catalog → Reference Table', viewBefore: 'dashboard', viewAfter: 'reftable', durationMs: 850, thoughtObserve: 'Locating Reference Table in sidebar…', thoughtPlan: 'Found Product Catalog → Reference Table', thoughtAct: 'Goto /#/29/pc/reference-table' },
-        { id: 3, kind: 'reftable-wait', task: 'Product Catalog Reference Table', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `${refTitle} loaded`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 600, thoughtObserve: 'Waiting for Reference Tables list…', thoughtPlan: `Live: ${refCount} tables (e.g. ${refSamples})`, thoughtAct: 'Reference Table visible' },
-        { id: 4, kind: 'reftable-title', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Title "${refTitle}" is visible`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 700, thoughtObserve: 'Boxing page title…', thoughtPlan: 'Title region', thoughtAct: 'PASS: title highlighted' },
-        { id: 5, kind: 'reftable-headers', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Column headers align with table data', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 750, thoughtObserve: 'Boxing column headers…', thoughtPlan: 'Header row geometry', thoughtAct: 'PASS: headers highlighted' },
-        { id: 6, kind: 'reftable-data', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Select live table rows (${refCount})`, viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 900, thoughtObserve: 'Boxing Reference Table data region…', thoughtPlan: `Rows include ${refSamples}`, thoughtAct: 'PASS: green box on table data' },
-        { id: 7, kind: 'reftable-rows', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Highlight first data rows', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 800, thoughtObserve: 'Selecting row 1 and row 2…', thoughtPlan: 'Row-level boxes', thoughtAct: 'PASS: rows selected' },
-        { id: 8, kind: 'reftable-state', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Approved state badges aligned in State column', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 780, thoughtObserve: 'Boxing State / Approved column…', thoughtPlan: 'Status pills alignment', thoughtAct: 'PASS: state column highlighted' },
-        { id: 9, kind: 'reftable-cta', task: 'Product Catalog Reference Table', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: '+ Add New button fully legible', viewBefore: 'reftable', viewAfter: 'reftable', durationMs: 700, thoughtObserve: 'Boxing + Add New CTA…', thoughtPlan: 'Primary action bounds', thoughtAct: 'PASS: Add New highlighted' },
+      const steps = [
+        {
+          id: 0,
+          kind: 'login',
+          pageId: 'login',
+          task: 'Open portal',
+          type: 'ai',
+          pixelType: 'goto',
+          yamlText: 'Open portal-dc02 login',
+          viewBefore: 'login',
+          viewAfter: 'home',
+          durationMs: 850,
+          thoughtObserve: 'Capturing real login frame…',
+          thoughtPlan: 'Located LotusFlare login chrome',
+          thoughtAct: 'Continue into /#/29…',
+        },
+        {
+          id: 1,
+          kind: 'home-wait',
+          pageId: 'home',
+          task: 'Open portal',
+          type: 'aiWaitFor',
+          pixelType: 'waitFor',
+          yamlText: `Home shows "${welcome}"`,
+          viewBefore: 'home',
+          viewAfter: 'home',
+          durationMs: 520,
+          thoughtObserve: 'Polling Home…',
+          thoughtPlan: `Detected ${welcome}`,
+          thoughtAct: 'Home ready — inventory loaded into frame',
+        },
       ];
+
+      let nextId = 2;
+      for (const pageId of PAGE_ORDER) {
+        if (pageId === 'home') continue;
+        const p = pageById(pageId) || { id: pageId, label: pageId, title: pageId, totalCount: null, headers: [], sampleNames: [] };
+        const title = p.title || p.label || pageId;
+        const samples = (p.sampleNames || []).slice(0, 3).join(', ') || 'live rows';
+        const headers = (p.headers || []).slice(0, 4).join(', ') || 'column headers';
+
+        steps.push({
+          id: nextId++,
+          kind: 'nav-page',
+          pageId,
+          task: `Scan ${p.label || pageId}`,
+          type: 'ai',
+          pixelType: 'click',
+          yamlText: `Open ${title}`,
+          viewBefore: CURRENT_PAGE_ID || 'home',
+          viewAfter: pageId,
+          durationMs: 700,
+          thoughtObserve: `Navigating to ${p.label || pageId}…`,
+          thoughtPlan: `URL ${p.path || pageId}`,
+          thoughtAct: `Frame now shows ${title}`,
+        });
+        steps.push({
+          id: nextId++,
+          kind: 'page-wait',
+          pageId,
+          task: `Scan ${p.label || pageId}`,
+          type: 'aiWaitFor',
+          pixelType: 'waitFor',
+          yamlText: `${title} finished loading`,
+          viewBefore: pageId,
+          viewAfter: pageId,
+          durationMs: 520,
+          thoughtObserve: 'Waiting for spinner to clear…',
+          thoughtPlan: `Stored in frame: ${samples}`,
+          thoughtAct: 'Page inventory ready',
+        });
+        steps.push({
+          id: nextId++,
+          kind: 'assert-title',
+          pageId,
+          task: `Scan ${p.label || pageId}`,
+          type: 'aiAssert',
+          pixelType: 'toHaveScreenshot',
+          yamlText: `Title "${title}" visible beside sidebar`,
+          viewBefore: pageId,
+          viewAfter: pageId,
+          durationMs: 650,
+          thoughtObserve: 'Boxing page title…',
+          thoughtPlan: 'Title vs sidebar alignment',
+          thoughtAct: 'PASS: title region',
+        });
+        if ((p.headers || []).length) {
+          steps.push({
+            id: nextId++,
+            kind: 'assert-headers',
+            pageId,
+            task: `Scan ${p.label || pageId}`,
+            type: 'aiAssert',
+            pixelType: 'toHaveScreenshot',
+            yamlText: `Column headers align (${headers})`,
+            viewBefore: pageId,
+            viewAfter: pageId,
+            durationMs: 720,
+            thoughtObserve: 'Measuring header row geometry…',
+            thoughtPlan: 'Detect header ↔ cell misalignment',
+            thoughtAct: 'PASS: headers aligned',
+          });
+        }
+        if ((p.layout || []).some((b) => b.id === 'table') || (p.sampleNames || []).length) {
+          steps.push({
+            id: nextId++,
+            kind: 'assert-table',
+            pageId,
+            task: `Scan ${p.label || pageId}`,
+            type: 'aiAssert',
+            pixelType: 'toHaveScreenshot',
+            yamlText: `Select live table data (${p.totalCount ?? (p.rows || []).length || 'n'} rows)`,
+            viewBefore: pageId,
+            viewAfter: pageId,
+            durationMs: 850,
+            thoughtObserve: 'Boxing table data region…',
+            thoughtPlan: `Rows: ${samples}`,
+            thoughtAct: 'PASS: green box on table data',
+          });
+        }
+        if ((p.layout || []).some((b) => b.id === 'cta')) {
+          steps.push({
+            id: nextId++,
+            kind: 'assert-cta',
+            pageId,
+            task: `Scan ${p.label || pageId}`,
+            type: 'aiAssert',
+            pixelType: 'toHaveScreenshot',
+            yamlText: 'Primary action button fully legible (not clipped)',
+            viewBefore: pageId,
+            viewAfter: pageId,
+            durationMs: 620,
+            thoughtObserve: 'Boxing primary CTA…',
+            thoughtPlan: 'Clip / overflow check',
+            thoughtAct: 'PASS: CTA fully visible',
+          });
+        }
+      }
+
+      // Final Reference Table deep pass — misalignment focus
+      const ref = live?.referenceTable || pageById('reference-table') || {};
+      const refTitle = ref.title || 'Reference Tables';
+      const refSamples = (ref.sampleNames || []).slice(0, 3).join(', ') || 'table rows';
+      steps.push({
+        id: nextId++,
+        kind: 'assert-rows',
+        pageId: 'reference-table',
+        task: 'Reference Table deep scan',
+        type: 'aiAssert',
+        pixelType: 'toHaveScreenshot',
+        yamlText: `Highlight first data rows (${refSamples})`,
+        viewBefore: 'reference-table',
+        viewAfter: 'reference-table',
+        durationMs: 780,
+        thoughtObserve: 'Selecting row 1–3…',
+        thoughtPlan: 'Row-level alignment boxes',
+        thoughtAct: 'PASS: rows selected',
+      });
+      steps.push({
+        id: nextId++,
+        kind: 'assert-misalign',
+        pageId: 'reference-table',
+        task: 'Reference Table deep scan',
+        type: 'aiAssert',
+        pixelType: 'toHaveScreenshot',
+        yamlText: `No column misalignment under "${refTitle}"`,
+        viewBefore: 'reference-table',
+        viewAfter: 'reference-table',
+        durationMs: 900,
+        thoughtObserve: 'Scanning header↔cell vertical alignment…',
+        thoughtPlan: 'Flag shifted columns / clipped CTAs / NaN text',
+        thoughtAct: 'PASS: no misalignment detected',
+      });
+
+      return steps;
     }
 
     const state = {
@@ -1677,7 +1825,6 @@
       phasePlanTitle: $('phase-plan-title'),
       phasePlanSub: $('phase-plan-sub'),
       reportModeBadge: $('report-mode-badge'),
-
       btnPlayPause: $('btn-play-pause'),
       playPauseLabel: $('play-pause-label'),
       btnNextStep: $('btn-next-step'),
@@ -1686,34 +1833,26 @@
       bugModeBanner: $('bug-mode-banner'),
       statusBadge: $('status-badge'),
       statusText: $('status-text'),
-
       phaseObserve: $('phase-observe'),
       phasePlan: $('phase-plan'),
       phaseAct: $('phase-act'),
       yamlContainer: $('yaml-container'),
-
       browserUrl: $('browser-url'),
       portalViewport: $('portal-viewport'),
       viewLogin: $('view-login'),
-      viewDashboard: $('view-dashboard'),
-      viewOrders: $('view-orders'),
-      viewOffers: $('view-billing'),
-      viewSettings: $('view-settings'),
-      viewReftable: $('view-reftable'),
+      viewPortal: $('view-portal'),
+      portalShotImg: $('portal-shot-img'),
+      portalHotspots: $('portal-hotspots'),
       liveBanner: $('live-data-banner'),
-
+      inventoryTitle: $('inventory-title'),
+      inventoryMeta: $('inventory-meta'),
       portalEmail: $('portal-email'),
       portalPassword: $('portal-password'),
-      ordersColStatusHead: $('orders-col-status-head'),
-      btnUpgrade: $('btn-upgrade'),
-      bugNanPrice: $('bug-nan-price'),
-
       visionScanLayer: $('vision-scan-layer'),
       visionBoxesLayer: $('vision-boxes-layer'),
       aiCursor: $('ai-cursor'),
       aiThoughtBar: $('ai-thought-bar'),
       aiThoughtText: $('ai-thought-text'),
-
       statPassed: $('stat-passed'),
       statFailed: $('stat-failed'),
       statDuration: $('stat-duration'),
@@ -1731,7 +1870,14 @@
       const vp = els.portalViewport.getBoundingClientRect();
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) return null;
-      return { left: r.left - vp.left, top: r.top - vp.top, width: r.width, height: r.height, cx: r.left - vp.left + r.width / 2, cy: r.top - vp.top + r.height / 2 };
+      return {
+        left: r.left - vp.left,
+        top: r.top - vp.top,
+        width: r.width,
+        height: r.height,
+        cx: r.left - vp.left + r.width / 2,
+        cy: r.top - vp.top + r.height / 2,
+      };
     }
 
     function applyModeUI() {
@@ -1741,98 +1887,129 @@
       els.leftFilename.textContent = isMid ? 'portal-qa.yaml' : 'visual-tour.spec.ts';
       els.loopTitle.textContent = isMid ? 'Midscene Vision Loop' : 'Playwright Pixel Diff Loop';
       els.phasePlanTitle.textContent = isMid ? '2. Plan' : '2. Diff';
-      els.phasePlanSub.textContent = isMid ? 'Vision AI' : 'Baseline PNG';
+      els.phasePlanSub.textContent = isMid ? 'Vision AI' : 'Pixel match';
       els.reportModeBadge.textContent = isMid ? 'Vision AI' : 'Pixel Diff';
       renderYamlPane();
-      renderReportPane();
-    }
-
-    function renderYamlPane() {
-      const isMid = state.mode === 'midscene';
-      let html = `
-        <div class="yaml-header-block">
-          <div style="color:#38bdf8;">${isMid ? 'web:' : 'playwright:'}</div>
-          <div style="padding-left:10px;">url: <span style="color:#6ee7b7;">portal-dc02.lotusflare.com</span></div>
-          <div style="padding-left:10px;">viewport: <span style="color:#fcd34d;">1440×900</span></div>
-        </div>
-      `;
-      let lastTask = '';
-      QA_STEPS.forEach((step) => {
-        if (step.task !== lastTask) {
-          lastTask = step.task;
-          html += `<div class="yaml-task-group">- ${step.task}</div>`;
-        }
-        const res = state.stepResults[step.id];
-        const isCur = state.currentStepIndex === step.id && state.isRunning;
-        const isIns = state.inspectedStepId === step.id;
-        const cls = isCur ? 'is-current' : isIns ? 'is-inspected' : res?.status === 'fail' ? 'is-fail' : '';
-
-        let icon = '<span class="step-ring"></span>';
-        if (isCur) icon = '<span class="step-spin"></span>';
-        else if (res?.status === 'pass') icon = '<span style="color:#34d399;font-weight:700;">✓</span>';
-        else if (res?.status === 'fail') icon = '<span style="color:#fb7185;font-weight:700;">✕</span>';
-
-        const labelCmd = isMid ? step.type : step.pixelType;
-        const cmdCls = step.type === 'ai' ? 'cmd-ai' : step.type === 'aiAssert' ? 'cmd-assert' : 'cmd-wait';
-
-        html += `
-          <div id="yaml-step-${step.id}" class="yaml-step ${cls}">
-            <span class="step-icon">${icon}</span>
-            <div style="min-width:0;flex:1;">
-              <span class="${cmdCls}">${labelCmd}:</span>
-              <span style="color:#cbd5e1;"> ${step.yamlText}</span>
-            </div>
-          </div>
-        `;
-      });
-      els.yamlContainer.innerHTML = html;
-      const activeId = state.isRunning ? state.currentStepIndex : state.inspectedStepId;
-      if (activeId !== null && activeId >= 0) {
-        const el = document.getElementById(`yaml-step-${activeId}`);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
     }
 
     function setActivePhase(phase) {
-      els.phaseObserve.className = 'phase-pill' + (phase === 'observe' ? ' active-observe' : '');
-      els.phasePlan.className = 'phase-pill' + (phase === 'plan' ? ' active-plan' : '');
-      els.phaseAct.className = 'phase-pill' + (phase === 'act' ? ' active-act' : '');
+      [els.phaseObserve, els.phasePlan, els.phaseAct].forEach((el) => el.classList.remove('active'));
+      if (phase === 'observe') els.phaseObserve.classList.add('active');
+      if (phase === 'plan') els.phasePlan.classList.add('active');
+      if (phase === 'act') els.phaseAct.classList.add('active');
+    }
+
+    function renderYamlPane() {
+      if (!QA_STEPS.length) {
+        els.yamlContainer.innerHTML = '<div style="padding:12px;color:#94a3b8;">Loading steps…</div>';
+        return;
+      }
+      let html = '';
+      QA_STEPS.forEach((step, idx) => {
+        const res = state.stepResults[step.id];
+        const active = state.currentStepIndex === idx;
+        const done = !!res;
+        const fail = res && res.status === 'fail';
+        const cmd = state.mode === 'midscene' ? step.type : step.pixelType;
+        html += `<div class="yaml-step ${active ? 'is-active' : ''} ${done ? (fail ? 'is-fail' : 'is-done') : ''}">
+          <div class="mono" style="font-size:10px;color:#64748b;">#${idx + 1} ${cmd} · ${step.pageId || ''}</div>
+          <div style="font-size:12px;color:#e2e8f0;font-weight:600;">${step.yamlText}</div>
+        </div>`;
+      });
+      els.yamlContainer.innerHTML = html;
+      const activeEl = els.yamlContainer.querySelector('.yaml-step.is-active');
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
     }
 
     function applyBugModeToDOM() {
       els.bugModeBanner.classList.toggle('hidden', !state.bugMode);
-      els.ordersColStatusHead.classList.toggle('bug-shift', state.bugMode);
-      els.btnUpgrade.classList.toggle('bug-clip', state.bugMode);
-      els.bugNanPrice.classList.toggle('is-on', state.bugMode);
+      // Shift headers hotspot when present to simulate misalignment
+      const headers = document.getElementById('hs-headers');
+      if (headers) headers.classList.toggle('bug-shift', state.bugMode);
+      const cta = document.getElementById('hs-cta');
+      if (cta) cta.classList.toggle('bug-clip', state.bugMode);
+    }
+
+    function updateInventory(pageId) {
+      if (pageId === 'login') {
+        els.inventoryTitle.textContent = 'Login';
+        els.inventoryMeta.textContent = 'Unauthenticated login chrome stored in frame.';
+        return;
+      }
+      const p = pageById(pageId);
+      if (!p) {
+        els.inventoryTitle.textContent = pageId;
+        els.inventoryMeta.textContent = '';
+        return;
+      }
+      const samples = (p.sampleNames || []).slice(0, 5).join(' · ') || 'no row samples';
+      const headers = (p.headers || []).slice(0, 6).join(', ') || '—';
+      els.inventoryTitle.textContent = `${p.title || p.label} · stored in frame`;
+      els.inventoryMeta.textContent = `Headers: ${headers} · Samples: ${samples} · Layout boxes: ${(p.layout || []).map((b) => b.id).join(', ')}`;
+    }
+
+    function mountHotspots(pageId) {
+      els.portalHotspots.innerHTML = '';
+      const p = pageById(pageId);
+      const layout = p?.layout || [];
+      const fallback = {
+        sidebar: { left: 0, top: 0, width: 15.5, height: 100 },
+        title: { left: 16, top: 2, width: 28, height: 5 },
+        cta: { left: 86, top: 2.5, width: 12, height: 4.5 },
+        table: { left: 16, top: 17, width: 82, height: 75 },
+        headers: { left: 16, top: 12, width: 82, height: 4.5 },
+        row1: { left: 16, top: 17, width: 82, height: 5 },
+        row2: { left: 16, top: 22, width: 82, height: 5 },
+        row3: { left: 16, top: 27, width: 82, height: 5 },
+      };
+      const ids = ['sidebar', 'title', 'cta', 'table', 'headers', 'row1', 'row2', 'row3'];
+      ids.forEach((id) => {
+        const box = layout.find((b) => b.id === id) || fallback[id];
+        if (!box) return;
+        // Always ensure critical boxes exist for scan targets
+        if (!layout.find((b) => b.id === id) && !['sidebar', 'title', 'table', 'headers', 'cta', 'row1', 'row2', 'row3'].includes(id)) return;
+        const el = document.createElement('div');
+        el.className = 'hotspot';
+        el.id = `hs-${id}`;
+        el.style.left = `${box.left}%`;
+        el.style.top = `${box.top}%`;
+        el.style.width = `${box.width}%`;
+        el.style.height = `${box.height}%`;
+        els.portalHotspots.appendChild(el);
+      });
+      // Ensure table/headers exist even if layout missed them
+      ['table', 'headers', 'title', 'cta', 'row1', 'row2'].forEach((id) => {
+        if (!document.getElementById(`hs-${id}`) && fallback[id]) {
+          const box = fallback[id];
+          const el = document.createElement('div');
+          el.className = 'hotspot';
+          el.id = `hs-${id}`;
+          el.style.left = `${box.left}%`;
+          el.style.top = `${box.top}%`;
+          el.style.width = `${box.width}%`;
+          el.style.height = `${box.height}%`;
+          els.portalHotspots.appendChild(el);
+        }
+      });
+      applyBugModeToDOM();
     }
 
     function setPortalView(view) {
-      els.viewLogin.classList.add('hidden');
-      els.viewDashboard.classList.add('hidden');
-      els.viewOrders.classList.add('hidden');
-      els.viewOffers.classList.add('hidden');
-      els.viewSettings.classList.add('hidden');
-      els.viewReftable.classList.add('hidden');
-
+      CURRENT_PAGE_ID = view;
       if (view === 'login') {
         els.viewLogin.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/login';
-      } else if (view === 'dashboard') {
-        els.viewDashboard.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29';
-      } else if (view === 'orders') {
-        els.viewOrders.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders';
-      } else if (view === 'settings') {
-        els.viewSettings.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization';
-      } else if (view === 'reftable') {
-        els.viewReftable.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/reference-table';
-      } else {
-        els.viewOffers.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/offers';
+        els.viewPortal.classList.add('hidden');
+        els.browserUrl.textContent = urlFor('login');
+        updateInventory('login');
+        return;
       }
+      els.viewLogin.classList.add('hidden');
+      els.viewPortal.classList.remove('hidden');
+      els.portalShotImg.src = shotFor(view);
+      els.portalShotImg.alt = `portal-dc02 ${view}`;
+      els.browserUrl.textContent = urlFor(view);
+      mountHotspots(view);
+      updateInventory(view);
     }
 
     function clearVisionOverlay() {
@@ -1862,12 +2039,10 @@
       box.style.top = `${Math.round(r.top - 4)}px`;
       box.style.width = `${Math.round(r.width + 8)}px`;
       box.style.height = `${Math.round(r.height + 8)}px`;
-
       const tag = document.createElement('div');
       tag.className = 'bbox-label';
       tag.textContent = label;
       box.appendChild(tag);
-
       if (calloutText) {
         const c = document.createElement('div');
         c.className = 'bbox-callout';
@@ -1896,16 +2071,6 @@
       setTimeout(() => rp.remove(), 600);
     }
 
-    async function typeIntoInput(inputEl, text, token) {
-      inputEl.value = '';
-      for (let i = 0; i < text.length; i++) {
-        if (token !== state.runToken) return false;
-        inputEl.value += text[i];
-        await sleep(28, token);
-      }
-      return true;
-    }
-
     function updateStatusBadge(mode) {
       const map = {
         idle: { cls: '', label: 'Idle' },
@@ -1922,7 +2087,8 @@
       if (state.isRunning && !state.isPaused) {
         els.playPauseLabel.textContent = 'Pause';
       } else {
-        els.playPauseLabel.textContent = state.currentStepIndex >= 0 && state.currentStepIndex < QA_STEPS.length - 1 ? 'Resume' : 'Run QA Scan';
+        els.playPauseLabel.textContent =
+          state.currentStepIndex >= 0 && state.currentStepIndex < QA_STEPS.length - 1 ? 'Resume' : 'Run QA Scan';
       }
     }
 
@@ -1931,7 +2097,6 @@
       const passed = results.filter((r) => r.status === 'pass').length;
       const failed = results.filter((r) => r.status === 'fail').length;
       const totalMs = results.reduce((s, r) => s + r.durationMs, 0);
-
       els.statPassed.textContent = passed;
       els.statFailed.textContent = failed;
       els.statDuration.textContent = `${(totalMs / 1000).toFixed(1)}s`;
@@ -1967,8 +2132,7 @@
               </div>
               ${res.reasoning}
             </div>
-          </button>
-        `;
+          </button>`;
       });
       els.reportTimeline.innerHTML = html;
       els.reportTimeline.querySelectorAll('.report-card').forEach((card) => {
@@ -2017,134 +2181,186 @@
       setActivePhase('observe');
       setThought(step.thoughtObserve);
       triggerScanSweep();
-      if (!(await sleep(580, token))) return false;
+      if (!(await sleep(520, token))) return false;
 
       setActivePhase('plan');
       setThought(isPixel ? 'Comparing frame against accepted baseline PNG...' : step.thoughtPlan);
 
-      const result = { status: 'pass', durationMs: isPixel ? Math.round(step.durationMs * 0.45) : step.durationMs, reasoning: '', coords: '', view: step.viewAfter, boxes: [] };
-      const refTitle = LIVE?.referenceTable?.title || 'Reference Tables (16)';
-      const refCount = LIVE?.referenceTable?.totalCount ?? 16;
-      const refSamples = (LIVE?.referenceTable?.sampleNames || ['test-new-2', 'test-approve', 'Delivery vendor']).slice(0, 3).join(', ');
+      const result = {
+        status: 'pass',
+        durationMs: isPixel ? Math.round(step.durationMs * 0.45) : step.durationMs,
+        reasoning: '',
+        coords: '',
+        view: step.viewAfter,
+        boxes: [],
+      };
+      const page = pageById(step.pageId) || {};
+      const title = page.title || page.label || step.pageId;
+      const samples = (page.sampleNames || []).slice(0, 3).join(', ') || 'live data';
 
       if (step.kind === 'login') {
         const rBtn = drawBoundingBox('#portal-signin', 'login chrome', 'detect');
-        if (!(await sleep(450, token))) return false;
-        setActivePhase('act');
-        setThought(step.thoughtAct);
-        if (rBtn) { moveCursorTo(rBtn.cx, rBtn.cy); if (!(await sleep(400, token))) return false; spawnClickRipple(rBtn.cx, rBtn.cy); result.coords = `(${Math.round(rBtn.cx)}, ${Math.round(rBtn.cy)})`; }
-        if (!(await sleep(300, token))) return false;
-        setPortalView('dashboard');
-        clearVisionOverlay();
-        result.view = 'login';
-        result.reasoning = 'Opened real dc02 login, then operator 29 Home.';
-        result.boxes = [{ selector: '#portal-signin', label: '✓ login frame', variant: 'pass' }];
-      } else if (step.kind === 'home-wait') {
-        const rM = drawBoundingBox('#dashboard-metrics', 'welcome banner', 'detect');
-        if (!(await sleep(450, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#dashboard-metrics', '✓ Home welcome visible', 'pass');
-        result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = `Live Home: "${LIVE?.home?.welcome || 'Welcome back'}"`;
-        result.boxes = [{ selector: '#dashboard-metrics', label: '✓ Home welcome visible', variant: 'pass' }];
-        if (!(await sleep(480, token))) return false;
-      } else if (step.kind === 'nav-reftable') {
-        // From Home, jump into Reference Table view and green-box the nav affordance region.
-        const rNav = drawBoundingBox('#nav-overview', 'nav: Product Catalog', 'detect');
         if (!(await sleep(400, token))) return false;
         setActivePhase('act');
         setThought(step.thoughtAct);
-        if (rNav) { moveCursorTo(rNav.cx, rNav.cy + 40); if (!(await sleep(420, token))) return false; spawnClickRipple(rNav.cx, rNav.cy + 40); }
-        if (!(await sleep(280, token))) return false;
-        setPortalView('reftable');
+        if (rBtn) {
+          moveCursorTo(rBtn.cx, rBtn.cy);
+          if (!(await sleep(350, token))) return false;
+          spawnClickRipple(rBtn.cx, rBtn.cy);
+          result.coords = `(${Math.round(rBtn.cx)}, ${Math.round(rBtn.cy)})`;
+        }
+        if (!(await sleep(250, token))) return false;
+        setPortalView('home');
         clearVisionOverlay();
-        drawBoundingBox('#reftable-nav', '✓ Reference Table nav', 'pass');
-        result.reasoning = 'Opened Product Catalog → Reference Table (/#/29/pc/reference-table).';
-        result.boxes = [{ selector: '#reftable-nav', label: '✓ Reference Table nav', variant: 'pass' }];
-      } else if (step.kind === 'reftable-wait') {
-        drawBoundingBox('#reftable-title', 'title', 'detect');
-        drawBoundingBox('#reftable-data', 'table data', 'detect');
-        if (!(await sleep(500, token))) return false;
+        result.view = 'home';
+        result.reasoning = 'Opened real dc02 login, then operator 29 Home. Portal inventory mounted in frame.';
+        result.boxes = [{ selector: '#hs-title', label: '✓ Home loaded', variant: 'pass' }];
+        drawBoundingBox('#hs-title', '✓ Home loaded', 'pass');
+      } else if (step.kind === 'home-wait') {
+        drawBoundingBox('#hs-title', 'welcome', 'detect');
+        if (!(await sleep(400, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        drawBoundingBox('#reftable-title', `✓ ${refTitle}`, 'pass');
-        drawBoundingBox('#reftable-data', '✓ table loaded', 'pass');
-        result.reasoning = `Live Reference Table loaded: ${refTitle}. Samples: ${refSamples}.`;
-        result.boxes = [
-          { selector: '#reftable-title', label: `✓ ${refTitle}`, variant: 'pass' },
-          { selector: '#reftable-data', label: '✓ table loaded', variant: 'pass' },
-        ];
-        if (!(await sleep(550, token))) return false;
-      } else if (step.kind === 'reftable-title') {
-        drawBoundingBox('#reftable-title', 'title region', 'detect');
-        if (!(await sleep(420, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#reftable-title', `✓ ${refTitle}`, 'pass');
-        result.reasoning = `Green box on page title: ${refTitle}.`;
-        result.boxes = [{ selector: '#reftable-title', label: `✓ ${refTitle}`, variant: 'pass' }];
-        if (!(await sleep(500, token))) return false;
-      } else if (step.kind === 'reftable-headers') {
-        drawBoundingBox('#reftable-headers', 'column headers', 'detect');
-        if (!(await sleep(420, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#reftable-headers', '✓ headers aligned', 'pass');
-        result.reasoning = 'Green box on Reference Table column headers (Name, Value Type, State, …).';
-        result.boxes = [{ selector: '#reftable-headers', label: '✓ headers aligned', variant: 'pass' }];
-        if (!(await sleep(520, token))) return false;
-      } else if (step.kind === 'reftable-data') {
-        drawBoundingBox('#reftable-data', 'table data region', 'detect');
-        if (!(await sleep(480, token))) return false;
-        setActivePhase('act');
-        clearVisionOverlay();
-        drawBoundingBox('#reftable-data', `✓ ${refCount} tables selected`, 'pass');
-        result.reasoning = `Green box selecting live Reference Table data (${refCount} rows). Examples: ${refSamples}.`;
-        result.boxes = [{ selector: '#reftable-data', label: `✓ ${refCount} tables selected`, variant: 'pass' }];
-        if (!(await sleep(650, token))) return false;
-      } else if (step.kind === 'reftable-rows') {
-        drawBoundingBox('#reftable-row-1', 'row 1', 'detect');
-        drawBoundingBox('#reftable-row-2', 'row 2', 'detect');
+        drawBoundingBox('#hs-title', `✓ ${LIVE?.home?.welcome || 'Home'}`, 'pass');
+        result.reasoning = `Live Home stored: "${LIVE?.home?.welcome || 'Welcome back'}" · ${LIVE?.pages?.length || 0} pages in inventory.`;
+        result.boxes = [{ selector: '#hs-title', label: `✓ ${LIVE?.home?.welcome || 'Home'}`, variant: 'pass' }];
         if (!(await sleep(450, token))) return false;
+      } else if (step.kind === 'nav-page') {
+        setActivePhase('act');
+        setThought(step.thoughtAct);
+        if (!(await sleep(280, token))) return false;
+        setPortalView(step.pageId);
+        clearVisionOverlay();
+        drawBoundingBox('#hs-title', `✓ ${title}`, 'pass');
+        result.reasoning = `Frame switched to ${title}. URL ${urlFor(step.pageId)}.`;
+        result.boxes = [{ selector: '#hs-title', label: `✓ ${title}`, variant: 'pass' }];
+        if (!(await sleep(400, token))) return false;
+      } else if (step.kind === 'page-wait') {
+        drawBoundingBox('#hs-table', 'content', 'detect');
+        drawBoundingBox('#hs-title', 'title', 'detect');
+        if (!(await sleep(420, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        drawBoundingBox('#reftable-row-1', '✓ row 1', 'pass');
-        drawBoundingBox('#reftable-row-2', '✓ row 2', 'pass');
-        result.reasoning = 'Green boxes on the first Reference Table data rows.';
+        drawBoundingBox('#hs-title', `✓ ${title}`, 'pass');
+        if (document.getElementById('hs-table')) drawBoundingBox('#hs-table', '✓ content loaded', 'pass');
+        result.reasoning = `${title} ready in frame. Samples: ${samples}.`;
+        result.boxes = [{ selector: '#hs-title', label: `✓ ${title}`, variant: 'pass' }];
+        if (document.getElementById('hs-table')) result.boxes.push({ selector: '#hs-table', label: '✓ content loaded', variant: 'pass' });
+        if (!(await sleep(450, token))) return false;
+      } else if (step.kind === 'assert-title') {
+        drawBoundingBox('#hs-title', 'title region', 'detect');
+        if (!(await sleep(380, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#hs-title', `✓ ${title}`, 'pass');
+        drawBoundingBox('#hs-sidebar', '✓ sidebar', 'pass');
+        result.reasoning = `Title + sidebar boxed for ${title}.`;
         result.boxes = [
-          { selector: '#reftable-row-1', label: '✓ row 1', variant: 'pass' },
-          { selector: '#reftable-row-2', label: '✓ row 2', variant: 'pass' },
+          { selector: '#hs-title', label: `✓ ${title}`, variant: 'pass' },
+          { selector: '#hs-sidebar', label: '✓ sidebar', variant: 'pass' },
         ];
-        if (!(await sleep(550, token))) return false;
-      } else if (step.kind === 'reftable-state') {
-        drawBoundingBox('#reftable-state-col', 'State / Approved', 'detect');
-        if (!(await sleep(420, token))) return false;
+        if (!(await sleep(450, token))) return false;
+      } else if (step.kind === 'assert-headers') {
+        drawBoundingBox('#hs-headers', 'column headers', 'detect');
+        if (!(await sleep(400, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
         if (state.bugMode) {
           result.status = 'fail';
-          setThought('FAIL: State column badges look misaligned!');
-          const rBad = drawBoundingBox('#reftable-state-col', '✕ state misaligned', 'fail', 'Simulated State column misalignment on Reference Table.');
+          setThought('FAIL: column headers look misaligned!');
+          const rBad = drawBoundingBox(
+            '#hs-headers',
+            '✕ header misalignment',
+            'fail',
+            `Simulated header shift on ${title}. Headers: ${(page.headers || []).join(', ')}`,
+          );
           result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
-          result.reasoning = 'Bug simulation: State / Approved column highlighted as misaligned.';
-          result.boxes = [{ selector: '#reftable-state-col', label: '✕ state misaligned', variant: 'fail', callout: result.reasoning }];
-          if (!(await sleep(1100, token))) return false;
+          result.reasoning = `Bug simulation: column headers misaligned on ${title}.`;
+          result.boxes = [{ selector: '#hs-headers', label: '✕ header misalignment', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(1000, token))) return false;
         } else {
-          drawBoundingBox('#reftable-state-col', '✓ Approved column', 'pass');
-          result.reasoning = 'Green box on State column (Approved badges) in Reference Table.';
-          result.boxes = [{ selector: '#reftable-state-col', label: '✓ Approved column', variant: 'pass' }];
-          if (!(await sleep(520, token))) return false;
+          drawBoundingBox('#hs-headers', '✓ headers aligned', 'pass');
+          result.reasoning = `Green box on headers for ${title}: ${(page.headers || []).slice(0, 6).join(', ')}.`;
+          result.boxes = [{ selector: '#hs-headers', label: '✓ headers aligned', variant: 'pass' }];
+          if (!(await sleep(480, token))) return false;
         }
-      } else if (step.kind === 'reftable-cta') {
-        drawBoundingBox('#reftable-add-btn', '+ Add New', 'detect');
-        if (!(await sleep(400, token))) return false;
+      } else if (step.kind === 'assert-table') {
+        drawBoundingBox('#hs-table', 'table data', 'detect');
+        if (!(await sleep(420, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        drawBoundingBox('#reftable-add-btn', '✓ + Add New', 'pass');
-        result.reasoning = 'Green box on + Add New primary action for Reference Tables.';
-        result.boxes = [{ selector: '#reftable-add-btn', label: '✓ + Add New', variant: 'pass' }];
-        if (!(await sleep(500, token))) return false;
+        const count = page.totalCount ?? (page.rows || []).length;
+        drawBoundingBox('#hs-table', `✓ data selected (${count})`, 'pass');
+        result.reasoning = `Green box selecting live table data on ${title} (${count}). Examples: ${samples}.`;
+        result.boxes = [{ selector: '#hs-table', label: `✓ data selected (${count})`, variant: 'pass' }];
+        if (!(await sleep(550, token))) return false;
+      } else if (step.kind === 'assert-cta') {
+        drawBoundingBox('#hs-cta', 'primary CTA', 'detect');
+        if (!(await sleep(360, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: primary action clipped!');
+          const rBad = drawBoundingBox('#hs-cta', '✕ CTA clipped', 'fail', `Primary button clipped on ${title}.`);
+          result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
+          result.reasoning = `Bug simulation: primary CTA clipped on ${title}.`;
+          result.boxes = [{ selector: '#hs-cta', label: '✕ CTA clipped', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(950, token))) return false;
+        } else {
+          drawBoundingBox('#hs-cta', '✓ CTA legible', 'pass');
+          result.reasoning = `Green box on primary action for ${title}.`;
+          result.boxes = [{ selector: '#hs-cta', label: '✓ CTA legible', variant: 'pass' }];
+          if (!(await sleep(420, token))) return false;
+        }
+      } else if (step.kind === 'assert-rows') {
+        setPortalView('reference-table');
+        drawBoundingBox('#hs-row1', 'row 1', 'detect');
+        drawBoundingBox('#hs-row2', 'row 2', 'detect');
+        if (document.getElementById('hs-row3')) drawBoundingBox('#hs-row3', 'row 3', 'detect');
+        if (!(await sleep(420, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#hs-row1', '✓ row 1', 'pass');
+        drawBoundingBox('#hs-row2', '✓ row 2', 'pass');
+        if (document.getElementById('hs-row3')) drawBoundingBox('#hs-row3', '✓ row 3', 'pass');
+        const refSamples = (LIVE?.referenceTable?.sampleNames || []).slice(0, 3).join(', ');
+        result.reasoning = `Green boxes on Reference Table rows (${refSamples}).`;
+        result.boxes = [
+          { selector: '#hs-row1', label: '✓ row 1', variant: 'pass' },
+          { selector: '#hs-row2', label: '✓ row 2', variant: 'pass' },
+        ];
+        if (!(await sleep(520, token))) return false;
+      } else if (step.kind === 'assert-misalign') {
+        setPortalView('reference-table');
+        drawBoundingBox('#hs-headers', 'headers', 'detect');
+        drawBoundingBox('#hs-table', 'table', 'detect');
+        if (!(await sleep(450, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: misalignment / layout defect!');
+          const rBad = drawBoundingBox(
+            '#hs-headers',
+            '✕ misalignment',
+            'fail',
+            'Simulated column misalignment on Reference Table — headers do not line up with cells.',
+          );
+          result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
+          result.reasoning = 'Bug simulation: Reference Table column misalignment detected.';
+          result.boxes = [{ selector: '#hs-headers', label: '✕ misalignment', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(1100, token))) return false;
+        } else {
+          drawBoundingBox('#hs-headers', '✓ headers ↔ cells aligned', 'pass');
+          drawBoundingBox('#hs-table', '✓ no layout defects', 'pass');
+          result.reasoning = 'No misalignment: Reference Table headers line up with cells; CTA not clipped.';
+          result.boxes = [
+            { selector: '#hs-headers', label: '✓ headers ↔ cells aligned', variant: 'pass' },
+            { selector: '#hs-table', label: '✓ no layout defects', variant: 'pass' },
+          ];
+          if (!(await sleep(550, token))) return false;
+        }
       }
 
       state.stepResults[step.id] = result;
@@ -2171,7 +2387,11 @@
       setActivePhase(null);
       const failCount = Object.values(state.stepResults).filter((r) => r.status === 'fail').length;
       updateStatusBadge(failCount > 0 ? 'failed' : 'passed');
-      setThought(failCount > 0 ? `Scan complete — ${failCount} UI defects caught! Click any red card in the report to inspect.` : 'Scan complete — All 11 visual & layout checks passed!');
+      setThought(
+        failCount > 0
+          ? `Scan complete — ${failCount} UI defects caught! Click any red card to inspect.`
+          : `Scan complete — all ${QA_STEPS.length} portal pages/checks passed (inventory in frame).`,
+      );
       updatePlayPauseButton();
       renderYamlPane();
     }
@@ -2197,6 +2417,7 @@
 
       state.isRunning = false;
       state.isPaused = nextIdx < QA_STEPS.length - 1;
+      updatePlayPauseButton();
       if (nextIdx === QA_STEPS.length - 1) {
         hideCursor();
         const anyFail = Object.values(state.stepResults).some((r) => r.status === 'fail');
@@ -2204,7 +2425,6 @@
       } else {
         updateStatusBadge('paused');
       }
-      updatePlayPauseButton();
       renderYamlPane();
     }
 
@@ -2215,9 +2435,8 @@
       state.currentStepIndex = -1;
       state.inspectedStepId = null;
       state.stepResults = {};
-
-      els.portalEmail.value = '';
-      els.portalPassword.value = '';
+      if (els.portalEmail) els.portalEmail.value = '';
+      if (els.portalPassword) els.portalPassword.value = '';
       setPortalView('login');
       applyBugModeToDOM();
       clearVisionOverlay();
@@ -2230,8 +2449,14 @@
       renderReportPane();
     }
 
-    els.modeMidscene.addEventListener('click', () => { state.mode = 'midscene'; applyModeUI(); });
-    els.modePixel.addEventListener('click', () => { state.mode = 'pixel'; applyModeUI(); });
+    els.modeMidscene.addEventListener('click', () => {
+      state.mode = 'midscene';
+      applyModeUI();
+    });
+    els.modePixel.addEventListener('click', () => {
+      state.mode = 'pixel';
+      applyModeUI();
+    });
 
     els.btnPlayPause.addEventListener('click', () => {
       if (state.isRunning) {
@@ -2272,16 +2497,18 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         LIVE = await res.json();
         QA_STEPS = buildSteps(LIVE);
-        const sc=$('steps-count-label'); if (sc) sc.textContent = `${QA_STEPS.length} steps`;
-        const offerNames = (LIVE.offers?.sampleNames || []).slice(0, 3).join(', ');
-        const ref = LIVE.referenceTable?.title || 'Reference Tables';
-        els.liveBanner.innerHTML = `<strong style="color:#e2e8f0">Live dc02 data</strong> · captured ${LIVE.capturedAt || '?'} · `
-          + `${LIVE.home?.welcome || 'Home'} · <strong style="color:#86efac">${ref}</strong>`
-          + ` · ${LIVE.offers?.title || 'Offers'} · <span style="color:#64748b">source: ${LIVE.source || 'portal scrape'}</span>`;
+        const sc = $('steps-count-label');
+        if (sc) sc.textContent = `${QA_STEPS.length} steps`;
+        const pageLabels = (LIVE.pages || []).map((p) => p.title || p.label).join(' · ');
+        els.liveBanner.innerHTML =
+          `<strong style="color:#e2e8f0">Portal inventory in frame</strong> · captured ${LIVE.capturedAt || '?'} · ` +
+          `<strong style="color:#86efac">${(LIVE.pages || []).length} pages</strong> · ${pageLabels} · ` +
+          `<span style="color:#64748b">${LIVE.source || 'portal scrape'}</span>`;
       } catch (err) {
         LIVE = null;
         QA_STEPS = buildSteps(null);
-        els.liveBanner.innerHTML = `<strong style="color:#fb7185">live-data.json missing</strong> — run <code>npm run capture:live</code> then refresh. (${err.message})`;
+        els.liveBanner.innerHTML =
+          `<strong style="color:#fb7185">live-data.json missing</strong> — run <code>npm run capture:inventory</code> then refresh. (${err.message})`;
       }
     }
 
@@ -2293,6 +2520,7 @@
         if (state.currentStepIndex === -1 && !state.isRunning && QA_STEPS.length) runLoop(0);
       }, 650);
     });
+  </script>
   </script>
 </body>
 </html>

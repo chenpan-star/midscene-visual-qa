@@ -19,9 +19,10 @@ cp .env.example .env   # OPENAI_API_KEY (+ optional MIDSCENE_MODEL_NAME)
 npm run tour:login          # Chrome → portal-dc02 /#/29
 npm run test:midscene       # Midscene on the LIVE portal
 npm run test:visual         # Playwright pixel tour on the LIVE portal
-npm run capture:live        # scrape your real Home/Orders/Offers/Settings into live-data.json
-npm run capture:screens     # refresh assets/portal/*.png used in the frame
-npm run capture:all         # live-data.json + screenshots
+npm run capture:inventory   # full portal inventory → screenshots + live-data.json + layout boxes
+npm run capture:live        # (legacy) scrape Home/Orders/Offers/Settings into live-data.json
+npm run capture:screens     # (legacy) refresh assets/portal/*.png used in the frame
+npm run capture:all         # alias for capture:inventory
 ```
 
 The Pages visualizer loads `assets/portal/live-data.json` (your operator-29 scrape) into the Midscene report steps — not mock KPI/offer rows.

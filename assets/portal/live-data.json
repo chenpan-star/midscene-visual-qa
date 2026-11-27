@@ -1,8 +1,9 @@
 {
-  "capturedAt": "2026-11-27T07:41:57.621Z",
+  "capturedAt": "2026-11-27T09:01:20.840Z",
   "portalBaseUrl": "https://portal-dc02.lotusflare.com",
   "companyId": "29",
-  "source": "live portal-dc02 API + DOM (Playwright)",
+  "source": "live portal-dc02 inventory (screenshots + DOM/API + layout boxes)",
+  "purpose": "Store full portal page info in the Midscene visualizer frame for AI bug / misalignment scan",
   "home": {
     "url": "https://portal-dc02.lotusflare.com/#/29",
     "welcome": "Welcome back, Chen Pan!",
@@ -10,102 +11,512 @@
     "environment": "Staging"
   },
   "orders": {
-    "url": "https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders",
-    "title": "API Product Orders (0)",
+    "url": "https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders/all",
+    "title": "API Product Orders",
     "totalCount": 0,
-    "apiResponseCount": 0,
-    "rows": [],
-    "sampleIds": []
+    "rows": [
+      {
+        "name": "Application Owners",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Applications",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Channel Partners",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Customers",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Supplier Management",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Use Cases",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Pricing and Fees",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Charging",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Promotions",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Rewards",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Messages",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Segments",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      }
+    ],
+    "sampleIds": [],
+    "headers": [
+      "ID",
+      "Description",
+      "Type",
+      "Product IDs",
+      "Offer Name",
+      "Applications",
+      "Application Owners",
+      "Approval Status",
+      "Client ID",
+      "Update time",
+      "State",
+      "Global IDs"
+    ],
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 19.6,
+        "top": 2.7,
+        "width": 14.3,
+        "height": 3.6
+      },
+      {
+        "id": "cta",
+        "left": 82.8,
+        "top": 2.2,
+        "width": 15,
+        "height": 4.4
+      },
+      {
+        "id": "table",
+        "left": 17.4,
+        "top": 18.3,
+        "width": 125,
+        "height": 5.4
+      },
+      {
+        "id": "headers",
+        "left": 17.4,
+        "top": 18.3,
+        "width": 125,
+        "height": 5.4
+      }
+    ]
   },
   "offers": {
     "url": "https://portal-dc02.lotusflare.com/#/29/pc/offers",
     "title": "Offers (519)",
     "totalCount": 519,
-    "apiResponseCount": 5,
+    "rows": [],
+    "sampleNames": [],
+    "headers": [
+      "Name",
+      "Description",
+      "Update time",
+      "Published state",
+      "External ID",
+      "Draft state",
+      "Operations",
+      "Price type",
+      "Price",
+      "Currency",
+      "Currency code",
+      "Start time"
+    ],
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 19.6,
+        "top": 2.2,
+        "width": 4.2,
+        "height": 3.6
+      },
+      {
+        "id": "cta",
+        "left": 61.7,
+        "top": 2.2,
+        "width": 8.9,
+        "height": 4.4
+      },
+      {
+        "id": "table",
+        "left": 17.4,
+        "top": 9,
+        "width": 197.9,
+        "height": 88.8
+      },
+      {
+        "id": "headers",
+        "left": 17.4,
+        "top": 9,
+        "width": 197.9,
+        "height": 5.4
+      },
+      {
+        "id": "row1",
+        "left": 17.4,
+        "top": 14.4,
+        "width": 197.9,
+        "height": 5.6
+      },
+      {
+        "id": "row2",
+        "left": 17.4,
+        "top": 20,
+        "width": 197.9,
+        "height": 5.6
+      },
+      {
+        "id": "row3",
+        "left": 17.4,
+        "top": 25.6,
+        "width": 197.9,
+        "height": 5.6
+      }
+    ]
+  },
+  "products": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/pc/products",
+    "title": "Products",
+    "totalCount": 0,
+    "rows": [
+      {
+        "name": "Reference Table",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Preset Templates",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Validation Rules",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Pricing and Fees",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Charging",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Promotions",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Rewards",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Messages",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Segments",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Data Hub",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Tier Management",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      },
+      {
+        "name": "Customer Care",
+        "description": null,
+        "id": null,
+        "state": null,
+        "type": null
+      }
+    ],
+    "sampleNames": [
+      "Reference Table",
+      "Preset Templates",
+      "Validation Rules",
+      "Pricing and Fees",
+      "Charging",
+      "Promotions",
+      "Rewards",
+      "Messages"
+    ],
+    "headers": [
+      "Name",
+      "Description",
+      "Update time",
+      "Published state",
+      "External ID",
+      "Draft state",
+      "Template Name",
+      "Template External Id"
+    ],
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 19.6,
+        "top": 2.2,
+        "width": 6,
+        "height": 3.6
+      },
+      {
+        "id": "cta",
+        "left": 76.4,
+        "top": 2.2,
+        "width": 8.9,
+        "height": 4.4
+      },
+      {
+        "id": "table",
+        "left": 17.4,
+        "top": 9,
+        "width": 93.8,
+        "height": 88.8
+      },
+      {
+        "id": "headers",
+        "left": 17.4,
+        "top": 9,
+        "width": 93.8,
+        "height": 5.4
+      },
+      {
+        "id": "row1",
+        "left": 17.4,
+        "top": 14.4,
+        "width": 93.8,
+        "height": 5.6
+      },
+      {
+        "id": "row2",
+        "left": 17.4,
+        "top": 20,
+        "width": 93.8,
+        "height": 5.6
+      },
+      {
+        "id": "row3",
+        "left": 17.4,
+        "top": 25.6,
+        "width": 93.8,
+        "height": 5.6
+      }
+    ]
+  },
+  "templates": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/pc/templates",
+    "title": "Templates",
+    "totalCount": 0,
     "rows": [
       {
         "name": "aa changed by vlad again",
         "description": "",
         "id": "01b604492a0f40179689348b0fd49b83",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "demo5",
         "description": "vlad i - imported from demo5 Template",
         "id": "0352401ad60a475e88d85a63a0995021",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "demo5",
         "description": "demo5 Template",
         "id": "0352401ad60a475e88d85a63a0995022",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "haoran_test_template_123456",
         "description": "",
         "id": "0363a5c63e084153b630dbf4adece13f",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "Test huk json",
         "description": "test ",
         "id": "04210b63dd234b958cb50ba69f06fd14",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "leslie 's template that use dno_base_plan_units",
         "description": "",
         "id": "08c2c780a37d40f0b075a99472c7fd52",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "CSP/Supplier test",
         "description": "CSP/Supplier test",
         "id": "0def4e323815415c9c0dceb9b09e6a0f",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "all_types_of_template_widgets_mandatory_enabled",
         "description": "all_types_of_template_widgets with mandatory setting",
         "id": "0e3825c667f341aa939602a4c01447c9",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "Vlad I - test import of PC template with preserved id",
         "description": "vlad i - test import of template with same id",
         "id": "10b042cc95844d319b89bfad50ca1ca9",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "TestValidValue",
         "description": "",
         "id": "11452a4f778c4b5b85839a2c608bd48e",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "this is demo offer template, test catalogmanagement",
         "description": "this is offer template for unit test",
         "id": "17670abb2257478ca5e3f71334e69f9b",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
       },
       {
         "name": "leslie's template with regular preset template",
         "description": "",
         "id": "17d87c3e7a2c490abdbc34b3d33df96f",
-        "lifecycleStatus": "2",
-        "price": null
+        "state": "2",
+        "type": "offer"
+      },
+      {
+        "name": "Demo10Aug4-take2",
+        "description": "Demo 10 template description",
+        "id": "1b74b5d3046b4026819202c62b56fae6",
+        "state": "2",
+        "type": "offer"
+      },
+      {
+        "name": "Artyom's Offer Template",
+        "description": "Artyom's Template for testing offers",
+        "id": "1bca9fa2f41745f1914774902076b7cf",
+        "state": "2",
+        "type": "offer"
+      },
+      {
+        "name": "Qiguang Offer1",
+        "description": "test",
+        "id": "1dfcad0688a44b0db85f7f01ff4db1d9",
+        "state": "2",
+        "type": "offer"
+      },
+      {
+        "name": "Sigida test referenced template 123",
+        "description": "",
+        "id": "1e4f59bb1d1543b688c942ceb6eabe39",
+        "state": "2",
+        "type": "offer"
       }
     ],
     "sampleNames": [
@@ -116,47 +527,1360 @@
       "Test huk json",
       "leslie 's template that use dno_base_plan_units",
       "CSP/Supplier test",
-      "all_types_of_template_widgets_mandatory_enabled",
-      "Vlad I - test import of PC template with preserved id",
-      "TestValidValue",
-      "this is demo offer template, test catalogmanagement",
-      "leslie's template with regular preset template"
+      "all_types_of_template_widgets_mandatory_enabled"
+    ],
+    "headers": [
+      "Name",
+      "Description",
+      "Update time",
+      "State",
+      "External ID",
+      "Template Type",
+      "Uses Presets"
+    ],
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 19.6,
+        "top": 2.2,
+        "width": 7,
+        "height": 3.6
+      },
+      {
+        "id": "cta",
+        "left": 75.7,
+        "top": 2.2,
+        "width": 8.9,
+        "height": 4.4
+      },
+      {
+        "id": "table",
+        "left": 17.4,
+        "top": 9,
+        "width": 82.6,
+        "height": 88.8
+      },
+      {
+        "id": "headers",
+        "left": 17.4,
+        "top": 9,
+        "width": 82.6,
+        "height": 5.4
+      },
+      {
+        "id": "row1",
+        "left": 17.4,
+        "top": 14.4,
+        "width": 82.6,
+        "height": 5.6
+      },
+      {
+        "id": "row2",
+        "left": 17.4,
+        "top": 20,
+        "width": 82.6,
+        "height": 5.6
+      },
+      {
+        "id": "row3",
+        "left": 17.4,
+        "top": 25.6,
+        "width": 82.6,
+        "height": 5.6
+      }
     ]
-  },
-  "settings": {
-    "url": "https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization",
-    "timezone": "(GMT+00:00)",
-    "dateFormat": "DD-MM-YYYY",
-    "timeFormat": "12 hour",
-    "currency": "Canadian Dollar \u2014 CA$"
-  },
-  "screenshots": {
-    "login": "assets/portal/login.png",
-    "home": "assets/portal/home.png",
-    "orders": "assets/portal/orders.png",
-    "offers": "assets/portal/offers.png",
-    "settings": "assets/portal/settings.png",
-    "referenceTable": "assets/portal/reference-table.png"
   },
   "referenceTable": {
     "url": "https://portal-dc02.lotusflare.com/#/29/pc/reference-table",
     "title": "Reference Tables (16)",
     "totalCount": 16,
-    "sampleNames": [
-      "test-new-2",
-      "test-approve",
-      "Delivery vendor",
-      "yuliang_reftable",
-      "dgfdhgf"
+    "rows": [
+      {
+        "name": "dgfdhgf",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "test-new-2",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "43546",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "T222",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "yuliang_reftable",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "Delivery vendor",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "test_1212_string",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      },
+      {
+        "name": "test-approve",
+        "description": null,
+        "id": null,
+        "state": "Approved",
+        "type": null
+      }
     ],
-    "columns": [
-      "Reference",
+    "sampleNames": [
+      "dgfdhgf",
+      "test-new-2",
+      "43546",
+      "T222",
+      "yuliang_reftable",
+      "Delivery vendor",
+      "test_1212_string",
+      "test-approve"
+    ],
+    "headers": [
+      "Reference Key",
       "Name",
       "Value Type",
       "State",
       "Values Count",
       "Created Time",
       "Last Updated"
+    ],
+    "columns": [
+      "Reference Key",
+      "Name",
+      "Value Type",
+      "State",
+      "Values Count",
+      "Created Time",
+      "Last Updated"
+    ],
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 19.6,
+        "top": 2.2,
+        "width": 11.4,
+        "height": 3.6
+      },
+      {
+        "id": "cta",
+        "left": 88,
+        "top": 2.2,
+        "width": 9.8,
+        "height": 4.4
+      },
+      {
+        "id": "table",
+        "left": 17.4,
+        "top": 9,
+        "width": 82.6,
+        "height": 88.8
+      },
+      {
+        "id": "headers",
+        "left": 17.4,
+        "top": 9,
+        "width": 82.6,
+        "height": 5.4
+      },
+      {
+        "id": "row1",
+        "left": 17.4,
+        "top": 14.4,
+        "width": 82.6,
+        "height": 5.6
+      },
+      {
+        "id": "row2",
+        "left": 17.4,
+        "top": 20,
+        "width": 82.6,
+        "height": 5.6
+      },
+      {
+        "id": "row3",
+        "left": 17.4,
+        "top": 25.6,
+        "width": 82.6,
+        "height": 5.6
+      }
+    ],
+    "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Reference Tables (16) Filter Add New Reference Key Name Value Type State Values Count Created Time Last Updated dgfdhgf test-new-2 Array String Approved 1 2026-10-28 2026-11-03 sdfsfg test-new String Approved 1 2026-10-28 2026-10-28 43546 test-approve String Approved 1 2026-10-27 2026-10-28 534 aab23 String Approved 1 2026-06-24 2026-10-27 200 T222 String Approved 1 2026-06-24 2026-09-08 156 T111 String Approved 1 2026-06-24 2026-10-27 yuliang_reftable yuliang-reftable Array String Approved 2 2026-05-08 2026-05-08 value_type_test yanqing test Array String Approved 1 2026-05-08 2026-09-21 test_ref_table T"
+  },
+  "settings": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization",
+    "timezone": "(GMT+00:00) Support & Feedback My Account LotusFlar",
+    "dateFormat": "DD-MM-YYYY",
+    "timeFormat": "12 hour",
+    "currency": null,
+    "layout": [
+      {
+        "id": "sidebar",
+        "left": 0,
+        "top": 0,
+        "width": 17.4,
+        "height": 100
+      },
+      {
+        "id": "title",
+        "left": 17.4,
+        "top": 2.7,
+        "width": 16.6,
+        "height": 3.6
+      }
     ]
+  },
+  "pages": [
+    {
+      "id": "home",
+      "label": "Home",
+      "path": "/#/29",
+      "url": "https://portal-dc02.lotusflare.com/#/29",
+      "title": "Welcome back, Chen Pan!",
+      "totalCount": null,
+      "headers": [],
+      "rows": [
+        {
+          "name": "Pricing and Fees",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Charging",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Promotions",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Rewards",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Messages",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Segments",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Data Hub",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Tier Management",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Customer Care",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Reports",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Orchestration Engine",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Orchestration Engine (new)",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "Pricing and Fees",
+        "Charging",
+        "Promotions",
+        "Rewards",
+        "Messages",
+        "Segments",
+        "Data Hub",
+        "Tier Management"
+      ],
+      "bodyExcerpt": "Home Product Catalog Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Home Welcome back, Chen Pan!",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.6,
+          "width": 4,
+          "height": 3.6
+        }
+      ],
+      "screenshot": "assets/portal/home.png"
+    },
+    {
+      "id": "orders",
+      "label": "API Product Orders",
+      "path": "/#/29/operate-apis/api-product-orders",
+      "url": "https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders/all",
+      "title": "API Product Orders",
+      "totalCount": null,
+      "headers": [
+        "ID",
+        "Description",
+        "Type",
+        "Product IDs",
+        "Offer Name",
+        "Applications",
+        "Application Owners",
+        "Approval Status",
+        "Client ID",
+        "Update time",
+        "State",
+        "Global IDs"
+      ],
+      "rows": [
+        {
+          "name": "Application Owners",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Applications",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Channel Partners",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Customers",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Supplier Management",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Use Cases",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Pricing and Fees",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Charging",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Promotions",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Rewards",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Messages",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Segments",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "Application Owners",
+        "Applications",
+        "Channel Partners",
+        "Customers",
+        "Supplier Management",
+        "Use Cases",
+        "Pricing and Fees",
+        "Charging"
+      ],
+      "bodyExcerpt": "Home Product Catalog Consent API Management APIs Overview Application Owners Applications API Products API Product Orders Channel Partners Customers Supplier Management Use Cases Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging API Product Orders (0) Filter All Channel Partners New API Product Order Pending Approval Approved Rejected All ID Description Type Product IDs Offer Name Applications Application Owners Approval Status Client ID Update time State Global IDs",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.7,
+          "width": 14.3,
+          "height": 3.6
+        },
+        {
+          "id": "cta",
+          "left": 82.8,
+          "top": 2.2,
+          "width": 15,
+          "height": 4.4
+        },
+        {
+          "id": "table",
+          "left": 17.4,
+          "top": 18.3,
+          "width": 125,
+          "height": 5.4
+        },
+        {
+          "id": "headers",
+          "left": 17.4,
+          "top": 18.3,
+          "width": 125,
+          "height": 5.4
+        }
+      ],
+      "screenshot": "assets/portal/orders.png"
+    },
+    {
+      "id": "offers",
+      "label": "Offers",
+      "path": "/#/29/pc/offers",
+      "url": "https://portal-dc02.lotusflare.com/#/29/pc/offers",
+      "title": "Offers (519)",
+      "totalCount": 519,
+      "headers": [
+        "Name",
+        "Description",
+        "Update time",
+        "Published state",
+        "External ID",
+        "Draft state",
+        "Operations",
+        "Price type",
+        "Price",
+        "Currency",
+        "Currency code",
+        "Start time"
+      ],
+      "rows": [
+        {
+          "name": "Reference Table",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Preset Templates",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Validation Rules",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Pricing and Fees",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Charging",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Promotions",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Rewards",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Messages",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Segments",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Data Hub",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Tier Management",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Customer Care",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "Reference Table",
+        "Preset Templates",
+        "Validation Rules",
+        "Pricing and Fees",
+        "Charging",
+        "Promotions",
+        "Rewards",
+        "Messages"
+      ],
+      "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Offers (519) Filter Import All Channel Partners New offer Name Description Update time Published state External ID Draft state Operations Price type Price Currency Currency code Start time End time Categories ID Template Name Template External Id Dynamic templated CS offer offer description 05-01-2026 02:25pm Unapproved dtcso Published N/A Flat \u00a30.01 MONETARY GBP 31-12-2025 10:00am - CIA category 79c9ee84c11349409d4270f73a4e4a55 Templated cs offer tcso Test characteristics_type_5_7 - 17-04-2026 11:24am Unapproved - Published N/A Flat \u00a31.00 MONETARY GBP 31-03-2026 10:00pm - - 989d2d65c3284584bd0aaac5a043d",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.2,
+          "width": 4.2,
+          "height": 3.6
+        },
+        {
+          "id": "cta",
+          "left": 61.7,
+          "top": 2.2,
+          "width": 8.9,
+          "height": 4.4
+        },
+        {
+          "id": "table",
+          "left": 17.4,
+          "top": 9,
+          "width": 197.9,
+          "height": 88.8
+        },
+        {
+          "id": "headers",
+          "left": 17.4,
+          "top": 9,
+          "width": 197.9,
+          "height": 5.4
+        },
+        {
+          "id": "row1",
+          "left": 17.4,
+          "top": 14.4,
+          "width": 197.9,
+          "height": 5.6
+        },
+        {
+          "id": "row2",
+          "left": 17.4,
+          "top": 20,
+          "width": 197.9,
+          "height": 5.6
+        },
+        {
+          "id": "row3",
+          "left": 17.4,
+          "top": 25.6,
+          "width": 197.9,
+          "height": 5.6
+        }
+      ],
+      "screenshot": "assets/portal/offers.png"
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "path": "/#/29/pc/products",
+      "url": "https://portal-dc02.lotusflare.com/#/29/pc/products",
+      "title": "Products",
+      "totalCount": null,
+      "headers": [
+        "Name",
+        "Description",
+        "Update time",
+        "Published state",
+        "External ID",
+        "Draft state",
+        "Template Name",
+        "Template External Id"
+      ],
+      "rows": [
+        {
+          "name": "Reference Table",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Preset Templates",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Validation Rules",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Pricing and Fees",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Charging",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Promotions",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Rewards",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Messages",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Segments",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Data Hub",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Tier Management",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Customer Care",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "Reference Table",
+        "Preset Templates",
+        "Validation Rules",
+        "Pricing and Fees",
+        "Charging",
+        "Promotions",
+        "Rewards",
+        "Messages"
+      ],
+      "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Products (77) Filter Import New product Name Description Update time Published state External ID Draft state Template Name Template External Id lz test product sim card - 2026-04-13 Approved - Published lz test product sim card Lz_Test_Product_Sim_Card Apple iPhone 15 SmartPC Apple iPhone 15 2026-06-30 Approved - Unpublished Changes Product Template with characteristics SmartPC product_type_template_smartpc hr-test-1110 - 2026-11-10 Unapproved - Published API Product api_product Product Test 05123 - 2026-08-14 Unapproved - Published API Product api_product Vlad I - test import of PC Product - 2025-07-22 ",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.2,
+          "width": 6,
+          "height": 3.6
+        },
+        {
+          "id": "cta",
+          "left": 76.4,
+          "top": 2.2,
+          "width": 8.9,
+          "height": 4.4
+        },
+        {
+          "id": "table",
+          "left": 17.4,
+          "top": 9,
+          "width": 93.8,
+          "height": 88.8
+        },
+        {
+          "id": "headers",
+          "left": 17.4,
+          "top": 9,
+          "width": 93.8,
+          "height": 5.4
+        },
+        {
+          "id": "row1",
+          "left": 17.4,
+          "top": 14.4,
+          "width": 93.8,
+          "height": 5.6
+        },
+        {
+          "id": "row2",
+          "left": 17.4,
+          "top": 20,
+          "width": 93.8,
+          "height": 5.6
+        },
+        {
+          "id": "row3",
+          "left": 17.4,
+          "top": 25.6,
+          "width": 93.8,
+          "height": 5.6
+        }
+      ],
+      "screenshot": "assets/portal/products.png"
+    },
+    {
+      "id": "templates",
+      "label": "Templates",
+      "path": "/#/29/pc/templates",
+      "url": "https://portal-dc02.lotusflare.com/#/29/pc/templates",
+      "title": "Templates",
+      "totalCount": null,
+      "headers": [
+        "Name",
+        "Description",
+        "Update time",
+        "State",
+        "External ID",
+        "Template Type",
+        "Uses Presets"
+      ],
+      "rows": [
+        {
+          "name": "aa changed by vlad again",
+          "description": "",
+          "id": "01b604492a0f40179689348b0fd49b83",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "demo5",
+          "description": "vlad i - imported from demo5 Template",
+          "id": "0352401ad60a475e88d85a63a0995021",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "demo5",
+          "description": "demo5 Template",
+          "id": "0352401ad60a475e88d85a63a0995022",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "haoran_test_template_123456",
+          "description": "",
+          "id": "0363a5c63e084153b630dbf4adece13f",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Test huk json",
+          "description": "test ",
+          "id": "04210b63dd234b958cb50ba69f06fd14",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "leslie 's template that use dno_base_plan_units",
+          "description": "",
+          "id": "08c2c780a37d40f0b075a99472c7fd52",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "CSP/Supplier test",
+          "description": "CSP/Supplier test",
+          "id": "0def4e323815415c9c0dceb9b09e6a0f",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "all_types_of_template_widgets_mandatory_enabled",
+          "description": "all_types_of_template_widgets with mandatory setting",
+          "id": "0e3825c667f341aa939602a4c01447c9",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Vlad I - test import of PC template with preserved id",
+          "description": "vlad i - test import of template with same id",
+          "id": "10b042cc95844d319b89bfad50ca1ca9",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "TestValidValue",
+          "description": "",
+          "id": "11452a4f778c4b5b85839a2c608bd48e",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "this is demo offer template, test catalogmanagement",
+          "description": "this is offer template for unit test",
+          "id": "17670abb2257478ca5e3f71334e69f9b",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "leslie's template with regular preset template",
+          "description": "",
+          "id": "17d87c3e7a2c490abdbc34b3d33df96f",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Demo10Aug4-take2",
+          "description": "Demo 10 template description",
+          "id": "1b74b5d3046b4026819202c62b56fae6",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Artyom's Offer Template",
+          "description": "Artyom's Template for testing offers",
+          "id": "1bca9fa2f41745f1914774902076b7cf",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Qiguang Offer1",
+          "description": "test",
+          "id": "1dfcad0688a44b0db85f7f01ff4db1d9",
+          "state": "2",
+          "type": "offer"
+        },
+        {
+          "name": "Sigida test referenced template 123",
+          "description": "",
+          "id": "1e4f59bb1d1543b688c942ceb6eabe39",
+          "state": "2",
+          "type": "offer"
+        }
+      ],
+      "sampleNames": [
+        "aa changed by vlad again",
+        "demo5",
+        "demo5",
+        "haoran_test_template_123456",
+        "Test huk json",
+        "leslie 's template that use dno_base_plan_units",
+        "CSP/Supplier test",
+        "all_types_of_template_widgets_mandatory_enabled"
+      ],
+      "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Templates (382) Filter Import New Template Name Description Update time State External ID Template Type Uses Presets aa changed by vlad again - 28-10-2026 03:27pm Approved aa Offers Yes demo5 vlad i - imported from demo5 Template 29-10-2026 02:39am Approved vlad_i_template_external_id_1ca90f6f-c96e-4b98-b4b9-8ee99cd73943 Offers Yes demo5 demo5 Template 25-11-2026 02:43am Approved template_external_id_1ca90f6f-c96e-4b98-b4b9-8ee99cd73943 Offers Yes haoran_test_template_123456 - 14-07-2026 03:19am Approved haoran_test_template_123456 Offers No Test huk json test 03-09-2026 01:49am Approved dsfdsfdsf Offers",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.2,
+          "width": 7,
+          "height": 3.6
+        },
+        {
+          "id": "cta",
+          "left": 75.7,
+          "top": 2.2,
+          "width": 8.9,
+          "height": 4.4
+        },
+        {
+          "id": "table",
+          "left": 17.4,
+          "top": 9,
+          "width": 82.6,
+          "height": 88.8
+        },
+        {
+          "id": "headers",
+          "left": 17.4,
+          "top": 9,
+          "width": 82.6,
+          "height": 5.4
+        },
+        {
+          "id": "row1",
+          "left": 17.4,
+          "top": 14.4,
+          "width": 82.6,
+          "height": 5.6
+        },
+        {
+          "id": "row2",
+          "left": 17.4,
+          "top": 20,
+          "width": 82.6,
+          "height": 5.6
+        },
+        {
+          "id": "row3",
+          "left": 17.4,
+          "top": 25.6,
+          "width": 82.6,
+          "height": 5.6
+        }
+      ],
+      "screenshot": "assets/portal/templates.png"
+    },
+    {
+      "id": "reference-table",
+      "label": "Reference Tables",
+      "path": "/#/29/pc/reference-table",
+      "url": "https://portal-dc02.lotusflare.com/#/29/pc/reference-table",
+      "title": "Reference Tables (16)",
+      "totalCount": 16,
+      "headers": [
+        "Reference Key",
+        "Name",
+        "Value Type",
+        "State",
+        "Values Count",
+        "Created Time",
+        "Last Updated"
+      ],
+      "rows": [
+        {
+          "name": "dgfdhgf",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "test-new-2",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "43546",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "T222",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "yuliang_reftable",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "Delivery vendor",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "test_1212_string",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        },
+        {
+          "name": "test-approve",
+          "description": null,
+          "id": null,
+          "state": "Approved",
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "dgfdhgf",
+        "test-new-2",
+        "43546",
+        "T222",
+        "yuliang_reftable",
+        "Delivery vendor",
+        "test_1212_string",
+        "test-approve"
+      ],
+      "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Reference Tables (16) Filter Add New Reference Key Name Value Type State Values Count Created Time Last Updated dgfdhgf test-new-2 Array String Approved 1 2026-10-28 2026-11-03 sdfsfg test-new String Approved 1 2026-10-28 2026-10-28 43546 test-approve String Approved 1 2026-10-27 2026-10-28 534 aab23 String Approved 1 2026-06-24 2026-10-27 200 T222 String Approved 1 2026-06-24 2026-09-08 156 T111 String Approved 1 2026-06-24 2026-10-27 yuliang_reftable yuliang-reftable Array String Approved 2 2026-05-08 2026-05-08 value_type_test yanqing test Array String Approved 1 2026-05-08 2026-09-21 test_ref_table T",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 19.6,
+          "top": 2.2,
+          "width": 11.4,
+          "height": 3.6
+        },
+        {
+          "id": "cta",
+          "left": 88,
+          "top": 2.2,
+          "width": 9.8,
+          "height": 4.4
+        },
+        {
+          "id": "table",
+          "left": 17.4,
+          "top": 9,
+          "width": 82.6,
+          "height": 88.8
+        },
+        {
+          "id": "headers",
+          "left": 17.4,
+          "top": 9,
+          "width": 82.6,
+          "height": 5.4
+        },
+        {
+          "id": "row1",
+          "left": 17.4,
+          "top": 14.4,
+          "width": 82.6,
+          "height": 5.6
+        },
+        {
+          "id": "row2",
+          "left": 17.4,
+          "top": 20,
+          "width": 82.6,
+          "height": 5.6
+        },
+        {
+          "id": "row3",
+          "left": 17.4,
+          "top": 25.6,
+          "width": 82.6,
+          "height": 5.6
+        }
+      ],
+      "screenshot": "assets/portal/reference-table.png"
+    },
+    {
+      "id": "settings",
+      "label": "Company Settings",
+      "path": "/#/29/settings/tenant-localization",
+      "url": "https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization",
+      "title": "Company Settings",
+      "totalCount": null,
+      "headers": [],
+      "rows": [
+        {
+          "name": "Reference Table",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Preset Templates",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Validation Rules",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Pricing and Fees",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Charging",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Promotions",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Rewards",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Messages",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Segments",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Data Hub",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Tier Management",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        },
+        {
+          "name": "Customer Care",
+          "description": null,
+          "id": null,
+          "state": null,
+          "type": null
+        }
+      ],
+      "sampleNames": [
+        "Reference Table",
+        "Preset Templates",
+        "Validation Rules",
+        "Pricing and Fees",
+        "Charging",
+        "Promotions",
+        "Rewards",
+        "Messages"
+      ],
+      "bodyExcerpt": "Home Product Catalog Reference Table Templates Preset Templates Categories Facets Offers Products Services Resources Validation Rules Consent API Management Pricing and Fees Charging Promotions Rewards Messages Segments Data Hub Tier Management Customer Care Reports Orchestration Engine Orchestration Engine (new) Operations Documents Authentication Product Service Resource Customers Our Team Support Billing CPQ Orders Audit Logs Inventories Product Configurator Customer360 Payments Sales AI Operating Layer Settings (GMT+00:00) Support & Feedback My Account LotusFlareTelecom Staging Settings Tenant Management Company Settings User Settings Remote Configuration User Management Roles Management Quiet Hours Campaign categories Application Management Manual Proxy Request Third-party Applications External Mock Settings Use Case Configuration Consent Configuration IDP Management Company Settings These changes will be applied to all users. However, the user's own setting will override the operator setting. General Timezone (GMT+00:00) Africa/Abidjan Date format DD-MM-YYYY Example: 31-12-2020 MM-DD-YYYY Example: 12-31-2020 YYYY-MM-DD Example: 2020-12-31 Time format 12 hour Example 1:00 PM 2",
+      "layout": [
+        {
+          "id": "sidebar",
+          "left": 0,
+          "top": 0,
+          "width": 17.4,
+          "height": 100
+        },
+        {
+          "id": "title",
+          "left": 17.4,
+          "top": 2.7,
+          "width": 16.6,
+          "height": 3.6
+        }
+      ],
+      "screenshot": "assets/portal/settings.png"
+    }
+  ],
+  "screenshots": {
+    "login": "assets/portal/login.png",
+    "home": "assets/portal/home.png",
+    "orders": "assets/portal/orders.png",
+    "offers": "assets/portal/offers.png",
+    "products": "assets/portal/products.png",
+    "templates": "assets/portal/templates.png",
+    "referenceTable": "assets/portal/reference-table.png",
+    "settings": "assets/portal/settings.png"
   }
 }

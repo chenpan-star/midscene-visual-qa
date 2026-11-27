@@ -20,16 +20,28 @@ tasks:
     flow:
       - goto: https://portal-dc02.lotusflare.com/#/29/pc/offers
       - aiWaitFor: The Offers page content is visible
-      - aiAssert: Primary action buttons are fully legible and prices or dates are properly formatted with no NaN text
+      - aiAssert: Column headers align with cells, primary actions are fully legible, and prices or dates have no NaN text
+
+  - name: Verify Products page layout
+    flow:
+      - goto: https://portal-dc02.lotusflare.com/#/29/pc/products
+      - aiWaitFor: The Products page content is visible
+      - aiAssert: Column headers align with values and no primary action is clipped
+
+  - name: Verify Templates page layout
+    flow:
+      - goto: https://portal-dc02.lotusflare.com/#/29/pc/templates
+      - aiWaitFor: The Templates page content is visible
+      - aiAssert: Column headers align with values and no overlapping panels
 
   - name: Verify Product Catalog Reference Table
     flow:
       - goto: https://portal-dc02.lotusflare.com/#/29/pc/reference-table
       - aiWaitFor: The Reference Table page content is visible beside the sidebar
-      - aiAssert: The Reference Table list is loaded, column headers align with values, and no primary action is clipped
+      - aiAssert: The Reference Table list is loaded, column headers align with values under them, Approved badges sit in the State column, and + Add New is not clipped
 
   - name: Verify Settings page
     flow:
       - goto: https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization
       - aiWaitFor: The Settings page content is visible beside the sidebar
-      - aiAssert: Settings content is readable with no overlapping panels
+      - aiAssert: Settings content is readable with no overlapping panels or cut-off labels
