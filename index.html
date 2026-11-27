@@ -1437,7 +1437,7 @@
             <h1 class="brand-title">Midscene.js — Vision QA &amp; Visual Diff Visualizer</h1>
             <span class="pill-version">Interactive Demo</span>
           </div>
-          <p class="brand-sub">Midscene framework · portal frame = your real dc02 captures for <code style="color:#7dd3fc;">https://portal-dc02.lotusflare.com/#/29</code></p>
+          <p class="brand-sub">Midscene framework · frame = your portal · report driven by <code style="color:#7dd3fc;">assets/portal/live-data.json</code> from dc02 <code style="color:#7dd3fc;">/#/29</code></p>
         </div>
       </div>
 
@@ -1469,6 +1469,10 @@
       </div>
     </div>
   </header>
+
+  <div id="live-data-banner" style="max-width:1680px;margin:0 auto;padding:8px 16px 0;font-size:12px;color:#94a3b8;">
+    Loading live portal data…
+  </div>
 
   <main class="workspace">
     <section class="pane">
@@ -1552,20 +1556,11 @@
             <div id="bug-nan-price" class="bug-nan-pill" style="left:70%;top:28%;">$NaN/mo</div>
           </div>
 
-          <div id="upgrade-modal-backdrop" class="shot-modal-layer hidden">
-            <div id="upgrade-modal" class="shot-modal-box">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                <strong style="font-size:14px;color:#0f172a;">New Offer Draft</strong>
-                <button id="btn-close-modal" type="button" style="width:28px;height:28px;border-radius:8px;border:none;background:#f1f5f9;color:#475569;font-weight:700;">✕</button>
-              </div>
-              <p style="font-size:12px;color:#475569;line-height:1.5;margin:0 0 14px;">
-                Draft offer for operator 29. Vision QA checks modal centering and the close control.
-              </p>
-              <div style="display:flex;justify-content:flex-end;gap:8px;">
-                <button type="button" class="btn-portal-sec">Cancel</button>
-                <button type="button" class="btn-portal-pri">Save Draft</button>
-              </div>
-            </div>
+          <div id="view-settings" class="portal-shot-view hidden">
+            <img class="portal-shot" src="assets/portal/settings.png" alt="Company Settings on dc02 /#/29" />
+            <div id="settings-panel" class="hotspot" style="left:30%;top:10%;width:68%;height:70%;"></div>
+            <div id="settings-timezone" class="hotspot" style="left:40%;top:22%;width:40%;height:5%;"></div>
+            <div id="settings-currency" class="hotspot" style="left:40%;top:48%;width:40%;height:5%;"></div>
           </div>
 
           <div id="vision-overlay" class="vision-overlay">
@@ -1624,19 +1619,35 @@
   </main>
 
   <script>
-    const QA_STEPS = [
-      { id: 0, task: 'Log into portal', type: 'ai', pixelType: 'goto', yamlText: 'Sign in with qa.bot@example.com & password', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 1320, thoughtObserve: 'Capturing 1440×900 frame of /login...', thoughtPlan: 'Located email, password, and Sign In button', thoughtAct: 'Typing credentials & clicking Sign In...' },
-      { id: 1, task: 'Log into portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Home welcome banner is visible', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 510, thoughtObserve: 'Polling real Home screenshot...', thoughtPlan: 'Detected LOTUSFLARE sidebar & Welcome back banner', thoughtAct: 'Home rendered for operator 29' },
-      { id: 2, task: 'Log into portal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Sidebar & Home header aligned with zero overlap', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 640, thoughtObserve: 'Inspecting real sidebar and Home header...', thoughtPlan: 'Evaluating LOTUSFLARE nav vs content spacing', thoughtAct: 'PASS: Sidebar and Home header aligned' },
-      { id: 3, task: 'Check API Orders alignment', type: 'ai', pixelType: 'click', yamlText: 'Open API Product Orders', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Management → API Product Orders...', thoughtPlan: 'Found orders entry in left nav', thoughtAct: 'Navigating to /#/29/operate-apis/api-product-orders...' },
-      { id: 4, task: 'Check API Orders alignment', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Approval Status column header aligns with status pills', viewBefore: 'orders', viewAfter: 'orders', durationMs: 720, bugTarget: 'orders', thoughtObserve: 'Inspecting Approval Status header vs pills...', thoughtPlan: 'Measuring horizontal x-offset on Approval Status', thoughtAct: 'Evaluating column alignment...' },
-      { id: 5, task: 'Verify Offers UI', type: 'ai', pixelType: 'click', yamlText: 'Open Product Catalog Offers', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Scanning Product Catalog → Offers...', thoughtPlan: 'Found Offers under Product Catalog', thoughtAct: 'Navigating to /#/29/pc/offers...' },
-      { id: 6, task: 'Verify Offers UI', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Offers table / page content is loaded', viewBefore: 'billing', viewAfter: 'billing', durationMs: 470, thoughtObserve: 'Waiting for Offers content on operator 29...', thoughtPlan: 'Detected Offers page chrome & table region', thoughtAct: 'Offers page visible' },
-      { id: 7, task: 'Verify Offers UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Primary action button fully legible (not clipped)', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Scanning primary CTA bounds on Offers...', thoughtPlan: 'Checking CTA overflow and text clipping', thoughtAct: 'Evaluating CTA visibility...' },
-      { id: 8, task: 'Verify Offers UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'No $NaN or Invalid Date text on Offers', viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Reading rendered price / date strings...', thoughtPlan: 'Validating currency & date format strings', thoughtAct: 'Evaluating price formatting...' },
-      { id: 9, task: 'Test Upgrade modal', type: 'ai', pixelType: 'click', yamlText: 'Click primary create / new action', viewBefore: 'billing', viewAfter: 'modal', durationMs: 790, thoughtObserve: 'Locating primary create action...', thoughtPlan: 'Found primary CTA in page chrome', thoughtAct: 'Opening New Offer Draft modal...' },
-      { id: 10, task: 'Test Upgrade modal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Modal centered, readable, with visible close button', viewBefore: 'modal', viewAfter: 'modal', durationMs: 620, thoughtObserve: 'Capturing modal geometry above backdrop...', thoughtPlan: 'Checking centering, contrast, and close affordance', thoughtAct: 'PASS: Modal centered with clear ✕ button' },
-    ];
+    /** Filled from assets/portal/live-data.json — scraped from your live portal-dc02 session. */
+    let LIVE = null;
+    let QA_STEPS = [];
+
+    function buildSteps(live) {
+      const welcome = live?.home?.welcome || 'Welcome back';
+      const ordersTitle = live?.orders?.title || 'API Product Orders';
+      const ordersCount = live?.orders?.totalCount ?? 0;
+      const offersTitle = live?.offers?.title || 'Offers';
+      const offersCount = live?.offers?.totalCount ?? 0;
+      const offerSamples = (live?.offers?.sampleNames || []).slice(0, 3).join(', ') || 'offer rows';
+      const currency = live?.settings?.currency || 'currency';
+      const tz = live?.settings?.timezone || 'timezone';
+      const dateFmt = live?.settings?.dateFormat || 'date format';
+
+      return [
+        { id: 0, task: 'Open portal login', type: 'ai', pixelType: 'goto', yamlText: 'Open https://portal-dc02.lotusflare.com/#/login', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 900, thoughtObserve: 'Capturing real login frame…', thoughtPlan: 'Located LotusFlare login chrome', thoughtAct: 'Session continues into /#/29…' },
+        { id: 1, task: 'Open portal login', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `Home shows "${welcome}"`, viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 520, thoughtObserve: 'Polling Home screenshot…', thoughtPlan: `Detected ${welcome}`, thoughtAct: 'Home ready for operator 29' },
+        { id: 2, task: 'Open portal login', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Sidebar & Home header aligned', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 640, thoughtObserve: 'Inspecting LOTUSFLARE sidebar…', thoughtPlan: 'Checking overlap vs Home header', thoughtAct: 'PASS: sidebar aligned' },
+        { id: 3, task: 'API Product Orders', type: 'ai', pixelType: 'click', yamlText: 'Open API Product Orders', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Management → Orders…', thoughtPlan: 'Found orders nav', thoughtAct: 'Goto /#/29/operate-apis/api-product-orders' },
+        { id: 4, task: 'API Product Orders', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `${ordersTitle} — live count ${ordersCount}`, viewBefore: 'orders', viewAfter: 'orders', durationMs: 720, bugTarget: 'orders', thoughtObserve: 'Reading live orders table…', thoughtPlan: `Live data: ${ordersTitle}`, thoughtAct: 'Asserting column alignment' },
+        { id: 5, task: 'Offers', type: 'ai', pixelType: 'click', yamlText: 'Open Product Catalog → Offers', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Locating Offers…', thoughtPlan: 'Found Offers nav', thoughtAct: 'Goto /#/29/pc/offers' },
+        { id: 6, task: 'Offers', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: `${offersTitle} loaded`, viewBefore: 'billing', viewAfter: 'billing', durationMs: 500, thoughtObserve: 'Waiting for offers table…', thoughtPlan: `Live: ${offersCount} offers (e.g. ${offerSamples})`, thoughtAct: 'Offers visible' },
+        { id: 7, task: 'Offers', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Primary New offer CTA fully legible', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Checking New offer button bounds…', thoughtPlan: 'CTA clip check', thoughtAct: 'Evaluating CTA' },
+        { id: 8, task: 'Offers', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `No $NaN in live offer prices (${offersCount} rows)`, viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Scanning price cells in live offers…', thoughtPlan: 'NaN / Invalid Date check', thoughtAct: 'Evaluating prices' },
+        { id: 9, task: 'Company Settings', type: 'ai', pixelType: 'click', yamlText: 'Open Company Settings', viewBefore: 'billing', viewAfter: 'settings', durationMs: 780, thoughtObserve: 'Opening settings/tenant-localization…', thoughtPlan: 'Settings route', thoughtAct: 'Goto /#/29/settings/tenant-localization' },
+        { id: 10, task: 'Company Settings', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: `Timezone ${tz}, ${dateFmt}, ${currency}`, viewBefore: 'settings', viewAfter: 'settings', durationMs: 700, thoughtObserve: 'Reading live localization fields…', thoughtPlan: `Live settings: ${tz} / ${dateFmt} / ${currency}`, thoughtAct: 'PASS: settings readable' },
+      ];
+    }
 
     const state = {
       mode: 'midscene',
@@ -1679,7 +1690,8 @@
       viewDashboard: $('view-dashboard'),
       viewOrders: $('view-orders'),
       viewOffers: $('view-billing'),
-      upgradeModalBackdrop: $('upgrade-modal-backdrop'),
+      viewSettings: $('view-settings'),
+      liveBanner: $('live-data-banner'),
 
       portalEmail: $('portal-email'),
       portalPassword: $('portal-password'),
@@ -1790,7 +1802,7 @@
       els.viewDashboard.classList.add('hidden');
       els.viewOrders.classList.add('hidden');
       els.viewOffers.classList.add('hidden');
-      els.upgradeModalBackdrop.classList.add('hidden');
+      els.viewSettings.classList.add('hidden');
 
       if (view === 'login') {
         els.viewLogin.classList.remove('hidden');
@@ -1800,11 +1812,13 @@
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29';
       } else if (view === 'orders') {
         els.viewOrders.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders/all';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders';
+      } else if (view === 'settings') {
+        els.viewSettings.classList.remove('hidden');
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization';
       } else {
         els.viewOffers.classList.remove('hidden');
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/offers';
-        if (view === 'modal') els.upgradeModalBackdrop.classList.remove('hidden');
       }
     }
 
@@ -1963,8 +1977,8 @@
       state.inspectedStepId = stepId;
       setPortalView(res.view);
       if (stepId === 0) {
-        els.portalEmail.value = 'qa.bot@example.com';
-        els.portalPassword.value = 'DemoPass123!';
+        els.portalEmail.value = '';
+        els.portalPassword.value = '';
       }
       clearVisionOverlay();
       hideCursor();
@@ -1998,21 +2012,17 @@
       const result = { status: 'pass', durationMs: isPixel ? Math.round(step.durationMs * 0.45) : step.durationMs, reasoning: '', coords: '', view: step.viewAfter, boxes: [] };
 
       if (step.id === 0) {
-        const rEmail = drawBoundingBox('#portal-email', 'input: email', 'detect');
-        const rPass = drawBoundingBox('#portal-password', 'input: password', 'detect');
-        const rBtn = drawBoundingBox('#portal-signin', 'btn: Sign In', 'detect');
+        const rBtn = drawBoundingBox('#portal-signin', 'login chrome', 'detect');
         if (!(await sleep(450, token))) return false;
         setActivePhase('act');
         setThought(step.thoughtAct);
-        if (rEmail) { moveCursorTo(rEmail.cx, rEmail.cy); if (!(await sleep(420, token))) return false; spawnClickRipple(rEmail.cx, rEmail.cy); if (!(await typeIntoInput(els.portalEmail, 'qa.bot@example.com', token))) return false; }
-        if (rPass) { moveCursorTo(rPass.cx, rPass.cy); if (!(await sleep(320, token))) return false; spawnClickRipple(rPass.cx, rPass.cy); if (!(await typeIntoInput(els.portalPassword, 'DemoPass123!', token))) return false; }
         if (rBtn) { moveCursorTo(rBtn.cx, rBtn.cy); if (!(await sleep(400, token))) return false; spawnClickRipple(rBtn.cx, rBtn.cy); result.coords = `(${Math.round(rBtn.cx)}, ${Math.round(rBtn.cy)})`; }
         if (!(await sleep(300, token))) return false;
         setPortalView('dashboard');
         clearVisionOverlay();
         result.view = 'login';
-        result.reasoning = 'Entered credentials and clicked Sign In. Navigated to /#/29 Home.';
-        result.boxes = [{ selector: '#portal-email', label: '✓ email entered', variant: 'pass' }, { selector: '#portal-signin', label: '✓ clicked Sign In', variant: 'pass' }];
+        result.reasoning = 'Opened real dc02 login frame, then continued into operator 29 Home (live session screenshots).';
+        result.boxes = [{ selector: '#portal-signin', label: '✓ login frame', variant: 'pass' }];
       } else if (step.id === 1) {
         const rM = drawBoundingBox('#dashboard-metrics', 'welcome banner', 'detect');
         if (!(await sleep(450, token))) return false;
@@ -2020,7 +2030,7 @@
         clearVisionOverlay();
         drawBoundingBox('#dashboard-metrics', '✓ Home welcome visible', 'pass');
         result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = 'Real Home screenshot for operator 29 shows Welcome banner + LOTUSFLARE sidebar.';
+        result.reasoning = `Live Home data: "${LIVE?.home?.welcome || 'Welcome back'}" · ${LIVE?.home?.operatorLabel || 'operator 29'} · ${LIVE?.home?.environment || 'Staging'}.`;
         result.boxes = [{ selector: '#dashboard-metrics', label: '✓ Home welcome visible', variant: 'pass' }];
         if (!(await sleep(480, token))) return false;
       } else if (step.id === 2) {
@@ -2042,7 +2052,7 @@
         if (!(await sleep(280, token))) return false;
         setPortalView('orders');
         clearVisionOverlay();
-        result.reasoning = 'Opened real API Product Orders page for operator 29.';
+        result.reasoning = `Opened live Orders page: ${LIVE?.orders?.title || 'API Product Orders'} (${LIVE?.orders?.totalCount ?? '?'} rows in capture).`;
         result.boxes = [{ selector: '#orders-table', label: '✓ orders table region', variant: 'pass' }];
       } else if (step.id === 4) {
         drawBoundingBox('#orders-col-status-head', 'header: Approval Status', 'detect');
@@ -2074,7 +2084,7 @@
         if (!(await sleep(280, token))) return false;
         setPortalView('billing');
         clearVisionOverlay();
-        result.reasoning = 'Opened real Offers page for operator 29.';
+        result.reasoning = `Opened live Offers: ${LIVE?.offers?.title || 'Offers'}.`;
         result.boxes = [{ selector: '#plan-card-pro', label: '✓ Offers content', variant: 'pass' }];
       } else if (step.id === 6) {
         const rC = drawBoundingBox('#plan-card-pro', 'Offers content', 'detect');
@@ -2083,7 +2093,8 @@
         clearVisionOverlay();
         drawBoundingBox('#plan-card-pro', '✓ Offers loaded', 'pass');
         result.coords = rC ? `(${Math.round(rC.cx)}, ${Math.round(rC.cy)})` : '';
-        result.reasoning = 'Real Offers screenshot for operator 29 finished loading.';
+        const samples = (LIVE?.offers?.sampleNames || []).slice(0, 3).join(', ');
+        result.reasoning = `Live offers loaded: ${LIVE?.offers?.totalCount ?? '?'} total. Samples: ${samples || 'n/a'}.`;
         result.boxes = [{ selector: '#plan-card-pro', label: '✓ Offers loaded', variant: 'pass' }];
         if (!(await sleep(480, token))) return false;
       } else if (step.id === 7) {
@@ -2125,31 +2136,36 @@
         } else {
           drawBoundingBox('#billing-price', '✓ no $NaN', 'pass');
           drawBoundingBox('#billing-renewal', '✓ no Invalid Date', 'pass');
-          result.reasoning = 'No $NaN or Invalid Date text on the real Offers screenshot.';
+          result.reasoning = `No $NaN/Invalid Date on live Offers (${LIVE?.offers?.totalCount ?? '?'} rows from portal-dc02).`;
           result.boxes = [{ selector: '#billing-price', label: '✓ no $NaN', variant: 'pass' }, { selector: '#billing-renewal', label: '✓ no Invalid Date', variant: 'pass' }];
           if (!(await sleep(600, token))) return false;
         }
       } else if (step.id === 9) {
-        const rU = drawBoundingBox('#btn-upgrade', 'btn: primary create', 'detect');
+        const rS = drawBoundingBox('#settings-panel', 'settings content', 'detect');
         if (!(await sleep(420, token))) return false;
         setActivePhase('act');
-        if (rU) { moveCursorTo(rU.cx, rU.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rU.cx, rU.cy); result.coords = `(${Math.round(rU.cx)}, ${Math.round(rU.cy)})`; }
+        if (rS) { moveCursorTo(rS.cx, rS.cy); if (!(await sleep(360, token))) return false; spawnClickRipple(rS.cx, rS.cy); result.coords = `(${Math.round(rS.cx)}, ${Math.round(rS.cy)})`; }
         if (!(await sleep(280, token))) return false;
-        setPortalView('modal');
+        setPortalView('settings');
         clearVisionOverlay();
-        result.reasoning = 'Opened New Offer Draft modal over the real Offers screenshot.';
-        result.boxes = [{ selector: '#upgrade-modal', label: '✓ modal opened', variant: 'pass' }];
+        result.reasoning = 'Opened live Company Settings for operator 29.';
+        result.boxes = [{ selector: '#settings-panel', label: '✓ settings', variant: 'pass' }];
       } else if (step.id === 10) {
-        drawBoundingBox('#upgrade-modal', 'check: centering', 'detect');
-        drawBoundingBox('#btn-close-modal', 'check: close btn', 'detect');
+        drawBoundingBox('#settings-timezone', 'check: timezone', 'detect');
+        drawBoundingBox('#settings-currency', 'check: currency', 'detect');
         if (!(await sleep(500, token))) return false;
         setActivePhase('act');
         clearVisionOverlay();
-        const rM = drawBoundingBox('#upgrade-modal', '✓ centered & legible', 'pass');
-        drawBoundingBox('#btn-close-modal', '✓ close visible', 'pass');
+        const rM = drawBoundingBox('#settings-panel', '✓ settings readable', 'pass');
+        drawBoundingBox('#settings-timezone', `✓ ${LIVE?.settings?.timezone || 'timezone'}`, 'pass');
+        drawBoundingBox('#settings-currency', `✓ ${LIVE?.settings?.currency || 'currency'}`, 'pass');
         result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
-        result.reasoning = 'Draft modal centered above the real portal screenshot with visible ✕ close control.';
-        result.boxes = [{ selector: '#upgrade-modal', label: '✓ centered & legible', variant: 'pass' }, { selector: '#btn-close-modal', label: '✓ close visible', variant: 'pass' }];
+        result.reasoning = `Live settings: timezone ${LIVE?.settings?.timezone || '?'}, date ${LIVE?.settings?.dateFormat || '?'}, currency ${LIVE?.settings?.currency || '?'}.`;
+        result.boxes = [
+          { selector: '#settings-panel', label: '✓ settings readable', variant: 'pass' },
+          { selector: '#settings-timezone', label: `✓ ${LIVE?.settings?.timezone || 'timezone'}`, variant: 'pass' },
+          { selector: '#settings-currency', label: `✓ ${LIVE?.settings?.currency || 'currency'}`, variant: 'pass' },
+        ];
         if (!(await sleep(550, token))) return false;
       }
 
@@ -2272,11 +2288,30 @@
       if (state.inspectedStepId !== null) inspectCompletedStep(state.inspectedStepId);
     });
 
-    window.addEventListener('DOMContentLoaded', () => {
+    async function loadLiveData() {
+      try {
+        const res = await fetch('assets/portal/live-data.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        LIVE = await res.json();
+        QA_STEPS = buildSteps(LIVE);
+        const offerNames = (LIVE.offers?.sampleNames || []).slice(0, 3).join(', ');
+        els.liveBanner.innerHTML = `<strong style="color:#e2e8f0">Live dc02 data</strong> · captured ${LIVE.capturedAt || '?'} · `
+          + `${LIVE.home?.welcome || 'Home'} · ${LIVE.orders?.title || 'Orders'} · ${LIVE.offers?.title || 'Offers'}`
+          + (offerNames ? ` (e.g. ${offerNames})` : '')
+          + ` · ${LIVE.settings?.currency || 'settings'} · <span style="color:#64748b">source: ${LIVE.source || 'portal scrape'}</span>`;
+      } catch (err) {
+        LIVE = null;
+        QA_STEPS = buildSteps(null);
+        els.liveBanner.innerHTML = `<strong style="color:#fb7185">live-data.json missing</strong> — run <code>npm run capture:live</code> then refresh. (${err.message})`;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadLiveData();
       applyModeUI();
       resetSimulation(true);
       setTimeout(() => {
-        if (state.currentStepIndex === -1 && !state.isRunning) runLoop(0);
+        if (state.currentStepIndex === -1 && !state.isRunning && QA_STEPS.length) runLoop(0);
       }, 650);
     });
   </script>

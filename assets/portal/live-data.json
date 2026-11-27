@@ -1,0 +1,140 @@
+{
+  "capturedAt": "2026-11-27T07:41:57.621Z",
+  "portalBaseUrl": "https://portal-dc02.lotusflare.com",
+  "companyId": "29",
+  "source": "live portal-dc02 API + DOM (Playwright)",
+  "home": {
+    "url": "https://portal-dc02.lotusflare.com/#/29",
+    "welcome": "Welcome back, Chen Pan!",
+    "operatorLabel": "LotusFlareTelecom",
+    "environment": "Staging"
+  },
+  "orders": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders",
+    "title": "API Product Orders (0)",
+    "totalCount": 0,
+    "apiResponseCount": 0,
+    "rows": [],
+    "sampleIds": []
+  },
+  "offers": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/pc/offers",
+    "title": "Offers (519)",
+    "totalCount": 519,
+    "apiResponseCount": 5,
+    "rows": [
+      {
+        "name": "aa changed by vlad again",
+        "description": "",
+        "id": "01b604492a0f40179689348b0fd49b83",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "demo5",
+        "description": "vlad i - imported from demo5 Template",
+        "id": "0352401ad60a475e88d85a63a0995021",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "demo5",
+        "description": "demo5 Template",
+        "id": "0352401ad60a475e88d85a63a0995022",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "haoran_test_template_123456",
+        "description": "",
+        "id": "0363a5c63e084153b630dbf4adece13f",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "Test huk json",
+        "description": "test ",
+        "id": "04210b63dd234b958cb50ba69f06fd14",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "leslie 's template that use dno_base_plan_units",
+        "description": "",
+        "id": "08c2c780a37d40f0b075a99472c7fd52",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "CSP/Supplier test",
+        "description": "CSP/Supplier test",
+        "id": "0def4e323815415c9c0dceb9b09e6a0f",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "all_types_of_template_widgets_mandatory_enabled",
+        "description": "all_types_of_template_widgets with mandatory setting",
+        "id": "0e3825c667f341aa939602a4c01447c9",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "Vlad I - test import of PC template with preserved id",
+        "description": "vlad i - test import of template with same id",
+        "id": "10b042cc95844d319b89bfad50ca1ca9",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "TestValidValue",
+        "description": "",
+        "id": "11452a4f778c4b5b85839a2c608bd48e",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "this is demo offer template, test catalogmanagement",
+        "description": "this is offer template for unit test",
+        "id": "17670abb2257478ca5e3f71334e69f9b",
+        "lifecycleStatus": "2",
+        "price": null
+      },
+      {
+        "name": "leslie's template with regular preset template",
+        "description": "",
+        "id": "17d87c3e7a2c490abdbc34b3d33df96f",
+        "lifecycleStatus": "2",
+        "price": null
+      }
+    ],
+    "sampleNames": [
+      "aa changed by vlad again",
+      "demo5",
+      "demo5",
+      "haoran_test_template_123456",
+      "Test huk json",
+      "leslie 's template that use dno_base_plan_units",
+      "CSP/Supplier test",
+      "all_types_of_template_widgets_mandatory_enabled",
+      "Vlad I - test import of PC template with preserved id",
+      "TestValidValue",
+      "this is demo offer template, test catalogmanagement",
+      "leslie's template with regular preset template"
+    ]
+  },
+  "settings": {
+    "url": "https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization",
+    "timezone": "(GMT+00:00)",
+    "dateFormat": "DD-MM-YYYY",
+    "timeFormat": "12 hour",
+    "currency": "Canadian Dollar — CA$"
+  },
+  "screenshots": {
+    "login": "assets/portal/login.png",
+    "home": "assets/portal/home.png",
+    "orders": "assets/portal/orders.png",
+    "offers": "assets/portal/offers.png",
+    "settings": "assets/portal/settings.png"
+  }
+}
