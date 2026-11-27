@@ -7,6 +7,11 @@ const authState = process.env.PORTAL_AUTH_STATE
   ? resolve(process.cwd(), process.env.PORTAL_AUTH_STATE)
   : resolve(process.cwd(), '.auth/user.json');
 
+/**
+ * Live Midscene Vision QA against portal-dc02 operator 29.
+ * Ready once Gemini/OpenAI quota is available — no code changes needed tomorrow:
+ *   npm run check:ready && npm run test:midscene
+ */
 const pages = [
   {
     name: 'Home',
@@ -62,6 +67,7 @@ test.describe('Midscene Vision QA against portal-dc02 operator 29', () => {
 
   for (const pageDef of pages) {
     test(pageDef.name, async ({ page, aiAssert, aiWaitFor }) => {
+      test.setTimeout(180_000);
       await page.goto(pageDef.path);
       await expect(page, 'Session expired. Run npm run tour:login again.').not.toHaveURL(/#\/login(?:\?|$)/);
 

@@ -218,34 +218,37 @@ async function capturePage(
     if (rows.length >= 16) break;
   }
 
-  // DOM fallback: pull plausible name lines from the content area.
+  // DOM fallback: read first column cells from the real table (never sidebar nav text).
   if (rows.length === 0) {
-    const lines = text
-      .split('\n')
-      .map((l) => l.trim())
-      .filter(Boolean);
-    const skip = new Set([
-      'Home',
-      'Product Catalog',
-      'Filter',
-      'Search...',
-      'Staging',
-      'Name',
-      'State',
-      'Operations',
-      'Approved',
-      'Draft',
-      'String',
-      'Array String',
-    ]);
-    for (const line of lines) {
-      if (skip.has(line)) continue;
-      if (line.length < 2 || line.length > 64) continue;
-      if (/^\d{4}-\d{2}-\d{2}/.test(line)) continue;
-      if (/^(Templates|Offers|Products|Services|Resources|Categories|Facets|Consent|API)/i.test(line)) continue;
-      rows.push({ name: line, description: null, id: null, state: null, type: null });
-      if (rows.length >= 12) break;
-    }
+    const cellNames = (await page.evaluate(`(() => {
+      const skip = new Set([
+        'Home','Product Catalog','Filter','Search...','Staging','Name','State','Operations',
+        'Approved','Draft','String','Array String','Reference Key','Value Type','Values Count',
+        'Created Time','Last Updated','Description','Update time','Published state','External ID',
+        'Draft state','Template Type','ID','Type','Product IDs','Offer Name','Applications',
+      ]);
+      const out = [];
+      const trs = Array.from(document.querySelectorAll('tbody tr, [role="row"]'));
+      for (const tr of trs) {
+        const cells = Array.from(tr.querySelectorAll('td, [role="cell"], [role="gridcell"]'))
+          .map((c) => (c.textContent || '').trim().replace(/\\s+/g, ' '))
+          .filter(Boolean);
+        if (!cells.length) continue;
+        const name = cells[0];
+        if (!name || skip.has(name) || name.length < 2 || name.length > 80) continue;
+        if (/^\\d{4}-\\d{2}-\\d{2}/.test(name)) continue;
+        out.push({
+          name: name,
+          description: cells[1] || null,
+          id: null,
+          state: cells.find((c) => /Approved|Draft|Published|Paused/i.test(c)) || null,
+          type: cells.find((c) => /String|Array|MONETARY/i.test(c)) || null,
+        });
+        if (out.length >= 12) break;
+      }
+      return out;
+    })()`)) as Array<Record<string, string | null>>;
+    rows.push(...cellNames);
   }
 
   const shotName = `${def.id}.png`;

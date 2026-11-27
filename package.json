@@ -6,15 +6,16 @@
   "description": "Midscene + Playwright Vision QA against live LotusFlare portal-dc02 operator 29 (no mock portal)",
   "scripts": {
     "web": "npx serve -l 4173 .",
+    "check:ready": "npx tsx scripts/check-ready.mts",
     "tour:login": "npx tsx scripts/capture-auth.mts",
     "capture:screens": "npx tsx scripts/capture-screens.mts",
     "capture:live": "npx tsx scripts/capture-live-data.mts",
+    "capture:inventory": "npx tsx scripts/capture-portal-inventory.mts",
     "capture:all": "npx tsx scripts/capture-portal-inventory.mts",
     "test:visual": "playwright test tests/visual-tour.spec.ts",
     "test:visual:update": "playwright test tests/visual-tour.spec.ts --update-snapshots",
     "test:midscene": "MIDSCENE_REPORT=1 playwright test tests/midscene-qa.spec.ts",
-    "test:report": "playwright show-report playwright-report",
-    "capture:inventory": "npx tsx scripts/capture-portal-inventory.mts"
+    "test:report": "playwright show-report playwright-report"
   },
   "devDependencies": {
     "@midscene/web": "1.17.1",
