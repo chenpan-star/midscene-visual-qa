@@ -558,8 +558,7 @@
     }
 
     .browser-shell {
-      flex: 1;
-      min-height: 580px;
+      width: 100%;
       background: #0f172a;
       border: 1px solid var(--border-muted);
       border-radius: 16px;
@@ -631,9 +630,10 @@
 
     .portal-viewport {
       position: relative;
-      flex: 1;
-      min-height: 520px;
-      background: #f1f5f9;
+      width: 100%;
+      aspect-ratio: 1440 / 900;
+      min-height: 0;
+      background: #0f172a;
       color: #0f172a;
       overflow: hidden;
       user-select: none;
@@ -649,7 +649,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      /* Screenshots are 1440×900; keep full frame — cover was cropping and looked "off". */
+      object-fit: fill;
       object-position: top left;
       background: #fff;
     }
@@ -1510,7 +1511,7 @@
             </svg>
             <span id="browser-url">https://portal-dc02.lotusflare.com/#/login</span>
           </div>
-          <div class="live-pill">1440×900 · Real portal shot</div>
+          <div class="live-pill">1440×900 · Full frame</div>
         </div>
 
         <div id="portal-viewport" class="portal-viewport">
@@ -1798,7 +1799,7 @@
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29';
       } else if (view === 'orders') {
         els.viewOrders.classList.remove('hidden');
-        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders';
+        els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/operate-apis/api-product-orders/all';
       } else {
         els.viewOffers.classList.remove('hidden');
         els.browserUrl.textContent = 'https://portal-dc02.lotusflare.com/#/29/pc/offers';
