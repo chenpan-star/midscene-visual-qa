@@ -78,4 +78,33 @@ test.describe('Midscene Vision QA against portal-dc02 operator 29', () => {
       await aiAssert(pageDef.assert);
     });
   }
+
+  /**
+   * Verifies Storybook DataTable "Column Configuration" contract on a live catalog page.
+   * Code: Table can-select-columns + table-key → ColumnSelectionDropdown (ConfigureColumnIcon).
+   * Storybook: Basic Components / DataTable / Configure Columns
+   *   https://portal-components-storybook.dc02-2.lotusflare.info/?path=/story/basic-components-datatable--configure-columns
+   */
+  test('Reference Table — Column Configuration', async ({ page, ai, aiAssert, aiWaitFor }) => {
+    test.setTimeout(240_000);
+    await page.goto(`/#/${companyId}/pc/reference-table`);
+    await expect(page, 'Session expired. Run npm run tour:login again.').not.toHaveURL(/#\/login(?:\?|$)/);
+
+    await page.locator('[data-testid="Sidebar"]').waitFor({ state: 'visible', timeout: 60_000 });
+    await page.locator('.cursor-wait').waitFor({ state: 'hidden', timeout: 30_000 }).catch(() => undefined);
+    await aiWaitFor('The Reference Tables page has finished loading and the data table is visible');
+
+    await aiAssert(
+      'In the table header row, near the right edge after the Last Updated column, there is a Column configuration control (gear / configure-columns icon). It is fully visible and not clipped.',
+    );
+
+    await ai('Click the Column configuration icon (gear / configure columns) in the table header');
+    await aiWaitFor(
+      'A Column configuration panel or dropdown is open. It shows a title like "Column configuration", a list of column names with checkboxes, and optionally a Reset action',
+    );
+
+    await aiAssert(
+      'The open Column configuration panel lists the Reference Table columns (such as Reference Key, Name, Value Type, State, Values Count, Created Time, Last Updated) with checkboxes. The panel title stays visible above the list. No overlapping or clipped controls.',
+    );
+  });
 });

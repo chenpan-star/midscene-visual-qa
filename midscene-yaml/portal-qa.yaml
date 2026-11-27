@@ -45,3 +45,12 @@ tasks:
       - goto: https://portal-dc02.lotusflare.com/#/29/settings/tenant-localization
       - aiWaitFor: The Settings page content is visible beside the sidebar
       - aiAssert: Settings content is readable with no overlapping panels or cut-off labels
+
+  - name: Verify Reference Table Column Configuration
+    flow:
+      - goto: https://portal-dc02.lotusflare.com/#/29/pc/reference-table
+      - aiWaitFor: The Reference Tables data table is visible
+      - aiAssert: A Column configuration (gear) icon is visible at the right of the table header and is not clipped
+      - ai: Click the Column configuration icon in the table header
+      - aiWaitFor: The Column configuration panel is open with a title and checkbox list of columns
+      - aiAssert: The panel lists Reference Table columns with checkboxes and the title stays pinned above the list
