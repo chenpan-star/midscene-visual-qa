@@ -1,0 +1,20 @@
+{
+  "name": "midscene-visual-qa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive Vision QA Live Visualizer + runnable Midscene.js & Playwright visual-diff starter kit",
+  "scripts": {
+    "web": "npx serve -l 4173 .",
+    "test:visual": "playwright test tests/visual-tour.spec.ts",
+    "test:visual:update": "playwright test tests/visual-tour.spec.ts --update-snapshots",
+    "test:midscene": "playwright test tests/midscene-qa.spec.ts",
+    "test:report": "playwright show-report playwright-report"
+  },
+  "devDependencies": {
+    "@midscene/web": "1.17.1",
+    "@playwright/test": "1.52.0",
+    "dotenv": "16.5.0",
+    "typescript": "5.8.3"
+  }
+}

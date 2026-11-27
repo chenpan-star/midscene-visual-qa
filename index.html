@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Midscene.js — Vision QA &amp; Visual Diff Live Visualizer</title>
+  <style>
+    :root {
+      --bg-app: #020617;
+      --bg-header: rgba(2, 6, 23, 0.92);
+      --bg-panel: rgba(15, 23, 42, 0.96);
+      --bg-panel-deep: rgba(2, 6, 23, 0.72);
+      --bg-elevated: #1e293b;
+      --border-subtle: rgba(51, 65, 85, 0.85);
+      --border-muted: rgba(30, 41, 59, 0.95);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-indigo: #6366f1;
+      --accent-indigo-hover: #4f46e5;
+      --accent-sky: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--bg-app);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.45);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--border-muted);
+      background: var(--bg-header);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      padding: 1px;
+      background: linear-gradient(135deg, #6366f1, #0ea5e9, #22d3ee);
+      flex-shrink: 0;
+    }
+
+    .brand-icon-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 9px;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+    }
+
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .pill-version {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(99, 102, 241, 0.16);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+
+    .brand-sub {
+      margin: 2px 0 0;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Mode segmented control */
+    .mode-switch {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 10px;
+      background: #0f172a;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .mode-btn.active {
+      background: rgba(99, 102, 241, 0.22);
+      color: #e0e7ff;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 13px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #334155;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent-indigo);
+      border-color: rgba(129, 140, 248, 0.5);
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-indigo-hover);
+    }
+
+    /* Bug toggle switch */
+    .bug-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #0f172a;
+      border: 1px solid var(--border-muted);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .bug-switch:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .bug-switch input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .switch-track {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      border-radius: 999px;
+      background: #334155;
+      transition: background 0.2s ease;
+    }
+
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      transition: transform 0.2s ease;
+    }
+
+    .bug-switch input:checked + .switch-track {
+      background: var(--accent-rose);
+    }
+
+    .bug-switch input:checked + .switch-track .switch-thumb {
+      transform: translateX(16px);
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--text-muted);
+    }
+
+    .status-running {
+      background: rgba(14, 165, 233, 0.16);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #7dd3fc;
+    }
+    .status-running .status-dot {
+      background: #38bdf8;
+      animation: pulseDot 1.2s infinite;
+    }
+
+    .status-paused {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fcd34d;
+    }
+    .status-paused .status-dot {
+      background: #f59e0b;
+    }
+
+    .status-passed {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+    }
+    .status-passed .status-dot {
+      background: #10b981;
+    }
+
+    .status-failed {
+      background: rgba(244, 63, 94, 0.16);
+      border-color: rgba(244, 63, 94, 0.45);
+      color: #fda4af;
+    }
+    .status-failed .status-dot {
+      background: #f43f5e;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.45; }
+    }
+
+    /* Main Workspace Grid */
+    .workspace {
+      flex: 1;
+      width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr) 340px;
+      gap: 16px;
+      align-items: stretch;
+      background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    @media (max-width: 1220px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pane {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-muted);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    .pane-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-muted);
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .pane-header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+    }
+
+    .pane-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 3-Phase Loop */
+    .phase-bar {
+      padding: 10px 12px;
+      background: var(--bg-panel-deep);
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .phase-bar-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .phase-pill {
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid var(--border-muted);
+      background: rgba(15, 23, 42, 0.85);
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .phase-pill-title {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .phase-pill-sub {
+      font-size: 9.5px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .phase-pill.active-observe {
+      border-color: rgba(56, 189, 248, 0.75);
+      background: rgba(56, 189, 248, 0.14);
+    }
+    .phase-pill.active-observe .phase-pill-title {
+      color: #7dd3fc;
+    }
+
+    .phase-pill.active-plan {
+      border-color: rgba(129, 140, 248, 0.75);
+      background: rgba(99, 102, 241, 0.16);
+    }
+    .phase-pill.active-plan .phase-pill-title {
+      color: #c7d2fe;
+    }
+
+    .phase-pill.active-act {
+      border-color: rgba(16, 185, 129, 0.75);
+      background: rgba(16, 185, 129, 0.15);
+    }
+    .phase-pill.active-act .phase-pill-title {
+      color: #6ee7b7;
+    }
+
+    /* YAML / Spec Pane */
+    .yaml-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.5;
+      max-height: 620px;
+    }
+
+    .yaml-header-block {
+      color: var(--text-dim);
+      font-size: 11px;
+      margin-bottom: 10px;
+    }
+
+    .yaml-task-group {
+      padding: 8px 0 4px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+
+    .yaml-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 8px 6px 10px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      border-left: 2px solid transparent;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .yaml-step:hover {
+      background: rgba(30, 41, 59, 0.45);
+    }
+
+    .yaml-step.is-current {
+      background: rgba(99, 102, 241, 0.18);
+      border-left-color: #818cf8;
+    }
+
+    .yaml-step.is-inspected {
+      background: rgba(56, 189, 248, 0.16);
+      border-left-color: #38bdf8;
+    }
+
+    .yaml-step.is-fail {
+      background: rgba(244, 63, 94, 0.12);
+      border-left-color: #f43f5e;
+    }
+
+    .step-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-ring {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 1.5px solid #334155;
+    }
+
+    .step-spin {
+      width: 13px;
+      height: 13px;
+      border-radius: 999px;
+      border: 2px solid rgba(56, 189, 248, 0.25);
+      border-top-color: #38bdf8;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .cmd-ai { color: #38bdf8; font-weight: 600; }
+    .cmd-assert { color: #fcd34d; font-weight: 600; }
+    .cmd-wait { color: #d8b4fe; font-weight: 600; }
+    .cmd-sleep { color: #94a3b8; font-weight: 600; }
+
+    /* Center Browser Stage */
+    .center-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .browser-shell {
+      flex: 1;
+      min-height: 580px;
+      background: #0f172a;
+      border: 1px solid var(--border-muted);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.42);
+    }
+
+    .browser-chrome {
+      padding: 10px 14px;
+      background: #0f172a;
+      border-bottom: 1px solid var(--border-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .traffic-lights {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .tl {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+    }
+    .tl-r { background: rgba(244, 63, 94, 0.82); }
+    .tl-y { background: rgba(245, 158, 11, 0.82); }
+    .tl-g { background: rgba(16, 185, 129, 0.82); }
+
+    .url-box {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      background: #020617;
+      border: 1px solid var(--border-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      overflow: hidden;
+    }
+
+    .url-box span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .portal-viewport {
+      position: relative;
+      flex: 1;
+      min-height: 520px;
+      background: #f8fafc;
+      color: #0f172a;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Portal View 1: Login */
+    .view-login {
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 360px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .portal-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .portal-logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .portal-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 13px;
+      color: #0f172a;
+      font-family: var(--font-sans);
+    }
+
+    .portal-btn-full {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 6px;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.25);
+    }
+
+    /* Portal App Shell */
+    .app-shell {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      background: #f8fafc;
+    }
+
+    .portal-sidebar {
+      width: 196px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-brand {
+      height: 54px;
+      padding: 0 16px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-nav {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .snav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    .snav-item.active {
+      background: #eef2ff;
+      color: #4338ca;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .avatar-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .portal-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portal-topbar {
+      height: 54px;
+      padding: 0 20px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .portal-topbar h2 {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .ops-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .subview {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .kpi-val {
+      margin-top: 6px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .kpi-delta {
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #059669;
+    }
+
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .bars-row {
+      height: 112px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+    }
+
+    /* Orders Table View */
+    .table-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .t-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr 1fr 0.8fr;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 12.5px;
+      color: #1e293b;
+    }
+
+    .t-row:last-child {
+      border-bottom: none;
+    }
+
+    .t-head {
+      background: #f8fafc;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #475569;
+    }
+
+    .col-shifted {
+      transform: translateX(22px);
+      color: #e11d48;
+    }
+
+    .tag-ok {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .tag-wait {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    /* Billing Card */
+    .plan-card {
+      background: #ffffff;
+      border: 2px solid #6366f1;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(99, 102, 241, 0.08);
+    }
+
+    .plan-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .plan-foot {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-portal-sec {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .btn-portal-pri {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: none;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .btn-portal-pri.bug-clipped {
+      width: 78px;
+      padding: 6px 8px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .usage-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .usage-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .meter {
+      height: 6px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    /* Upgrade Modal */
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 360px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.25);
+    }
+
+    /* Vision Overlay */
+    .vision-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      overflow: hidden;
+    }
+
+    @keyframes scanSweep {
+      0% { transform: translateY(0); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translateY(520px); opacity: 0; }
+    }
+
+    .ai-scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #818cf8, #38bdf8, transparent);
+      box-shadow: 0 0 18px 4px rgba(56, 189, 248, 0.65);
+      animation: scanSweep 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .ai-scan-tint {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08), rgba(99, 102, 241, 0.04));
+      animation: fadePulse 0.85s ease-out forwards;
+    }
+
+    @keyframes fadePulse {
+      0% { opacity: 0; }
+      30% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes bboxEnter {
+      0% { opacity: 0; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bugPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55); }
+      50% { box-shadow: 0 0 0 7px rgba(239, 68, 68, 0); }
+    }
+
+    .bbox {
+      position: absolute;
+      border-radius: 8px;
+      border: 2px solid #0ea5e9;
+      background: rgba(14, 165, 233, 0.1);
+      animation: bboxEnter 0.22s ease-out forwards;
+    }
+
+    .bbox-pass {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .bbox-fail {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.16);
+      animation: bboxEnter 0.22s ease-out forwards, bugPulse 1.5s infinite;
+    }
+
+    .bbox-label {
+      position: absolute;
+      top: -21px;
+      left: 0;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: #ffffff;
+      white-space: nowrap;
+      background: #0284c7;
+    }
+
+    .bbox-pass .bbox-label { background: #059669; }
+    .bbox-fail .bbox-label { background: #dc2626; }
+
+    .bbox-callout {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 230px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      background: rgba(69, 10, 10, 0.96);
+      border: 1px solid #ef4444;
+      color: #ffe4e6;
+      font-size: 11px;
+      line-height: 1.4;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+      z-index: 45;
+    }
+
+    .ai-cursor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+    }
+
+    .ai-cursor.visible {
+      opacity: 1;
+    }
+
+    @keyframes clickRipple {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.95; }
+      100% { transform: translate(-50%, -50%) scale(2.3); opacity: 0; }
+    }
+
+    .ai-ripple {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 2.5px solid #6366f1;
+      background: rgba(99, 102, 241, 0.22);
+      animation: clickRipple 0.55s ease-out forwards;
+      z-index: 48;
+    }
+
+    .thought-bar {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      z-index: 40;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .thought-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      color: #f1f5f9;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+    }
+
+    .thought-pill span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .bug-banner {
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(244, 63, 94, 0.11);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fecdd3;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    /* Right Report Pane */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--border-muted);
+      background: var(--bg-panel-deep);
+    }
+
+    .stat-cell {
+      padding: 10px 8px;
+      text-align: center;
+      border-right: 1px solid var(--border-muted);
+    }
+    .stat-cell:last-child {
+      border-right: none;
+    }
+
+    .stat-k {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .stat-v {
+      margin-top: 3px;
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .report-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 600px;
+    }
+
+    .report-empty {
+      margin: auto;
+      text-align: center;
+      padding: 28px 16px;
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    .report-card {
+      width: 100%;
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-muted);
+      background: rgba(2, 6, 23, 0.72);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .report-card:hover {
+      border-color: #475569;
+    }
+
+    .report-card.is-fail {
+      border-color: rgba(244, 63, 94, 0.55);
+      background: rgba(136, 19, 55, 0.22);
+    }
+
+    .report-card.is-selected {
+      border-color: #38bdf8;
+      background: rgba(30, 41, 59, 0.9);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
+    }
+
+    .rc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .rc-pill {
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .rc-pass {
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+    }
+    .rc-fail {
+      background: rgba(244, 63, 94, 0.22);
+      color: #fda4af;
+    }
+
+    .rc-reason {
+      margin-top: 6px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(30, 41, 59, 0.95);
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .report-card.is-fail .rc-reason {
+      color: #fecdd3;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon-wrap">
+          <div class="brand-icon-inner">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="brand-title-row">
+            <h1 class="brand-title">Midscene.js — Vision QA &amp; Visual Diff Visualizer</h1>
+            <span class="pill-version">Interactive Demo</span>
+          </div>
+          <p class="brand-sub">Compare natural-language Vision AI assertions and pixel-diff alignment checks on a multi-view SaaS portal</p>
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <div class="mode-switch" role="group" aria-label="Inspection engine">
+          <button id="mode-midscene" type="button" class="mode-btn active">Midscene Vision AI</button>
+          <button id="mode-pixel" type="button" class="mode-btn">Playwright Pixel Diff</button>
+        </div>
+
+        <button id="btn-play-pause" type="button" class="btn btn-primary">
+          <span id="play-pause-label">Run QA Scan</span>
+        </button>
+        <button id="btn-next-step" type="button" class="btn">Next Step</button>
+        <button id="btn-reset" type="button" class="btn">Reset</button>
+      </div>
+
+      <div class="controls-group">
+        <label class="bug-switch" for="toggle-bug">
+          <span>Simulate UI Bugs</span>
+          <input type="checkbox" id="toggle-bug" />
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+        </label>
+
+        <div id="status-badge" class="status-badge">
+          <span id="status-dot" class="status-dot"></span>
+          <span id="status-text">Idle</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="pane">
+      <div class="pane-header">
+        <div class="pane-header-title mono" id="left-pane-filename">portal-qa.yaml</div>
+        <span class="pane-meta">11 steps</span>
+      </div>
+
+      <div class="phase-bar">
+        <div class="phase-bar-label" id="loop-title">Midscene Vision Loop</div>
+        <div class="phase-grid">
+          <div id="phase-observe" class="phase-pill">
+            <div class="phase-pill-title">1. Observe</div>
+            <div class="phase-pill-sub">Screenshot</div>
+          </div>
+          <div id="phase-plan" class="phase-pill">
+            <div class="phase-pill-title" id="phase-plan-title">2. Plan</div>
+            <div class="phase-pill-sub" id="phase-plan-sub">Vision AI</div>
+          </div>
+          <div id="phase-act" class="phase-pill">
+            <div class="phase-pill-title">3. Verify</div>
+            <div class="phase-pill-sub">Live UI</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="yaml-container" class="yaml-scroll"></div>
+    </section>
+
+    <section class="center-col">
+      <div class="browser-shell">
+        <div class="browser-chrome">
+          <div class="traffic-lights">
+            <span class="tl tl-r"></span>
+            <span class="tl tl-y"></span>
+            <span class="tl tl-g"></span>
+          </div>
+          <div class="url-box">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#34d399" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span id="browser-url">https://demo.cloudpulse-portal.example/login</span>
+          </div>
+          <div class="live-pill">1440×900 · Live DOM</div>
+        </div>
+
+        <div id="portal-viewport" class="portal-viewport">
+          <div id="view-login" class="view-login">
+            <div class="login-card">
+              <div class="portal-logo-row">
+                <div class="portal-logo-badge">CP</div>
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:#0f172a;">CloudPulse Portal</div>
+                  <div style="font-size:12px;color:#64748b;">Sign in to your operator workspace</div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-label"><span>Work Email</span></div>
+                <input id="portal-email" class="portal-input" type="text" readonly placeholder="qa-bot@example.com" />
+              </div>
+
+              <div class="field-group">
+                <div class="field-label">
+                  <span>Password</span>
+                  <span style="color:#4f46e5;font-weight:500;">Forgot?</span>
+                </div>
+                <input id="portal-password" class="portal-input" type="password" readonly placeholder="••••••••••••" />
+              </div>
+
+              <button id="portal-signin" type="button" class="portal-btn-full">Sign In</button>
+            </div>
+          </div>
+
+          <div id="view-app-shell" class="app-shell hidden">
+            <aside id="portal-sidebar" class="portal-sidebar">
+              <div class="sidebar-brand">
+                <div class="portal-logo-badge" style="width:28px;height:28px;font-size:11px;border-radius:8px;">CP</div>
+                <span style="font-weight:700;font-size:14px;color:#0f172a;">CloudPulse</span>
+              </div>
+
+              <nav class="sidebar-nav">
+                <div id="nav-overview" class="snav-item active">Overview</div>
+                <div id="nav-orders" class="snav-item">API Product Orders</div>
+                <div id="nav-billing" class="snav-item">Billing &amp; Plans</div>
+                <div class="snav-item">Settings</div>
+              </nav>
+
+              <div class="sidebar-footer">
+                <div class="avatar-circle">QA</div>
+                <div style="min-width:0;">
+                  <div style="font-size:12px;font-weight:600;color:#1e293b;">QA Bot</div>
+                  <div style="font-size:10.5px;color:#64748b;overflow:hidden;text-overflow:ellipsis;">qa-bot@example.com</div>
+                </div>
+              </div>
+            </aside>
+
+            <div class="portal-main">
+              <header id="portal-topbar" class="portal-topbar">
+                <h2 id="portal-page-title">Workspace Overview</h2>
+                <span class="ops-pill">All Systems Operational</span>
+              </header>
+
+              <div id="subview-dashboard" class="subview">
+                <div id="dashboard-metrics" class="kpi-grid">
+                  <div class="kpi-card">
+                    <div class="kpi-label">Monthly Recurring Revenue</div>
+                    <div class="kpi-val">$128,450</div>
+                    <div class="kpi-delta">+14.2% vs last month</div>
+                  </div>
+                  <div class="kpi-card">
+                    <div class="kpi-label">Active Workspaces</div>
+                    <div class="kpi-val">2,418</div>
+                    <div class="kpi-delta">+86 this week</div>
+                  </div>
+                  <div class="kpi-card">
+                    <div class="kpi-label">API P95 Latency</div>
+                    <div class="kpi-val">42 ms</div>
+                    <div class="kpi-delta" style="color:#64748b;">99.99% uptime</div>
+                  </div>
+                </div>
+
+                <div class="chart-card">
+                  <div style="display:flex;justify-content:space-between;font-size:12px;">
+                    <strong style="color:#1e293b;">Real-time Request Throughput</strong>
+                    <span style="color:#94a3b8;">Last 7 days</span>
+                  </div>
+                  <div class="bars-row">
+                    <div class="bar" style="height:48%;background:#e0e7ff;"></div>
+                    <div class="bar" style="height:66%;background:#c7d2fe;"></div>
+                    <div class="bar" style="height:54%;background:#a5b4fc;"></div>
+                    <div class="bar" style="height:78%;background:#818cf8;"></div>
+                    <div class="bar" style="height:88%;background:#6366f1;"></div>
+                    <div class="bar" style="height:72%;background:#818cf8;"></div>
+                    <div class="bar" style="height:96%;background:#4f46e5;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="subview-orders" class="subview hidden">
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:#0f172a;">API Product Orders</div>
+                  <div style="font-size:12px;color:#64748b;">Inspect column alignment between headers and status cells.</div>
+                </div>
+
+                <div id="orders-table" class="table-card">
+                  <div class="t-row t-head">
+                    <span>Order ID</span>
+                    <span>Partner</span>
+                    <span id="orders-col-status-head">Status</span>
+                    <span style="text-align:right;">Action</span>
+                  </div>
+                  <div class="t-row">
+                    <span class="mono" style="font-size:11.5px;">ORD-9041</span>
+                    <span>NovaTel Partner</span>
+                    <span id="orders-col-status-cell"><span class="tag-ok">Approved</span></span>
+                    <span style="text-align:right;color:#4f46e5;font-weight:600;">Review</span>
+                  </div>
+                  <div class="t-row">
+                    <span class="mono" style="font-size:11.5px;">ORD-9042</span>
+                    <span>NorthStar Telco</span>
+                    <span><span class="tag-wait">Pending</span></span>
+                    <span style="text-align:right;color:#4f46e5;font-weight:600;">Review</span>
+                  </div>
+                  <div class="t-row">
+                    <span class="mono" style="font-size:11.5px;">ORD-9043</span>
+                    <span>Metro Fiber Co</span>
+                    <span><span class="tag-ok">Approved</span></span>
+                    <span style="text-align:right;color:#4f46e5;font-weight:600;">Review</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="subview-billing" class="subview hidden">
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:#0f172a;">Subscription &amp; Billing</div>
+                  <div style="font-size:12px;color:#64748b;">Manage your plan, seats, and invoices.</div>
+                </div>
+
+                <div id="plan-card-pro" class="plan-card">
+                  <div class="plan-top">
+                    <div>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:15px;font-weight:700;color:#0f172a;">Pro Team Plan</span>
+                        <span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:#e0e7ff;color:#4338ca;">ACTIVE</span>
+                      </div>
+                      <div style="font-size:12px;color:#64748b;margin-top:4px;">Unlimited pipelines, SSO, and priority support.</div>
+                    </div>
+                    <div style="text-align:right;">
+                      <div id="billing-price" style="font-size:22px;font-weight:800;color:#0f172a;">$49.00<span style="font-size:12px;font-weight:500;color:#64748b;">/mo</span></div>
+                      <div id="billing-renewal" style="font-size:11px;color:#64748b;margin-top:2px;">Renews Dec 15, 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="plan-foot">
+                    <span style="font-size:12px;color:#475569;">Visa ending in •••• 4242</span>
+                    <div style="display:flex;gap:8px;">
+                      <button type="button" class="btn-portal-sec">Invoices</button>
+                      <button id="btn-upgrade" type="button" class="btn-portal-pri">Upgrade Plan</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="usage-grid">
+                  <div class="usage-card">
+                    <div style="font-size:11.5px;color:#64748b;">Team Seats</div>
+                    <div style="font-size:14px;font-weight:700;margin-top:4px;">8 / 15 used</div>
+                    <div class="meter"><div style="width:53%;height:100%;background:#6366f1;"></div></div>
+                  </div>
+                  <div class="usage-card">
+                    <div style="font-size:11.5px;color:#64748b;">Monthly API Quota</div>
+                    <div style="font-size:14px;font-weight:700;margin-top:4px;">640k / 1M</div>
+                    <div class="meter"><div style="width:64%;height:100%;background:#0ea5e9;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="upgrade-modal-backdrop" class="modal-backdrop hidden">
+            <div id="upgrade-modal" class="modal-box">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <strong style="font-size:14px;color:#0f172a;">Upgrade to Enterprise</strong>
+                <button id="btn-close-modal" type="button" style="width:28px;height:28px;border-radius:8px;border:none;background:#f1f5f9;color:#475569;font-weight:700;">✕</button>
+              </div>
+              <p style="font-size:12px;color:#475569;line-height:1.5;margin:0 0 14px;">
+                Unlock dedicated VPC runners, custom SLA guarantees, audit logs, and unlimited seats for your organization.
+              </p>
+              <div style="padding:12px;border-radius:10px;background:#eef2ff;border:1px solid #e0e7ff;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                <div>
+                  <div style="font-size:12px;font-weight:700;color:#312e81;">Enterprise Annual</div>
+                  <div style="font-size:11px;color:#4f46e5;">Billed yearly · Save 20%</div>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#4338ca;">$199<span style="font-size:11px;font-weight:500;">/mo</span></div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;">
+                <button type="button" class="btn-portal-sec">Cancel</button>
+                <button type="button" class="btn-portal-pri">Confirm Upgrade</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="vision-overlay" class="vision-overlay">
+            <div id="vision-scan-layer"></div>
+            <div id="vision-boxes-layer"></div>
+            <div id="ai-cursor" class="ai-cursor">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 01.35-.15h6.87a.5.5 0 00.35-.85L6.35 2.86a.5.5 0 00-.85.35z" fill="#6366f1" stroke="#ffffff" stroke-width="1.8" />
+              </svg>
+              <span class="mono" style="margin-left:10px;padding:2px 6px;border-radius:4px;background:#4f46e5;color:#fff;font-size:9.5px;font-weight:600;">QA Agent</span>
+            </div>
+          </div>
+
+          <div id="ai-thought-bar" class="thought-bar hidden">
+            <div class="thought-pill">
+              <span class="status-dot" style="background:#38bdf8;"></span>
+              <span id="ai-thought-text">Observing live portal viewport...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="bug-mode-banner" class="bug-banner hidden">
+        <strong>Bug Simulation Active:</strong> API Product Orders shifts the <code class="mono">Status</code> column header by +22px, and Billing injects a clipped <code class="mono">Upgrade Plan</code> button plus an unformatted <code class="mono">$NaN/mo</code> price.
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="pane-header">
+        <div class="pane-header-title">Visual HTML Report</div>
+        <span class="pane-meta" id="report-mode-badge">Vision AI</span>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-k">Passed</div>
+          <div id="stat-passed" class="stat-v" style="color:#34d399;">0</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-k">Failed</div>
+          <div id="stat-failed" class="stat-v" style="color:#fb7185;">0</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-k">Duration</div>
+          <div id="stat-duration" class="stat-v" style="color:#38bdf8;">0.0s</div>
+        </div>
+      </div>
+
+      <div id="report-timeline" class="report-scroll">
+        <div id="report-empty" class="report-empty">
+          <p style="color:#94a3b8;font-weight:600;margin:0 0 6px;">No steps recorded yet</p>
+          <p style="margin:0;">Click <strong>Run QA Scan</strong> to watch the scan inspect each screen, or toggle <strong>Simulate UI Bugs</strong> to see defect detection.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const QA_STEPS = [
+      { id: 0, task: 'Log into portal', type: 'ai', pixelType: 'goto', yamlText: 'Sign in with qa-bot@example.com & password', viewBefore: 'login', viewAfter: 'dashboard', durationMs: 1320, thoughtObserve: 'Capturing 1440×900 frame of /login...', thoughtPlan: 'Located email, password, and Sign In button', thoughtAct: 'Typing credentials & clicking Sign In...' },
+      { id: 1, task: 'Log into portal', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Main dashboard KPI cards are visible', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 510, thoughtObserve: 'Polling frame for Workspace Overview...', thoughtPlan: 'Detected Workspace Overview header & 3 KPI cards', thoughtAct: 'Dashboard rendered cleanly' },
+      { id: 2, task: 'Log into portal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Sidebar & top header aligned with zero overlap', viewBefore: 'dashboard', viewAfter: 'dashboard', durationMs: 640, thoughtObserve: 'Inspecting sidebar and header geometry...', thoughtPlan: 'Evaluating bounding alignment and spacing', thoughtAct: 'PASS: Sidebar and top header aligned' },
+      { id: 3, task: 'Check API Orders alignment', type: 'ai', pixelType: 'click', yamlText: 'Click "API Product Orders" in left sidebar', viewBefore: 'dashboard', viewAfter: 'orders', durationMs: 780, thoughtObserve: 'Locating API Product Orders in left sidebar...', thoughtPlan: 'Found navigation link at row 2', thoughtAct: 'Navigating to /orders...' },
+      { id: 4, task: 'Check API Orders alignment', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Status column header aligns with status pills', viewBefore: 'orders', viewAfter: 'orders', durationMs: 720, bugTarget: 'orders', thoughtObserve: 'Inspecting table header vs cell alignment...', thoughtPlan: 'Measuring horizontal x-offset on Status column', thoughtAct: 'Evaluating column alignment...' },
+      { id: 5, task: 'Verify Billing & Plans UI', type: 'ai', pixelType: 'click', yamlText: 'Click "Billing & Plans" in left sidebar', viewBefore: 'orders', viewAfter: 'billing', durationMs: 810, thoughtObserve: 'Scanning left sidebar for Billing & Plans...', thoughtPlan: 'Found Billing link at row 3', thoughtAct: 'Navigating to /billing...' },
+      { id: 6, task: 'Verify Billing & Plans UI', type: 'aiWaitFor', pixelType: 'waitFor', yamlText: 'Active subscription card is loaded', viewBefore: 'billing', viewAfter: 'billing', durationMs: 470, thoughtObserve: 'Waiting for Pro Team Plan card...', thoughtPlan: 'Detected Pro Team Plan active card', thoughtAct: 'Subscription card visible' },
+      { id: 7, task: 'Verify Billing & Plans UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Active plan highlighted & no buttons clipped', viewBefore: 'billing', viewAfter: 'billing', durationMs: 760, bugTarget: 'clip', thoughtObserve: 'Scanning plan card border and button bounds...', thoughtPlan: 'Checking CTA overflow and text clipping', thoughtAct: 'Evaluating CTA visibility...' },
+      { id: 8, task: 'Verify Billing & Plans UI', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Currency & renewal date formatted (no NaN)', viewBefore: 'billing', viewAfter: 'billing', durationMs: 690, bugTarget: 'nan', thoughtObserve: 'Reading rendered price & renewal date text...', thoughtPlan: 'Validating currency & date format strings', thoughtAct: 'Evaluating price formatting...' },
+      { id: 9, task: 'Test Upgrade modal', type: 'ai', pixelType: 'click', yamlText: 'Click "Upgrade Plan" CTA button', viewBefore: 'billing', viewAfter: 'modal', durationMs: 790, thoughtObserve: 'Locating primary Upgrade Plan button...', thoughtPlan: 'Found indigo CTA in plan card footer', thoughtAct: 'Opening Upgrade to Enterprise modal...' },
+      { id: 10, task: 'Test Upgrade modal', type: 'aiAssert', pixelType: 'toHaveScreenshot', yamlText: 'Modal centered, readable, with visible close button', viewBefore: 'modal', viewAfter: 'modal', durationMs: 620, thoughtObserve: 'Capturing modal geometry above backdrop...', thoughtPlan: 'Checking centering, contrast, and close affordance', thoughtAct: 'PASS: Modal centered with clear ✕ button' },
+    ];
+
+    const state = {
+      mode: 'midscene',
+      isRunning: false,
+      isPaused: false,
+      currentStepIndex: -1,
+      bugMode: false,
+      stepResults: {},
+      runToken: 0,
+      inspectedStepId: null,
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const els = {
+      modeMidscene: $('mode-midscene'),
+      modePixel: $('mode-pixel'),
+      leftFilename: $('left-pane-filename'),
+      loopTitle: $('loop-title'),
+      phasePlanTitle: $('phase-plan-title'),
+      phasePlanSub: $('phase-plan-sub'),
+      reportModeBadge: $('report-mode-badge'),
+
+      btnPlayPause: $('btn-play-pause'),
+      playPauseLabel: $('play-pause-label'),
+      btnNextStep: $('btn-next-step'),
+      btnReset: $('btn-reset'),
+      toggleBug: $('toggle-bug'),
+      bugModeBanner: $('bug-mode-banner'),
+      statusBadge: $('status-badge'),
+      statusText: $('status-text'),
+
+      phaseObserve: $('phase-observe'),
+      phasePlan: $('phase-plan'),
+      phaseAct: $('phase-act'),
+      yamlContainer: $('yaml-container'),
+
+      browserUrl: $('browser-url'),
+      portalViewport: $('portal-viewport'),
+      viewLogin: $('view-login'),
+      viewAppShell: $('view-app-shell'),
+      subviewDashboard: $('subview-dashboard'),
+      subviewOrders: $('subview-orders'),
+      subviewBilling: $('subview-billing'),
+      upgradeModalBackdrop: $('upgrade-modal-backdrop'),
+      portalPageTitle: $('portal-page-title'),
+
+      portalEmail: $('portal-email'),
+      portalPassword: $('portal-password'),
+      navOverview: $('nav-overview'),
+      navOrders: $('nav-orders'),
+      navBilling: $('nav-billing'),
+      ordersColStatusHead: $('orders-col-status-head'),
+      billingPrice: $('billing-price'),
+      billingRenewal: $('billing-renewal'),
+      btnUpgrade: $('btn-upgrade'),
+
+      visionScanLayer: $('vision-scan-layer'),
+      visionBoxesLayer: $('vision-boxes-layer'),
+      aiCursor: $('ai-cursor'),
+      aiThoughtBar: $('ai-thought-bar'),
+      aiThoughtText: $('ai-thought-text'),
+
+      statPassed: $('stat-passed'),
+      statFailed: $('stat-failed'),
+      statDuration: $('stat-duration'),
+      reportTimeline: $('report-timeline'),
+      reportEmpty: $('report-empty'),
+    };
+
+    function sleep(ms, token) {
+      return new Promise((resolve) => setTimeout(() => resolve(token === state.runToken), ms));
+    }
+
+    function getRelativeRect(selector) {
+      const el = document.querySelector(selector);
+      if (!el) return null;
+      const vp = els.portalViewport.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return null;
+      return { left: r.left - vp.left, top: r.top - vp.top, width: r.width, height: r.height, cx: r.left - vp.left + r.width / 2, cy: r.top - vp.top + r.height / 2 };
+    }
+
+    function applyModeUI() {
+      const isMid = state.mode === 'midscene';
+      els.modeMidscene.classList.toggle('active', isMid);
+      els.modePixel.classList.toggle('active', !isMid);
+      els.leftFilename.textContent = isMid ? 'portal-qa.yaml' : 'visual-tour.spec.ts';
+      els.loopTitle.textContent = isMid ? 'Midscene Vision Loop' : 'Playwright Pixel Diff Loop';
+      els.phasePlanTitle.textContent = isMid ? '2. Plan' : '2. Diff';
+      els.phasePlanSub.textContent = isMid ? 'Vision AI' : 'Baseline PNG';
+      els.reportModeBadge.textContent = isMid ? 'Vision AI' : 'Pixel Diff';
+      renderYamlPane();
+      renderReportPane();
+    }
+
+    function renderYamlPane() {
+      const isMid = state.mode === 'midscene';
+      let html = `
+        <div class="yaml-header-block">
+          <div style="color:#38bdf8;">${isMid ? 'web:' : 'playwright:'}</div>
+          <div style="padding-left:10px;">url: <span style="color:#6ee7b7;">demo.cloudpulse-portal.example</span></div>
+          <div style="padding-left:10px;">viewport: <span style="color:#fcd34d;">1440×900</span></div>
+        </div>
+      `;
+      let lastTask = '';
+      QA_STEPS.forEach((step) => {
+        if (step.task !== lastTask) {
+          lastTask = step.task;
+          html += `<div class="yaml-task-group">- ${step.task}</div>`;
+        }
+        const res = state.stepResults[step.id];
+        const isCur = state.currentStepIndex === step.id && state.isRunning;
+        const isIns = state.inspectedStepId === step.id;
+        const cls = isCur ? 'is-current' : isIns ? 'is-inspected' : res?.status === 'fail' ? 'is-fail' : '';
+
+        let icon = '<span class="step-ring"></span>';
+        if (isCur) icon = '<span class="step-spin"></span>';
+        else if (res?.status === 'pass') icon = '<span style="color:#34d399;font-weight:700;">✓</span>';
+        else if (res?.status === 'fail') icon = '<span style="color:#fb7185;font-weight:700;">✕</span>';
+
+        const labelCmd = isMid ? step.type : step.pixelType;
+        const cmdCls = step.type === 'ai' ? 'cmd-ai' : step.type === 'aiAssert' ? 'cmd-assert' : 'cmd-wait';
+
+        html += `
+          <div id="yaml-step-${step.id}" class="yaml-step ${cls}">
+            <span class="step-icon">${icon}</span>
+            <div style="min-width:0;flex:1;">
+              <span class="${cmdCls}">${labelCmd}:</span>
+              <span style="color:#cbd5e1;"> ${step.yamlText}</span>
+            </div>
+          </div>
+        `;
+      });
+      els.yamlContainer.innerHTML = html;
+      const activeId = state.isRunning ? state.currentStepIndex : state.inspectedStepId;
+      if (activeId !== null && activeId >= 0) {
+        const el = document.getElementById(`yaml-step-${activeId}`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function setActivePhase(phase) {
+      els.phaseObserve.className = 'phase-pill' + (phase === 'observe' ? ' active-observe' : '');
+      els.phasePlan.className = 'phase-pill' + (phase === 'plan' ? ' active-plan' : '');
+      els.phaseAct.className = 'phase-pill' + (phase === 'act' ? ' active-act' : '');
+    }
+
+    function applyBugModeToDOM() {
+      els.bugModeBanner.classList.toggle('hidden', !state.bugMode);
+      els.ordersColStatusHead.classList.toggle('col-shifted', state.bugMode);
+      els.btnUpgrade.classList.toggle('bug-clipped', state.bugMode);
+      if (state.bugMode) {
+        els.billingPrice.innerHTML = '<span style="color:#e11d48;">$NaN</span><span style="font-size:12px;font-weight:500;color:#64748b;">/mo</span>';
+        els.billingRenewal.textContent = 'Renews Invalid Date';
+      } else {
+        els.billingPrice.innerHTML = '$49.00<span style="font-size:12px;font-weight:500;color:#64748b;">/mo</span>';
+        els.billingRenewal.textContent = 'Renews Dec 15, 2026';
+      }
+    }
+
+    function setPortalView(view) {
+      els.viewLogin.classList.add('hidden');
+      els.viewAppShell.classList.add('hidden');
+      els.subviewDashboard.classList.add('hidden');
+      els.subviewOrders.classList.add('hidden');
+      els.subviewBilling.classList.add('hidden');
+      els.upgradeModalBackdrop.classList.add('hidden');
+
+      els.navOverview.classList.remove('active');
+      els.navOrders.classList.remove('active');
+      els.navBilling.classList.remove('active');
+
+      if (view === 'login') {
+        els.viewLogin.classList.remove('hidden');
+        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/login';
+      } else if (view === 'dashboard') {
+        els.viewAppShell.classList.remove('hidden');
+        els.subviewDashboard.classList.remove('hidden');
+        els.navOverview.classList.add('active');
+        els.portalPageTitle.textContent = 'Workspace Overview';
+        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/dashboard';
+      } else if (view === 'orders') {
+        els.viewAppShell.classList.remove('hidden');
+        els.subviewOrders.classList.remove('hidden');
+        els.navOrders.classList.add('active');
+        els.portalPageTitle.textContent = 'API Product Orders';
+        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/orders';
+      } else {
+        els.viewAppShell.classList.remove('hidden');
+        els.subviewBilling.classList.remove('hidden');
+        els.navBilling.classList.add('active');
+        els.portalPageTitle.textContent = 'Billing & Subscription';
+        els.browserUrl.textContent = 'https://demo.cloudpulse-portal.example/billing';
+        if (view === 'modal') els.upgradeModalBackdrop.classList.remove('hidden');
+      }
+    }
+
+    function clearVisionOverlay() {
+      els.visionScanLayer.innerHTML = '';
+      els.visionBoxesLayer.innerHTML = '';
+    }
+
+    function setThought(text) {
+      if (!text) {
+        els.aiThoughtBar.classList.add('hidden');
+        return;
+      }
+      els.aiThoughtText.textContent = text;
+      els.aiThoughtBar.classList.remove('hidden');
+    }
+
+    function triggerScanSweep() {
+      els.visionScanLayer.innerHTML = '<div class="ai-scan-tint"></div><div class="ai-scan-line"></div>';
+    }
+
+    function drawBoundingBox(selector, label, variant = 'detect', calloutText = null) {
+      const r = getRelativeRect(selector);
+      if (!r) return null;
+      const box = document.createElement('div');
+      box.className = 'bbox' + (variant === 'pass' ? ' bbox-pass' : variant === 'fail' ? ' bbox-fail' : '');
+      box.style.left = `${Math.round(r.left - 4)}px`;
+      box.style.top = `${Math.round(r.top - 4)}px`;
+      box.style.width = `${Math.round(r.width + 8)}px`;
+      box.style.height = `${Math.round(r.height + 8)}px`;
+
+      const tag = document.createElement('div');
+      tag.className = 'bbox-label';
+      tag.textContent = label;
+      box.appendChild(tag);
+
+      if (calloutText) {
+        const c = document.createElement('div');
+        c.className = 'bbox-callout';
+        c.innerHTML = `<div style="font-weight:700;color:#fda4af;margin-bottom:3px;">✕ Defect Detected</div><div>${calloutText}</div>`;
+        box.appendChild(c);
+      }
+      els.visionBoxesLayer.appendChild(box);
+      return r;
+    }
+
+    function moveCursorTo(x, y) {
+      els.aiCursor.classList.add('visible');
+      els.aiCursor.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    }
+
+    function hideCursor() {
+      els.aiCursor.classList.remove('visible');
+    }
+
+    function spawnClickRipple(x, y) {
+      const rp = document.createElement('div');
+      rp.className = 'ai-ripple';
+      rp.style.left = `${Math.round(x)}px`;
+      rp.style.top = `${Math.round(y)}px`;
+      els.visionBoxesLayer.appendChild(rp);
+      setTimeout(() => rp.remove(), 600);
+    }
+
+    async function typeIntoInput(inputEl, text, token) {
+      inputEl.value = '';
+      for (let i = 0; i < text.length; i++) {
+        if (token !== state.runToken) return false;
+        inputEl.value += text[i];
+        await sleep(28, token);
+      }
+      return true;
+    }
+
+    function updateStatusBadge(mode) {
+      const map = {
+        idle: { cls: '', label: 'Idle' },
+        running: { cls: 'status-running', label: 'Running' },
+        paused: { cls: 'status-paused', label: 'Paused' },
+        passed: { cls: 'status-passed', label: 'Passed' },
+        failed: { cls: 'status-failed', label: 'Failed' },
+      }[mode];
+      els.statusBadge.className = `status-badge ${map.cls}`;
+      els.statusText.textContent = map.label;
+    }
+
+    function updatePlayPauseButton() {
+      if (state.isRunning && !state.isPaused) {
+        els.playPauseLabel.textContent = 'Pause';
+      } else {
+        els.playPauseLabel.textContent = state.currentStepIndex >= 0 && state.currentStepIndex < QA_STEPS.length - 1 ? 'Resume' : 'Run QA Scan';
+      }
+    }
+
+    function renderReportPane() {
+      const results = Object.values(state.stepResults);
+      const passed = results.filter((r) => r.status === 'pass').length;
+      const failed = results.filter((r) => r.status === 'fail').length;
+      const totalMs = results.reduce((s, r) => s + r.durationMs, 0);
+
+      els.statPassed.textContent = passed;
+      els.statFailed.textContent = failed;
+      els.statDuration.textContent = `${(totalMs / 1000).toFixed(1)}s`;
+
+      if (results.length === 0) {
+        els.reportTimeline.innerHTML = '';
+        els.reportTimeline.appendChild(els.reportEmpty);
+        els.reportEmpty.classList.remove('hidden');
+        return;
+      }
+
+      let html = '';
+      QA_STEPS.forEach((step) => {
+        const res = state.stepResults[step.id];
+        if (!res) return;
+        const isPass = res.status === 'pass';
+        const isSel = state.inspectedStepId === step.id;
+        const cmdName = state.mode === 'midscene' ? step.type : step.pixelType;
+        html += `
+          <button type="button" data-step-id="${step.id}" class="report-card ${isPass ? '' : 'is-fail'} ${isSel ? 'is-selected' : ''}">
+            <div class="rc-top">
+              <span class="mono" style="font-size:10.5px;color:#38bdf8;">#${step.id + 1} ${cmdName}</span>
+              <span style="display:flex;align-items:center;gap:6px;">
+                <span class="mono" style="font-size:10px;color:#94a3b8;">${res.durationMs}ms</span>
+                <span class="rc-pill ${isPass ? 'rc-pass' : 'rc-fail'}">${isPass ? 'PASS' : 'FAIL'}</span>
+              </span>
+            </div>
+            <div style="font-size:12px;font-weight:600;color:#f1f5f9;">${step.yamlText}</div>
+            <div class="rc-reason">
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;margin-bottom:3px;" class="mono">
+                <span>${state.mode === 'midscene' ? 'Vision AI Verdict' : 'Pixel Diff Verdict'}</span>
+                ${res.coords ? `<span style="color:#38bdf8;">${res.coords}</span>` : ''}
+              </div>
+              ${res.reasoning}
+            </div>
+          </button>
+        `;
+      });
+      els.reportTimeline.innerHTML = html;
+      els.reportTimeline.querySelectorAll('.report-card').forEach((card) => {
+        card.addEventListener('click', () => inspectCompletedStep(Number(card.getAttribute('data-step-id'))));
+      });
+      if (state.isRunning) els.reportTimeline.scrollTop = els.reportTimeline.scrollHeight;
+    }
+
+    function inspectCompletedStep(stepId) {
+      const res = state.stepResults[stepId];
+      if (!res) return;
+      if (state.isRunning) {
+        state.isPaused = true;
+        state.isRunning = false;
+        state.runToken++;
+        updatePlayPauseButton();
+        updateStatusBadge('paused');
+      }
+      state.inspectedStepId = stepId;
+      setPortalView(res.view);
+      if (stepId === 0) {
+        els.portalEmail.value = 'qa-bot@example.com';
+        els.portalPassword.value = 'DemoPass123!';
+      }
+      clearVisionOverlay();
+      hideCursor();
+      setActivePhase('act');
+      setThought(`Inspecting Step #${stepId + 1}: ${res.reasoning}`);
+      requestAnimationFrame(() => {
+        (res.boxes || []).forEach((b) => drawBoundingBox(b.selector, b.label, b.variant, b.callout));
+      });
+      renderYamlPane();
+      renderReportPane();
+    }
+
+    async function executeStep(stepIndex, token) {
+      const step = QA_STEPS[stepIndex];
+      const isPixel = state.mode === 'pixel';
+      state.currentStepIndex = stepIndex;
+      state.inspectedStepId = null;
+
+      setPortalView(step.viewBefore);
+      clearVisionOverlay();
+      renderYamlPane();
+
+      setActivePhase('observe');
+      setThought(step.thoughtObserve);
+      triggerScanSweep();
+      if (!(await sleep(580, token))) return false;
+
+      setActivePhase('plan');
+      setThought(isPixel ? 'Comparing frame against accepted baseline PNG...' : step.thoughtPlan);
+
+      const result = { status: 'pass', durationMs: isPixel ? Math.round(step.durationMs * 0.45) : step.durationMs, reasoning: '', coords: '', view: step.viewAfter, boxes: [] };
+
+      if (step.id === 0) {
+        const rEmail = drawBoundingBox('#portal-email', 'input: email', 'detect');
+        const rPass = drawBoundingBox('#portal-password', 'input: password', 'detect');
+        const rBtn = drawBoundingBox('#portal-signin', 'btn: Sign In', 'detect');
+        if (!(await sleep(450, token))) return false;
+        setActivePhase('act');
+        setThought(step.thoughtAct);
+        if (rEmail) { moveCursorTo(rEmail.cx, rEmail.cy); if (!(await sleep(420, token))) return false; spawnClickRipple(rEmail.cx, rEmail.cy); if (!(await typeIntoInput(els.portalEmail, 'qa-bot@example.com', token))) return false; }
+        if (rPass) { moveCursorTo(rPass.cx, rPass.cy); if (!(await sleep(320, token))) return false; spawnClickRipple(rPass.cx, rPass.cy); if (!(await typeIntoInput(els.portalPassword, 'DemoPass123!', token))) return false; }
+        if (rBtn) { moveCursorTo(rBtn.cx, rBtn.cy); if (!(await sleep(400, token))) return false; spawnClickRipple(rBtn.cx, rBtn.cy); result.coords = `(${Math.round(rBtn.cx)}, ${Math.round(rBtn.cy)})`; }
+        if (!(await sleep(300, token))) return false;
+        setPortalView('dashboard');
+        clearVisionOverlay();
+        result.view = 'login';
+        result.reasoning = 'Entered credentials and clicked Sign In. Navigated to /dashboard.';
+        result.boxes = [{ selector: '#portal-email', label: '✓ email entered', variant: 'pass' }, { selector: '#portal-signin', label: '✓ clicked Sign In', variant: 'pass' }];
+      } else if (step.id === 1) {
+        const rM = drawBoundingBox('#dashboard-metrics', 'KPI cards', 'detect');
+        if (!(await sleep(450, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#dashboard-metrics', '✓ dashboard visible', 'pass');
+        result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
+        result.reasoning = 'Workspace Overview and 3 KPI cards rendered cleanly.';
+        result.boxes = [{ selector: '#dashboard-metrics', label: '✓ dashboard visible', variant: 'pass' }];
+        if (!(await sleep(480, token))) return false;
+      } else if (step.id === 2) {
+        drawBoundingBox('#portal-sidebar', 'region: sidebar', 'detect');
+        drawBoundingBox('#portal-topbar', 'region: topbar', 'detect');
+        if (!(await sleep(480, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#portal-sidebar', isPixel ? '✓ 0.00% diff' : '✓ sidebar aligned', 'pass');
+        drawBoundingBox('#portal-topbar', '✓ topbar clean', 'pass');
+        result.reasoning = isPixel ? 'Full-page screenshot matched dashboard-baseline.png (0.00% pixel diff).' : 'Sidebar and top bar aligned with zero overlapping labels.';
+        result.boxes = [{ selector: '#portal-sidebar', label: isPixel ? '✓ 0.00% diff' : '✓ sidebar aligned', variant: 'pass' }, { selector: '#portal-topbar', label: '✓ topbar clean', variant: 'pass' }];
+        if (!(await sleep(550, token))) return false;
+      } else if (step.id === 3) {
+        const rN = drawBoundingBox('#nav-orders', 'nav: API Product Orders', 'detect');
+        if (!(await sleep(440, token))) return false;
+        setActivePhase('act');
+        if (rN) { moveCursorTo(rN.cx, rN.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rN.cx, rN.cy); result.coords = `(${Math.round(rN.cx)}, ${Math.round(rN.cy)})`; }
+        if (!(await sleep(280, token))) return false;
+        setPortalView('orders');
+        clearVisionOverlay();
+        result.reasoning = 'Opened API Product Orders table view.';
+        result.boxes = [{ selector: '#orders-table', label: '✓ 3 rows loaded', variant: 'pass' }];
+      } else if (step.id === 4) {
+        drawBoundingBox('#orders-col-status-head', 'header: Status', 'detect');
+        drawBoundingBox('#orders-col-status-cell', 'cell: Approved', 'detect');
+        if (!(await sleep(520, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: Status header shifted +22px right of Status pills!');
+          const rBad = drawBoundingBox('#orders-col-status-head', '✕ +22px offset', 'fail', isPixel ? 'Pixel diff 2.1% exceeds 1.0% threshold on Status header column.' : 'Status column header is visually misaligned (+22px) from the Approved/Pending badges below.');
+          drawBoundingBox('#orders-col-status-cell', 'cell column', 'pass');
+          result.coords = rBad ? `(${Math.round(rBad.cx)}, ${Math.round(rBad.cy)})` : '';
+          result.reasoning = isPixel ? 'Pixel diff (2.1%) caught +22px rightward shift on Status header.' : 'Detected +22px horizontal misalignment between Status header and pill column.';
+          result.boxes = [{ selector: '#orders-col-status-head', label: '✕ +22px offset', variant: 'fail', callout: result.reasoning }, { selector: '#orders-col-status-cell', label: 'cell column', variant: 'pass' }];
+          if (!(await sleep(1250, token))) return false;
+        } else {
+          drawBoundingBox('#orders-col-status-head', '✓ aligned', 'pass');
+          drawBoundingBox('#orders-col-status-cell', '✓ aligned', 'pass');
+          result.reasoning = isPixel ? 'Matched orders-baseline.png with 0.00% diff.' : 'Status header and pill badges align cleanly along the same left edge.';
+          result.boxes = [{ selector: '#orders-col-status-head', label: '✓ aligned', variant: 'pass' }, { selector: '#orders-col-status-cell', label: '✓ aligned', variant: 'pass' }];
+          if (!(await sleep(580, token))) return false;
+        }
+      } else if (step.id === 5) {
+        const rB = drawBoundingBox('#nav-billing', 'nav: Billing & Plans', 'detect');
+        if (!(await sleep(440, token))) return false;
+        setActivePhase('act');
+        if (rB) { moveCursorTo(rB.cx, rB.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rB.cx, rB.cy); result.coords = `(${Math.round(rB.cx)}, ${Math.round(rB.cy)})`; }
+        if (!(await sleep(280, token))) return false;
+        setPortalView('billing');
+        clearVisionOverlay();
+        result.reasoning = 'Clicked Billing & Plans in left navigation.';
+        result.boxes = [{ selector: '#nav-billing', label: '✓ active: Billing', variant: 'pass' }];
+      } else if (step.id === 6) {
+        const rC = drawBoundingBox('#plan-card-pro', 'card: Pro Team Plan', 'detect');
+        if (!(await sleep(440, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        drawBoundingBox('#plan-card-pro', '✓ subscription loaded', 'pass');
+        result.coords = rC ? `(${Math.round(rC.cx)}, ${Math.round(rC.cy)})` : '';
+        result.reasoning = 'Pro Team Plan card rendered with payment method and usage meters.';
+        result.boxes = [{ selector: '#plan-card-pro', label: '✓ subscription loaded', variant: 'pass' }];
+        if (!(await sleep(480, token))) return false;
+      } else if (step.id === 7) {
+        drawBoundingBox('#plan-card-pro', 'check: active highlight', 'detect');
+        drawBoundingBox('#btn-upgrade', 'check: button text clip', 'detect');
+        if (!(await sleep(520, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: Clipped text detected on "Upgrade Plan" button!');
+          drawBoundingBox('#plan-card-pro', '✓ active border ok', 'pass');
+          const rClip = drawBoundingBox('#btn-upgrade', '✕ DEFECT: clipped', 'fail', 'Button label "Upgrade Plan" is clipped horizontally inside a 78px container.');
+          result.coords = rClip ? `(${Math.round(rClip.cx)}, ${Math.round(rClip.cy)})` : '';
+          result.reasoning = isPixel ? 'Pixel diff (1.8%) flagged truncated Upgrade Plan button.' : 'Visual defect caught: "Upgrade Plan" button text is clipped inside its 78px width.';
+          result.boxes = [{ selector: '#plan-card-pro', label: '✓ active border ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✕ DEFECT: clipped', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(1250, token))) return false;
+        } else {
+          drawBoundingBox('#plan-card-pro', '✓ highlight ok', 'pass');
+          drawBoundingBox('#btn-upgrade', '✓ text intact', 'pass');
+          result.reasoning = 'Active Pro Team Plan card highlighted and Upgrade Plan CTA renders with full padding.';
+          result.boxes = [{ selector: '#plan-card-pro', label: '✓ highlight ok', variant: 'pass' }, { selector: '#btn-upgrade', label: '✓ text intact', variant: 'pass' }];
+          if (!(await sleep(600, token))) return false;
+        }
+      } else if (step.id === 8) {
+        drawBoundingBox('#billing-price', 'check: price string', 'detect');
+        drawBoundingBox('#billing-renewal', 'check: date string', 'detect');
+        if (!(await sleep(520, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        if (state.bugMode) {
+          result.status = 'fail';
+          setThought('FAIL: Detected "$NaN/mo" and "Invalid Date" on Billing card!');
+          const rP = drawBoundingBox('#billing-price', '✕ DEFECT: $NaN/mo', 'fail', 'Found raw "$NaN/mo" and "Invalid Date" strings instead of formatted currency & date.');
+          result.coords = rP ? `(${Math.round(rP.cx)}, ${Math.round(rP.cy)})` : '';
+          result.reasoning = 'Detected unformatted "$NaN/mo" price and "Invalid Date" renewal string.';
+          result.boxes = [{ selector: '#billing-price', label: '✕ DEFECT: $NaN/mo', variant: 'fail', callout: result.reasoning }];
+          if (!(await sleep(1250, token))) return false;
+        } else {
+          drawBoundingBox('#billing-price', '✓ $49.00/mo valid', 'pass');
+          drawBoundingBox('#billing-renewal', '✓ Dec 15, 2026 valid', 'pass');
+          result.reasoning = 'Verified "$49.00/mo" and "Renews Dec 15, 2026" with no NaN or undefined values.';
+          result.boxes = [{ selector: '#billing-price', label: '✓ $49.00/mo valid', variant: 'pass' }, { selector: '#billing-renewal', label: '✓ Dec 15, 2026 valid', variant: 'pass' }];
+          if (!(await sleep(600, token))) return false;
+        }
+      } else if (step.id === 9) {
+        const rU = drawBoundingBox('#btn-upgrade', 'btn: Upgrade Plan', 'detect');
+        if (!(await sleep(420, token))) return false;
+        setActivePhase('act');
+        if (rU) { moveCursorTo(rU.cx, rU.cy); if (!(await sleep(460, token))) return false; spawnClickRipple(rU.cx, rU.cy); result.coords = `(${Math.round(rU.cx)}, ${Math.round(rU.cy)})`; }
+        if (!(await sleep(280, token))) return false;
+        setPortalView('modal');
+        clearVisionOverlay();
+        result.reasoning = 'Clicked Upgrade Plan CTA and opened Enterprise upgrade dialog.';
+        result.boxes = [{ selector: '#upgrade-modal', label: '✓ modal opened', variant: 'pass' }];
+      } else if (step.id === 10) {
+        drawBoundingBox('#upgrade-modal', 'check: centering', 'detect');
+        drawBoundingBox('#btn-close-modal', 'check: close btn', 'detect');
+        if (!(await sleep(500, token))) return false;
+        setActivePhase('act');
+        clearVisionOverlay();
+        const rM = drawBoundingBox('#upgrade-modal', '✓ centered & legible', 'pass');
+        drawBoundingBox('#btn-close-modal', '✓ close visible', 'pass');
+        result.coords = rM ? `(${Math.round(rM.cx)}, ${Math.round(rM.cy)})` : '';
+        result.reasoning = 'Enterprise modal centered above backdrop with visible ✕ close control.';
+        result.boxes = [{ selector: '#upgrade-modal', label: '✓ centered & legible', variant: 'pass' }, { selector: '#btn-close-modal', label: '✓ close visible', variant: 'pass' }];
+        if (!(await sleep(550, token))) return false;
+      }
+
+      state.stepResults[step.id] = result;
+      renderYamlPane();
+      renderReportPane();
+      return true;
+    }
+
+    async function runLoop(fromIndex) {
+      state.isRunning = true;
+      state.isPaused = false;
+      const token = ++state.runToken;
+      updateStatusBadge('running');
+      updatePlayPauseButton();
+
+      for (let i = fromIndex; i < QA_STEPS.length; i++) {
+        if (token !== state.runToken) return;
+        const ok = await executeStep(i, token);
+        if (!ok || token !== state.runToken) return;
+      }
+
+      state.isRunning = false;
+      hideCursor();
+      setActivePhase(null);
+      const failCount = Object.values(state.stepResults).filter((r) => r.status === 'fail').length;
+      updateStatusBadge(failCount > 0 ? 'failed' : 'passed');
+      setThought(failCount > 0 ? `Scan complete — ${failCount} UI defects caught! Click any red card in the report to inspect.` : 'Scan complete — All 11 visual & layout checks passed!');
+      updatePlayPauseButton();
+      renderYamlPane();
+    }
+
+    async function runSingleNextStep() {
+      if (state.isRunning) {
+        state.isRunning = false;
+        state.isPaused = true;
+        state.runToken++;
+      }
+      let nextIdx = state.currentStepIndex + 1;
+      if (nextIdx >= QA_STEPS.length) {
+        resetSimulation(false);
+        nextIdx = 0;
+      }
+      state.isRunning = true;
+      const token = ++state.runToken;
+      updateStatusBadge('running');
+      updatePlayPauseButton();
+
+      const ok = await executeStep(nextIdx, token);
+      if (!ok || token !== state.runToken) return;
+
+      state.isRunning = false;
+      state.isPaused = nextIdx < QA_STEPS.length - 1;
+      if (nextIdx === QA_STEPS.length - 1) {
+        hideCursor();
+        const anyFail = Object.values(state.stepResults).some((r) => r.status === 'fail');
+        updateStatusBadge(anyFail ? 'failed' : 'passed');
+      } else {
+        updateStatusBadge('paused');
+      }
+      updatePlayPauseButton();
+      renderYamlPane();
+    }
+
+    function resetSimulation(clearThought = true) {
+      state.runToken++;
+      state.isRunning = false;
+      state.isPaused = false;
+      state.currentStepIndex = -1;
+      state.inspectedStepId = null;
+      state.stepResults = {};
+
+      els.portalEmail.value = '';
+      els.portalPassword.value = '';
+      setPortalView('login');
+      applyBugModeToDOM();
+      clearVisionOverlay();
+      hideCursor();
+      setActivePhase(null);
+      if (clearThought) setThought('');
+      updateStatusBadge('idle');
+      updatePlayPauseButton();
+      renderYamlPane();
+      renderReportPane();
+    }
+
+    els.modeMidscene.addEventListener('click', () => { state.mode = 'midscene'; applyModeUI(); });
+    els.modePixel.addEventListener('click', () => { state.mode = 'pixel'; applyModeUI(); });
+
+    els.btnPlayPause.addEventListener('click', () => {
+      if (state.isRunning) {
+        state.runToken++;
+        state.isRunning = false;
+        state.isPaused = true;
+        updateStatusBadge('paused');
+        updatePlayPauseButton();
+        setThought('Simulation paused. Click Resume or Next Step to continue.');
+      } else {
+        let startIdx = state.currentStepIndex + 1;
+        if (startIdx >= QA_STEPS.length || state.currentStepIndex === -1) {
+          resetSimulation(false);
+          startIdx = 0;
+        }
+        runLoop(startIdx);
+      }
+    });
+
+    els.btnNextStep.addEventListener('click', runSingleNextStep);
+    els.btnReset.addEventListener('click', () => resetSimulation(true));
+    els.toggleBug.addEventListener('change', (e) => {
+      state.bugMode = e.target.checked;
+      applyBugModeToDOM();
+      if (Object.keys(state.stepResults).length > 0 || state.isRunning) {
+        resetSimulation(false);
+        runLoop(0);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (state.inspectedStepId !== null) inspectCompletedStep(state.inspectedStepId);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyModeUI();
+      resetSimulation(true);
+      setTimeout(() => {
+        if (state.currentStepIndex === -1 && !state.isRunning) runLoop(0);
+      }, 650);
+    });
+  </script>
+</body>
+</html>

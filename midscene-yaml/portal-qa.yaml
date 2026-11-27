@@ -1,0 +1,30 @@
+web:
+  url: http://127.0.0.1:4173
+  viewportWidth: 1440
+  viewportHeight: 900
+
+tasks:
+  - name: Log into the portal
+    flow:
+      - ai: Type "qa-bot@example.com" into Work Email and a password, then click Sign In
+      - aiWaitFor: The main dashboard is visible
+      - aiAssert: Sidebar and top navigation bar are aligned with no overlapping text
+
+  - name: Check API Product Orders table alignment
+    flow:
+      - ai: Click "API Product Orders" in the left navigation menu
+      - aiWaitFor: The orders table rows are loaded
+      - aiAssert: The Status column header aligns cleanly with the Approved and Pending pills below it
+
+  - name: Verify Billing & Plans UI
+    flow:
+      - ai: Click "Billing & Plans" in the left navigation menu
+      - aiWaitFor: Active subscription card is loaded
+      - aiAssert: Active plan card is highlighted and the Upgrade Plan button is not cut off or clipped
+      - aiAssert: Currency amounts and renewal dates are formatted with no "NaN" or "Invalid Date"
+
+  - name: Test modal interaction
+    flow:
+      - ai: Click the "Upgrade Plan" button
+      - sleep: 1000
+      - aiAssert: Modal dialog is centered, readable, and has a visible close button

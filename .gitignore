@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.local
+.auth/
+midscene_run/
+playwright-report/
+test-results/
+blob-report/
+**/*-snapshots/
+.DS_Store
