@@ -1,76 +1,46 @@
-# Midscene Visual QA — LotusFlare Portal (dc02 / operator 29)
+# portal-dc02 Vision QA (operator 29)
 
-Interactive web visualizer and runnable Midscene.js + Playwright kit targeted at:
+Target: **`https://portal-dc02.lotusflare.com/#/29`**
 
-**`https://portal-dc02.lotusflare.com/#/29`**
+This kit drives **your live LotusFlare portal** with Midscene + Playwright. There is no mock portal app.
 
-**Live Web Visualizer:** https://chenpan-star.github.io/midscene-visual-qa/
+**Pages site:** https://chenpan-star.github.io/midscene-visual-qa/  
+Shows real screenshots captured from operator 29 only. It cannot embed the live portal — dc02 sends `X-Frame-Options: deny` — so open the portal in a normal browser or run the local Midscene suite.
 
-The Pages demo embeds **real screenshots** captured from `portal-dc02` operator 29 (login / Home / Orders / Offers). Live iframe embedding is blocked by the portal’s `X-Frame-Options: deny`, so the visualizer cannot show a live session on GitHub Pages. Live Midscene and pixel-diff runs against the real dc02 portal happen on your machine only — auth cookies stay local (gitignored). Refresh the demo shots with `npm run capture:screens` after `tour:login`.
-
-## Quick start against portal-dc02
+## Live Midscene (real portal)
 
 ```bash
 npm install
-npx playwright install chromium   # or rely on channel: chrome
-cp .env.example .env
-# Fill OPENAI_API_KEY + MIDSCENE_MODEL_NAME in .env
+cp .env.example .env   # OPENAI_API_KEY + optional MIDSCENE_MODEL_NAME
 
-# 1) Sign in once (opens Chrome against portal-dc02)
-npm run tour:login
-
-# 2) Midscene Vision AI assertions on Home / Orders / Offers / Settings
-npm run test:midscene
-
-# 3) Deterministic Playwright pixel baselines (optional)
-npm run test:visual:update
-npm run test:visual
-
-# 4) Open the Playwright / Midscene HTML report
-npm run test:report
+npm run tour:login     # Chrome → portal-dc02 /#/29 — sign in once
+npm run test:midscene  # Midscene aiAssert / aiWaitFor on the LIVE site
+npm run test:visual    # Playwright toHaveScreenshot on the LIVE site
 ```
 
-Environment defaults (override in `.env`):
+Defaults:
 
 | Variable | Default |
 | --- | --- |
 | `PORTAL_BASE_URL` | `https://portal-dc02.lotusflare.com` |
 | `PORTAL_COMPANY_ID` | `29` |
-| `PORTAL_AUTH_STATE` | `.auth/user.json` |
-| `MIDSCENE_MODEL_NAME` | `gpt-4.1` |
+| `PORTAL_AUTH_STATE` | `.auth/user.json` (gitignored) |
 
-## Web visualizer (GitHub Pages)
+## Refresh Pages screenshots
 
 ```bash
-npm run web
-# or open https://chenpan-star.github.io/midscene-visual-qa/
+npm run tour:login
+npm run capture:screens   # writes assets/portal/*.png from the live session
 ```
 
-Controls:
-
-- **Midscene Vision AI / Playwright Pixel Diff** — switch how the simulated scan narrates each step.
-- **Simulate UI Bugs** — inject a +22px Status-column misalignment, a clipped Create Offer CTA, and `$NaN/mo`.
-- **Run QA Scan / Next Step / Reset** — step through the flow; click a report card to inspect boxes.
-
-## What's in the repo
+## Layout
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Zero-dependency interactive visualizer over real dc02 screenshots |
-| `assets/portal/*.png` | Captured login / Home / Orders / Offers / Settings frames |
-| `scripts/capture-screens.mts` | Refresh `assets/portal` from a logged-in dc02 session |
-| `tests/midscene-qa.spec.ts` | Live Midscene `aiAssert` / `aiWaitFor` against portal-dc02 |
-| `tests/visual-tour.spec.ts` | Live Playwright `toHaveScreenshot` tour against portal-dc02 |
-| `tests/fixture.ts` | Midscene Playwright fixture |
-| `scripts/capture-auth.mts` | One-time Chrome login → `.auth/user.json` |
-| `midscene-yaml/portal-qa.yaml` | Declarative Midscene YAML for the same pages |
-
-## Midscene vs pixel-diff (spike notes)
-
-| Defect | Playwright screenshot | Midscene `aiAssert` |
-| --- | --- | --- |
-| 2–20px misalignment / spacing | Strong | Weak unless you crop with `locatePrompt` / `searchArea` |
-| Clipped CTA, `$NaN`, obvious overlap | Via baseline | Strong as natural-language screen claims |
-| Silent HTTP 500 / double submit | Network assertions | Misses (screenshot only) |
-
-Use Midscene for visible intent checks. Keep Playwright pixel diffs for alignment baselines. Never point either at production tenants — every Midscene assert uploads a screenshot to your configured model.
+| `index.html` | Real-screenshot viewer for Pages (no mock UI) |
+| `assets/portal/` | Captures from operator 29 |
+| `tests/midscene-qa.spec.ts` | Midscene against live dc02 |
+| `tests/visual-tour.spec.ts` | Pixel tour against live dc02 |
+| `scripts/capture-auth.mts` | Save login cookies locally |
+| `scripts/capture-screens.mts` | Refresh real screenshots |
+| `midscene-yaml/portal-qa.yaml` | Declarative Midscene flow for the same URLs |
